@@ -1,0 +1,19 @@
+{
+  "name": "giffield",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NaN-NotAName/GIFfield.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NaN-NotAName/GIFfield/issues"
+  },
+  "homepage": "https://github.com/NaN-NotAName/GIFfield#readme"
+}

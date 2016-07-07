@@ -18,9 +18,11 @@
   "homepage": "https://github.com/clefnetwork/GIFfield#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "chai": "^3.5.0",
     "express": "^4.14.0",
     "http": "0.0.0",
     "request": "^2.72.0",
-    "socket.io": "^1.4.8"
+    "socket.io": "^1.4.8",
+    "mocha": "^2.5.3"
   }
 }

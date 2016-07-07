@@ -18,48 +18,47 @@ Once the project moves into development, the press release can be used as a touc
  
 ## Heading ##
 <!--   > Name the product in a way the reader (i.e. your target customers) will understand. -->
- >
+ >  GIField
 
 
 ## Sub-Heading ##
 <!--   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title. -->
- >
+ >  Live music sharing app.
 
 
 ## Summary ##
 <!--   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good. -->
- >
+ >  Stream music to your friends and remotely share in the listening experience.
 
 
 ## Problem ##
 <!--   > Describe the problem your product solves. -->
- >
+ >  No way to share a listening experience in real time.
 
 
 ## Solution ##
 <!--   > Describe how your product elegantly solves the problem. -->
- >
+ >  Creates a forum to share a music broadcast in real time.
 
 
 ## Quote from You ##
 <!--   > A quote from a spokesperson in your company.
  -->
- >
+ > It's probably the most amazing thing ever.
 
- 
 
 ## How to Get Started ##
 <!--   > Describe how easy it is to get started. -->
- >
+ >  Login to our site, search for a song, and click play. Send friends a link to your url and they can listen in!
 
 
 ## Customer Quote ##
 <!--   > Provide a quote from a hypothetical customer that describes how they experienced the benefit. -->
- >
+ >  It's definitely the most amazing thing ever.
 
 
 ## Closing and Call to Action ##
 <!--   > Wrap it up and give pointers where the reader should go next. -->
- >
+ >  Go to our site, why are you still reading this.
 
 

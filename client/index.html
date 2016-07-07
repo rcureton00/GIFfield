@@ -2,22 +2,44 @@
 <html lang="en" ng-app="MusicPlayer">
 
 <head>
-    <meta charset="UTF-8">
-    <title>GifField</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
-    <script src="https://code.angularjs.org/1.2.28/angular-route.min.js"></script>
+
+  <meta charset="UTF-8">
+  <title>GifField</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+  <script src="https://code.angularjs.org/1.2.28/angular-route.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="/config.js"></script>
+
+
+  <script src="modules/app.js"></script>
+
+  <!-- Controllers -->
+  <script src="controllers/HomeController.js"></script>
+  <script src="controllers/PlayerController.js"></script>
+
 </head>
 
-<body>
+<body ng-controller="mainController" >
+  
+  <ul id="messages"></ul>
 
-        <div ng-view></div>
+    <input id="m" autocomplete="off" /><button id="clicker">Send</button>
 
-    <!-- Modules -->
-    <script src="modules/app.js"></script>
-    <!-- Controllers -->
-    <script src="controllers/HomeController.js"></script>
-    <script src="controllers/PlayerController.js"></script>
+
+  <script>
+    var socket = io();
+    $('#clicker').click(function(){
+      console.log('this form sbmited');
+      socket.emit('chat message', $('#m').val());
+      $('#m').val('');
+      return false;
+    });
+    socket.on('chat message', function(msg){
+      $('#messages').append($('<li>').text(msg));
+    });
+  </script>
 </body>
 
 </html>

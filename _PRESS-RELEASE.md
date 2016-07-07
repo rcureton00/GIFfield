@@ -46,7 +46,6 @@ Once the project moves into development, the press release can be used as a touc
  -->
  > It's probably the most amazing thing ever.
 
- 
 
 ## How to Get Started ##
 <!--   > Describe how easy it is to get started. -->

@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/clefnetwork/GIFfield#readme",
   "dependencies": {
-    "angular": "^1.5.7",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "request": "^2.72.0"

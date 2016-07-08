@@ -1,0 +1,7 @@
+<div ng-controller="mainController">
+  <input ng-model="chatMsg" autocomplete="off" /><button id="clicker" ng-click="chatSend()">Send</button>
+  <ul id="messages">
+    <li ng-repeat = "chatMessage in chatMessages"> {{ chatMessage }}</li>
+  </ul>
+</div>
+  

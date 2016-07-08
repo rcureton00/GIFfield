@@ -2,22 +2,51 @@
 <html lang="en" ng-app="MusicPlayer">
 
 <head>
-    <meta charset="UTF-8">
-    <title>GifField</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
-    <script src="https://code.angularjs.org/1.2.28/angular-route.min.js"></script>
+
+  <meta charset="UTF-8">
+  <title>GifField</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+  <script src="https://code.angularjs.org/1.2.28/angular-route.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="/config.js"></script>
+<<<<<<< 3615294dfc7d34363702c892b96093ed3861260e
+
+
+  <script src="modules/app.js"></script>
+
+  <!-- Controllers -->
+  <script src="controllers/HomeController.js"></script>
+  <script src="controllers/PlayerController.js"></script>
+=======
+  <script src="/addusername.js"></script>
+>>>>>>> MMVP on Chat Message
+
 </head>
 
 <body>
 
-        <div ng-view></div>
+  <!-- insert screenName -->
 
-    <!-- Modules -->
-    <script src="modules/app.js"></script>
-    <!-- Controllers -->
-    <script src="controllers/HomeController.js"></script>
-    <script src="controllers/PlayerController.js"></script>
+  <div ng-controller='AddUserName'> 
+    <input ng-model="screenName" /><button ng-click="setName()">Submit</button>
+  </div>
+
+  <!-- submit Chats -->
+  <div ng-controller="mainController">
+    <input ng-model="chatMsg" autocomplete="off" /><button id="clicker" ng-click="chatSend()">Send</button>
+  
+  <!-- Populate Messages -->
+  <ul id="messages">
+    <li ng-repeat = "chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
+  </ul>
+  
+  
+
+
+  </div>
+  
 </body>
 
 </html>

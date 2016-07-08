@@ -20,14 +20,9 @@
     "body-parser": "^1.15.2",
     "chai": "^3.5.0",
     "express": "^4.14.0",
-<<<<<<< 1d5257de46fe34f215250aeb23adba4a45a2c1be
     "http": "0.0.0",
     "request": "^2.72.0",
     "socket.io": "^1.4.8",
     "mocha": "^2.5.3"
-=======
-    "ng-audio": "0.0.2",
-    "request": "^2.72.0"
->>>>>>> Feat config music player
   }
 }

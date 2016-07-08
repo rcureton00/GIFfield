@@ -1,6 +1,6 @@
 angular.module('giffieldapp', [])
 
-  .controller('mainController', function($scope, socket){
+  .controller('ChatController', function($scope, socket){
     
     $scope.chatSend = function(){
       socket.emit('chat message', $scope.chatMsg);
@@ -14,6 +14,10 @@ angular.module('giffieldapp', [])
       console.log('on is listening');
       $scope.chatMessages.push(msg);
     });
+     $scope.setName = function(){
+      //console.log($scope.screenName);
+      socket.emit('username', $scope.screenName);
+  };
 
   })
   .factory('socket', function($rootScope){

@@ -6,10 +6,6 @@
     <title>GifField</title>
     <!-- Socket IO -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
-
-    <script src="/config.js"></script>
-    <!-- Modules -->
-    <script src="modules/app.js"></script>
     <!-- Font awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <!-- Bootstrap-->
@@ -24,27 +20,15 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
     <!-- SoundManager2 -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/script/soundmanager2.js"></script>
+    <script src="/config.js"></script>
+    <!-- Modules -->
+    <script src="modules/app.js"></script>
     <!-- Controllers -->
     <script src="controllers/HomeController.js"></script>
     <script src="controllers/PlayerController.js"></script>
-    <script src="/addusername.js"></script>
 </head>
 
 <body>
-    <!-- insert screenName -->
-    <div ng-controller='AddUserName'>
-        <input ng-model="screenName" />
-        <button ng-click="setName()">Submit</button>
-    </div>
-    <!-- submit Chats -->
-    <div ng-controller="mainController">
-        <input ng-model="chatMsg" autocomplete="off" />
-        <button id="clicker" ng-click="chatSend()">Send</button>
-        <!-- Populate Messages -->
-        <ul id="messages">
-            <li ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
-        </ul>
-    </div>
     <!-- Single View -->
     <div ng-view></div>
 </body>

@@ -1,4 +1,4 @@
-app.controller('PlayerController', ['$scope',
+appPlayer.controller('PlayerController', ['$scope',
     function($scope) {
         // Sound manager is a audio player library with hundreds of methods available,
         // The setup we have should be enough for a MVP.
@@ -23,7 +23,7 @@ app.controller('PlayerController', ['$scope',
 
                 $('.volume').on('click', function() {
 
-                }
+                });
             }
         });
     }

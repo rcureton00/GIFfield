@@ -1,4 +1,4 @@
-app.controller( 'HomeController', ['$scope',
+appPlayer.controller( 'HomeController', ['$scope',
         function($scope) {
             $scope.name = "HELLO WORLD";
 

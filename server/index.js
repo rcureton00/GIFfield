@@ -15,25 +15,37 @@ app.get('/', function(req, res){
 });
 
 
+
 io.on('connection', function(socket){
+  console.log('i connected', socket);
+  
+ // var addedUser = false;
+
+  socket.on('username', function(name){
+    console.log(name);
+    // if(addedUser){return; };
+    socket['name'] = name;
+    // addedUser = true;
+
+    // socket.broadcast.emit('user joined', {
+    //   username: socket.name
+    // })
+  });
+
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+    var obj = {};
+    obj['message'] = msg;
+    
+
+    io.emit('chat message', socket['name'] + ": " + msg);
     console.log('message: ' + msg);
   });
+
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
 });
 
-
-
-
-
-
-// SC.initialize({
-//   client_id: '8af4a50e36c50437ca44cd59756301ae',
-//   redirect_uri: 'localhost.com/callback.html'
-// });
 
 //Initializing http on io makes it so its listening on this port
 http.listen(8080, function(){

@@ -11,6 +11,7 @@
   <script src="https://code.angularjs.org/1.2.28/angular-route.min.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="/config.js"></script>
+<<<<<<< 3615294dfc7d34363702c892b96093ed3861260e
 
 
   <script src="modules/app.js"></script>
@@ -18,28 +19,34 @@
   <!-- Controllers -->
   <script src="controllers/HomeController.js"></script>
   <script src="controllers/PlayerController.js"></script>
+=======
+  <script src="/addusername.js"></script>
+>>>>>>> MMVP on Chat Message
 
 </head>
 
-<body ng-controller="mainController" >
+<body>
+
+  <!-- insert screenName -->
+
+  <div ng-controller='AddUserName'> 
+    <input ng-model="screenName" /><button ng-click="setName()">Submit</button>
+  </div>
+
+  <!-- submit Chats -->
+  <div ng-controller="mainController">
+    <input ng-model="chatMsg" autocomplete="off" /><button id="clicker" ng-click="chatSend()">Send</button>
   
-  <ul id="messages"></ul>
+  <!-- Populate Messages -->
+  <ul id="messages">
+    <li ng-repeat = "chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
+  </ul>
+  
+  
 
-    <input id="m" autocomplete="off" /><button id="clicker">Send</button>
 
-
-  <script>
-    var socket = io();
-    $('#clicker').click(function(){
-      console.log('this form sbmited');
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
-      return false;
-    });
-    socket.on('chat message', function(msg){
-      $('#messages').append($('<li>').text(msg));
-    });
-  </script>
+  </div>
+  
 </body>
 
 </html>

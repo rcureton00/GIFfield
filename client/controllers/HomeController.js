@@ -1,5 +1,6 @@
-app.controller('HomeController', ['$scope',
-    function($scope) {
-        $scope.name = "HELLO WORLD";
-    }
-])
+app.controller( 'HomeController', ['$scope',
+        function($scope) {
+            $scope.name = "HELLO WORLD";
+
+        }
+    ])

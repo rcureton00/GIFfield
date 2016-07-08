@@ -21,6 +21,11 @@ io.on('connection', function(socket){
   
  // var addedUser = false;
 
+  socket.on('playNpause', function(cb){
+    console.log('SERVER CAUGHT', cb);
+    io.emit('playNpause', cb);
+  });
+
   socket.on('username', function(name){
     console.log(name);
     // if(addedUser){return; };

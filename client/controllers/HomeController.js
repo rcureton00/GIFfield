@@ -5,7 +5,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket',
         
 
         /// chat controller stuff
-
+      $scope.user = false;
       $scope.chatSend = function(){
       socket.emit('chat message', $scope.chatMsg);
       $scope.chatMsg = "";
@@ -20,6 +20,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket',
     });
     $scope.setName = function(){
       //console.log($scope.screenName);
+      $scope.user = true;
       socket.emit('username', $scope.screenName);
     };
 

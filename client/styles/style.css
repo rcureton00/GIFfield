@@ -34,6 +34,36 @@
     border-radius: 3px;
 }
 
+.controls {
+    width: 600px;
+}
+
+/*chat pretties here*/
+.chatUserSubmit {
+    background: #80ccff;
+    border-radius: 5px;
+}
+
+.chatMsgSend {
+    background: #80ccff;
+    border-radius: 5px;
+    float: bottom;
+}
+
+.well {
+    vertical-align: left;
+    height: 300px;
+    overflow: auto;
+
+}
+
+.message {
+    border: 1px;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 20px;
+    font-color: #80ccff;
+}
 
 /*Button Wrapper*/
 

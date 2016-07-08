@@ -23,59 +23,75 @@ appPlayer.controller('HomeController', ['$scope', 'socket',
       socket.emit('username', $scope.screenName);
     };
 
-  
- 
+  var Music = function() {
+      this.playSound = function(urls) {
+        return soundManager.setup({
+          onready: function() {
+          soundManager.createSound({ url: urls}).play();
 
-
-
-
-
-
-       socket.on("playNpause", function(obj){
-                  console.log('we heard you', obj);
-                 });
-
-        soundManager.setup({
-            onready: function() {
-                var mySound,
-                    showHidePlay;
-
-                mySound = soundManager.createSound({
-                    url: 'http://users.skynet.be/fa046054/home/P22/track22.mp3'
-                });
-
-                $('.showPlay').on('click', function() {
-                    console.log('CLIENT: play');
-                    mySound.play();
-                    socket.emit("playNpause", function(){mySound.play();}); 
-                    $('.showPlay').hide();
-                    $('.showPause').click(function() {
-                        $('.showPlay').show();
-                        mySound.pause();
-                        socket.emit("playNpause", function()
-                          { console.log(' CLIENT: pause'); 
-                          mySound.pause();});   
-                    });
-                 //Broadcast play function
-                 
-                 // socket.on("playNpause", function(cb){
-                 //  console.log('we heard you', cb);
-                 // });
-
-
-
-                });
-
-                $('.volume').on('click', function() {
-
-                });
-            }
-        });
-
-
-
-
+        }
+      });
     }
+  };
+ 
+//CLICK AND THEN EMIT
+
+var musicInstance = new Music();
+$('.showPlay').on('click', function() {
+  // var playMusic = musicInstance.playSound('http://users.skynet.be/fa046054/home/P22/track22.mp3');
+  // playMusic.play();
+  socket.emit("playNpause", "playing"); 
+  musicInstance.playSound('http://users.skynet.be/fa046054/home/P22/track22.mp3');
+
+});
+
+
+//LISTENING --
+
+  socket.on("playNpause", function(obj){
+        console.log('we heard you', obj);
+
+
+
+//PLAY WHEN HEARD
+    var musicInstance = new Music();
+    
+    // var playMusic = musicInstance.playSound('http://users.skynet.be/fa046054/home/P22/track22.mp3');
+    // playMusic.play();
+    musicInstance.playSound('http://users.skynet.be/fa046054/home/P22/track22.mp3');
+
+
+
+});
+
+
+  // 'http://users.skynet.be/fa046054/home/P22/track22.mp3';
+
+      // $('.showPlay').on('click', function() {
+      //     console.log('CLIENT: play');
+      //     playMusic.play();
+      //     socket.emit("playNpause", "playing"); 
+      //     $('.showPlay').hide();
+      //     $('.showPause').click(function() {
+      //         $('.showPlay').show();
+      //         playMusic.pause();
+      //         socket.emit("playNpause", function() { 
+      //           console.log(' CLIENT: pause'); 
+      //           playMusic.pause();
+      //         });   
+      //     });
+       //Broadcast play function
+       
+       // socket.on("playNpause", function(){
+       //  console.log('we heard you');
+       //  mySound.play();
+       // });
+
+
+
+      // });
+    }
+    
 ])  
 .factory('socket', function($rootScope){
     var socket = io.connect();

@@ -51,7 +51,7 @@
     float: bottom;
 }
 
-.well {
+#messages {
     vertical-align: left;
     height: 300px;
     overflow: auto;

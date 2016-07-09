@@ -29,7 +29,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket',
         return soundManager.setup({
           onready: function() {
           soundManager.createSound({ url: urls}).play();
-
         }
       });
     }

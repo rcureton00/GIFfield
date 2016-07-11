@@ -16,7 +16,6 @@ app.get('/', function(req, res){
 });
 
 
-
 io.on('connection', function(socket){
 
   socket.on('playNpause', function(cb){
@@ -39,7 +38,6 @@ io.on('connection', function(socket){
     var obj = {};
     obj['message'] = msg;
     
-
     io.emit('chat message', socket['name'] + ": " + msg);
     console.log('message: ' + msg);
   });

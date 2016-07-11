@@ -9,8 +9,7 @@ appPlayer.config(function($routeProvider) {
       controller: 'LandingPage',
       templateUrl: '../views/landingPage.html'
     })
-    
     .otherwise({
-      redirectTo: '/'
+        redirectTo: '/'
     });
 });

@@ -1,3 +1,26 @@
-<div class="jumbotron text-center">
-    <h1>{{name}}</h1>
+<div ng-controller='HomeController'>
+
+  <div class="chats">
+    <!-- Populate Messages -->
+    <ul class="well" id="messages">
+        <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
+    </ul>
+
+    <input ng-hide="user" ng-model="screenName" />
+    <!-- submit Chats -->
+    <input ng-show="user" ng-model="chatMsg" autocomplete="off"/>
+    <button class="chatUserSubmit" ng-hide="user" ng-click="setName()">Submit</button>
+    <button class="chatMsgSend" ng-show="user" id="clicker" ng-click="chatSend()">Send</button>
+  </div>
+</div>
+<div class='player well'>
+      <img class='playerImg' src="http://icons.iconarchive.com/icons/danleech/simple/512/soundcloud-icon.png">
+      <ul>
+        <li id="playBack"><a href="#">Play</a></li>
+        <li id="stop"><a href="#">Stop</a></li>
+      </ul>
+         
+      <div class="well check"><span class="PlayTitle">Playlist</span>
+          <hr>
+      </div>
 </div>

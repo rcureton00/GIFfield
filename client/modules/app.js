@@ -1,19 +1,12 @@
-var appPlayer = angular.module('MusicPlayer', ['ngRoute', 'giffieldapp']);
+var appPlayer = angular.module('MusicPlayer', ['ngRoute']);
 appPlayer.config(function($routeProvider) {
-    $routeProvider
-        .when('/', {
-            controller: 'HomeController',
-            templateUrl: '../views/home.html'
-        })
-        .when('/player', {
-            controller: 'PlayerController',
-            templateUrl: '../views/player.html'
-        })
-        .when('/chat', {
-            controller: 'ChatController',
-            templateUrl: '../views/chat.partial.html'
-        })
-        .otherwise({
-            redirectTo: '/'
-        });
+  $routeProvider
+    .when('/', {
+      controller: 'HomeController',
+      templateUrl: '../views/home.html'
+    })
+    
+    .otherwise({
+      redirectTo: '/'
+    });
 })

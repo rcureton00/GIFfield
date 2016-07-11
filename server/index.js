@@ -1,3 +1,4 @@
+
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -6,20 +7,21 @@ var bodyParser = require('body-parser');
 var io = require('socket.io')(http);
 
 
-app.use(express.static('../client'));
+app.use(express.static(__dirname +'/../client'));
 app.use(bodyParser.json());
 
 app.get('/', function(req, res){
-  res.sendFile('index.html');
+ res.sendFile(__dirname +'/../client/index.html');
 
 });
 
 
-
 io.on('connection', function(socket){
-  console.log('i connected', socket);
-  
- // var addedUser = false;
+
+  socket.on('playNpause', function(cb){
+    console.log('SERVER CAUGHT', cb);
+    io.emit('playNpause', cb);
+  });
 
   socket.on('username', function(name){
     console.log(name);
@@ -36,9 +38,23 @@ io.on('connection', function(socket){
     var obj = {};
     obj['message'] = msg;
     
-
     io.emit('chat message', socket['name'] + ": " + msg);
     console.log('message: ' + msg);
+  });
+
+  // when the client emits 'typing', we broadcast it to others
+  socket.on('typing', function () {
+    // socket.broadcast.emit('typing', {
+    socket.broadcast.emit('typing', {
+      name: socket.name
+    });
+  });
+
+  // when the client emits 'stop typing', we broadcast it to others
+  socket.on('stop typing', function () {
+    socket.broadcast.emit('stop typing', {
+      username: socket.name
+    });
   });
 
   socket.on('disconnect', function(){
@@ -48,6 +64,8 @@ io.on('connection', function(socket){
 
 
 //Initializing http on io makes it so its listening on this port
-http.listen(8080, function(){
-  console.log('App listening on port 8080');
+http.listen(process.env.PORT || 8000, function(){
+  console.log('App listening on port 8000');
 });
+
+

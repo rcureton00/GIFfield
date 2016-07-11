@@ -10,15 +10,16 @@
 .chats {
     position: absolute;
     margin-left: 70%;
-
 }
 
 
 /*Outer window layout*/
+
 .fullPage {
     background-color: #424242;
     height: 100%;
 }
+
 .player {
     margin-top: 5%;
     border: 1px solid #E6EE9C;
@@ -63,7 +64,6 @@
     overflow: auto;
     background: rgba(0, 0, 0, 0.63);
 }
-
 
 .message {
     border: 1px;
@@ -147,7 +147,6 @@
     color: white;
     font-family: arial-black;
 }
-
 
 
 /*Volume*/

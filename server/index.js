@@ -1,3 +1,4 @@
+
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -17,9 +18,6 @@ app.get('/', function(req, res){
 
 
 io.on('connection', function(socket){
-  console.log('i connected', socket);
-  
- // var addedUser = false;
 
   socket.on('playNpause', function(cb){
     console.log('SERVER CAUGHT', cb);
@@ -46,6 +44,21 @@ io.on('connection', function(socket){
     console.log('message: ' + msg);
   });
 
+  // when the client emits 'typing', we broadcast it to others
+  socket.on('typing', function () {
+    // socket.broadcast.emit('typing', {
+    socket.broadcast.emit('typing', {
+      name: socket.name
+    });
+  });
+
+  // when the client emits 'stop typing', we broadcast it to others
+  socket.on('stop typing', function () {
+    socket.broadcast.emit('stop typing', {
+      username: socket.name
+    });
+  });
+
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
@@ -56,12 +69,5 @@ io.on('connection', function(socket){
 http.listen(process.env.PORT || 8080, function(){
   console.log('App listening on port 8080');
 });
-
-
-
-
-
-
-
 
 

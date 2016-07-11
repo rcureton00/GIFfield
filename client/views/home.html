@@ -4,8 +4,9 @@
     <input ng-hide="user" ng-model="screenName" />
     <button class="chatUserSubmit" ng-hide="user" ng-click="setName()">Submit</button>
     <!-- submit Chats -->
-    <input ng-show="user" ng-model="chatMsg" autocomplete="off" />
+    <input class="typingMessage" ng-change="updateTyping()" ng-show="user" ng-model="chatMsg" autocomplete="off" />
     <button class="chatMsgSend" ng-show="user" id="clicker" ng-click="chatSend()">Send</button>
+
     <!-- Populate Messages -->
     <ul class="well" id="messages">
         <div class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</div>

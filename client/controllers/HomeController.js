@@ -6,11 +6,13 @@ appPlayer.controller('HomeController', ['$scope', 'socket',
 
       /// chat controller stuff
     $scope.user = false;
+    $scope.typing = false;
+    $scope.TYPING_TIMER_LENGTH = 2000; // this is how quick the "[other user] is typing" message will go away
     $scope.chatSend = function(){
-    socket.emit('chat message', $scope.chatMsg);
-    $scope.chatMsg = "";
-    return false;
-  }
+      socket.emit('chat message', $scope.chatMsg);
+      $scope.chatMsg = "";
+      return false;
+    }
   
   $scope.chatMessages = [];
 
@@ -18,11 +20,51 @@ appPlayer.controller('HomeController', ['$scope', 'socket',
     console.log('on is listening');
     $scope.chatMessages.push(msg);
   });
+
   $scope.setName = function(){
-    //console.log($scope.screenName);
     $scope.user = true;
     socket.emit('username', $scope.screenName);
   };
+
+  socket.on("playNpause", function(obj){
+    console.log('we heard you', obj);
+  });
+
+  $scope.updateTyping = function (){
+    $scope.typing = true;
+    socket.emit('typing', $scope.name);
+    var lastTypingTime = (new Date()).getTime();
+
+    setTimeout(function () {
+      var typingTimer = (new Date()).getTime();
+      var timeDiff = typingTimer - lastTypingTime;
+      if (timeDiff >= $scope.TYPING_TIMER_LENGTH && $scope.typing) {
+        socket.emit('stop typing');
+        $scope.typing = false;
+      }
+    }, $scope.TYPING_TIMER_LENGTH);
+  };
+
+  // Whenever the server emits 'typing', show the typing message
+  socket.on('typing', function (data) {
+    
+    data.typing = true;
+    $scope.typingMessage = data.name + " is typing";
+    
+    if(!$scope.chatMessages.includes($scope.typingMessage)){
+      $scope.chatMessages.push($scope.typingMessage);
+    }
+    
+
+  });
+
+  // Whenever the server emits 'stop typing', kill the typing message
+  socket.on('stop typing', function (data) {
+    data.typing = false;
+    
+    var i = $scope.chatMessages.indexOf($scope.typingMessage);
+    $scope.chatMessages.splice(i, 1);
+  });
 
   var Music = function() {
     this.playSound = function(urls) {

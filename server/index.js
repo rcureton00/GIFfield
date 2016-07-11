@@ -66,8 +66,8 @@ io.on('connection', function(socket){
 
 
 //Initializing http on io makes it so its listening on this port
-http.listen(process.env.PORT || 8080, function(){
-  console.log('App listening on port 8080');
+http.listen(process.env.PORT || 8000, function(){
+  console.log('App listening on port 8000');
 });
 
 

@@ -18,7 +18,6 @@ appPlayer.controller('PlayerController', ['$scope',
             $('.showPlay').show();
             mySound.pause();
           });
-
         });
 
         // $('.volume').on('click', function() {

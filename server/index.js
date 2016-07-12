@@ -1,4 +1,3 @@
-
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -37,7 +36,6 @@ io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     var obj = {};
     obj['message'] = msg;
-    
     io.emit('chat message', socket['name'] + ": " + msg);
     console.log('message: ' + msg);
   });
@@ -49,7 +47,6 @@ io.on('connection', function(socket){
       name: socket.name
     });
   });
-
   // when the client emits 'stop typing', we broadcast it to others
   socket.on('stop typing', function () {
     socket.broadcast.emit('stop typing', {
@@ -61,7 +58,6 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
 });
-
 
 //Initializing http on io makes it so its listening on this port
 http.listen(process.env.PORT || 8000, function(){

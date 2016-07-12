@@ -1,26 +1,39 @@
-<div ng-controller='HomeController'>
-
-  <div class="chats">
-    <!-- Populate Messages -->
-    <ul class="well" id="messages">
-        <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
-    </ul>
-
-    <input ng-hide="user" ng-model="screenName" />
-    <!-- submit Chats -->
-    <input ng-show="user" ng-model="chatMsg" autocomplete="off"/>
-    <button class="chatUserSubmit" ng-hide="user" ng-click="setName()">Submit</button>
-    <button class="chatMsgSend" ng-show="user" id="clicker" ng-click="chatSend()">Send</button>
-  </div>
-</div>
-<div class='player well'>
-      <img class='playerImg' src="http://icons.iconarchive.com/icons/danleech/simple/512/soundcloud-icon.png">
-      <ul>
-        <li id="playBack"><a href="#">Play</a></li>
-        <li id="stop"><a href="#">Stop</a></li>
-      </ul>
-         
-      <div class="well check"><span class="PlayTitle">Playlist</span>
-          <hr>
-      </div>
+<!-- Full page wrapper-->
+<div class='fullPage'>
+    <h1 class="appTitle text-center">U Hurd</h1>
+    <div class="chats">
+        <!-- Populate Messages -->
+        <ul class="well" id="messages" class="message">
+            <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
+        </ul>
+<!--         <input ng-hide="user" ng-model="screenName" placeholder="Username" />
+ -->        <!-- submit Chats -->
+        <input ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" />
+        <!-- <button class="chatUserSubmit" ng-hide="user" ng-click="setName()">Submit</button> -->
+        <button class="chatMsgSend" id="clicker" ng-click="chatSend()">Send</button>
+    </div>
+    <div class='player'>
+        <div class="windowImg">
+            <img class='songCover' src="http://cdn.modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg">
+            <div class="btnWrapper">
+                <div class="playPauseButton">
+                    <i class="fa fa-pause fa-3x showPause buttonColor" ng-click="pause()" aria-hidden="true"></i>
+                    <i class="fa fa-play fa-3x showPlay buttonColor" ng-click="play()" aria-hidden="true"></i>
+                </div>
+                <!--  <button class='stop'><i class="fa fa-stop fa-1x buttonColor" aria-hidden="true"></i></button> -->
+                <button class='volume'><i class="fa fa-volume-up buttonColor showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down buttonColor
+showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off buttonColor showMuteVolume" aria-hidden="true"></i></button>
+            </div>
+            <div class="well playListBorder">
+                <span class="innerPlayList">Playlist</span>
+                <hr class="separator">
+                <ul class="tracks">
+                    <li>Track One</li>
+                    <li>Track Two</li>
+                    <li>Track Three</li>
+                    <li>Track Four</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>

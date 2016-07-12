@@ -1,0 +1,38 @@
+<div>
+  <div class="chats">
+    <input ng-model="screenName" />
+    <button ng-click="setName()">Submit</button>
+    <!-- submit Chats -->
+    <input ng-model="chatMsg" autocomplete="off" />
+    <button id="clicker" ng-click="chatSend()">Send</button>
+    <!-- Populate Messages -->
+    <ul id="messages">
+        <li ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
+    </ul>
+
+  </div>
+</div>
+
+<!-- soundcloud attempt -->
+
+<div class='player well'>
+       <img class='playerImg' src="http://icons.iconarchive.com/icons/danleech/simple/512/soundcloud-icon.png">
+       <ul>
+        <li id="playBack" ng-click="play()">
+          <!-- <a href="#">Play</a> -->
+          Play
+        </li>
+        <li id="stop" ng-click="pause()">
+          <!-- <a href="#">Stop</a> -->
+          Stop
+        </li>
+         
+       </ul>
+          
+       <div class="well check"><span class="PlayTitle">Playlist</span>
+           <hr>
+       </div>
+</div>
+
+
+    

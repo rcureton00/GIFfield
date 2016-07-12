@@ -40,6 +40,22 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
                 }
             }
 
+
+            // SC.stream(track, function(player){
+            //   $('#playBack').click(function(e) {
+            //     e.preventDefault();
+            //     player.start();
+            //     socket.emit("playNpause", track);
+            //   });
+            //   $('#stop').click(function(e) {
+            //     e.preventDefault();
+            //     player.pause();
+            //     socket.emit("playNpause", "pausing");
+            //   });
+            // });
+
+            /// chat controller stuff
+
             $scope.user = false;
             $scope.typing = false;
             $scope.TYPING_TIMER_LENGTH = 4000; // this is how quick the "[other user] is typing" message will go away
@@ -110,6 +126,17 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
                     playerFactory.player.pause();
                 }
 
+                // SC.stream(obj, function(player){
+                //   player.start();
+                // });
+                // if(obj === 'playing'){
+                //  // musicInstance.playSound('http://users.skynet.be/fa046054/home/P22/track22.mp3', true);
+
+                // }
+                // if(obj === 'pausing'){
+
+                //   musicInstance.playSound.pause();
+                // }
 
             });
         }
@@ -131,9 +158,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
         return singleton;
     })
     .factory('socket', function($rootScope) {
-
         var socket = io.connect();
-
 
         return {
             on: function(eventName, callback) {

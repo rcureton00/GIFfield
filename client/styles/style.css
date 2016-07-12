@@ -14,8 +14,8 @@ body {
 }
 
 .logo {
-    height: 144px;
-    width: 200px;
+    height: 300px;
+    width: 400px;
 }
 
 
@@ -35,8 +35,11 @@ body {
 
 /*Volume*/
 .volume {
-    margin-left: 92%;
+    margin-left: 45%;
     padding: 10px;
+    position: absolute;
+    margin-top: 3.8%;
+    /*object-position: right;*/
 }
 
 .fa-volume-off:before {
@@ -65,7 +68,7 @@ body {
 
 .showPlay {
     position: absolute;
-    margin-left: 105px;
+    margin-left: 15px;
     margin-top: 1%;
     border-radius: 100%;
     border-bottom: 1px solid #ff5419;
@@ -75,7 +78,7 @@ body {
 }
 .showPause {
     position: absolute;
-    margin-left: 15px;
+    margin-left: 105px;
     margin-top: 1%;
     border-radius: 100%;
     border-bottom: 1px solid #ff5419;
@@ -121,7 +124,7 @@ body {
 /*Button Wrapper*/
 
 .btnWrapper {
-    background: rgba(0, 0, 0, 0.63);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     border-bottom: 1px solid #ff5419;
     margin-top: 10px;

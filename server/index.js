@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 
 app.get('/', function(req, res){
  res.sendFile(__dirname +'/../client/index.html');
-
 });
 
 
@@ -21,18 +20,12 @@ io.on('connection', function(socket){
 
   socket.on('playNpause', function(cb){
     console.log('SERVER CAUGHT', cb);
-    io.emit('playNpause', cb);
+    socket.broadcast.emit('playNpause', cb);
   });
 
   socket.on('username', function(name){
-    console.log(name);
-    // if(addedUser){return; };
     socket['name'] = name;
-    // addedUser = true;
-
-    // socket.broadcast.emit('user joined', {
-    //   username: socket.name
-    // })
+    
   });
 
   socket.on('chat message', function(msg){
@@ -46,7 +39,6 @@ io.on('connection', function(socket){
 
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function () {
-    // socket.broadcast.emit('typing', {
     socket.broadcast.emit('typing', {
       name: socket.name
     });
@@ -62,6 +54,23 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
+
+  // when the client emits 'startPlay', we broadcast it to others
+  socket.on('startPlay', function(){
+    console.log("index.js socket.on startPlay invoked");
+    socket.broadcast.emit('startPlay', {
+      name: socket.name
+    });
+  });
+
+  // when the client emits 'stopPlay', we broadcast it to others
+  socket.on('stopPlay', function(){
+    console.log("index.js socket.on stopPlay invoked");
+    socket.broadcast.emit('stopPlay', {
+      name: socket.name
+    });
+  });
+
 });
 
 

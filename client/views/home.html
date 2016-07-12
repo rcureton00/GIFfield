@@ -8,7 +8,7 @@
 
     <input ng-hide="user" ng-model="screenName" />
     <!-- submit Chats -->
-    <input ng-show="user" ng-model="chatMsg" autocomplete="off"/>
+    <input ng-show="user" ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off"/>
     <button class="chatUserSubmit" ng-hide="user" ng-click="setName()">Submit</button>
     <button class="chatMsgSend" ng-show="user" id="clicker" ng-click="chatSend()">Send</button>
   </div>
@@ -19,7 +19,7 @@
   <div class="windowImg">
     <img class='songCover' src="http://icons.iconarchive.com/icons/danleech/simple/512/soundcloud-icon.png">
     <div class="btnWrapper">
-      <div class="playPauseButton">
+      <div class="playPauseButton" ng-click="updatePlayPause()">
         <i class="fa fa-pause fa-3x showPause buttonColor" aria-hidden="true"></i>
         <i class="fa fa-play fa-3x showPlay buttonColor" aria-hidden="true"></i>
       </div>

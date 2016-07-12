@@ -1,7 +1,9 @@
-appPlayer.controller('PlayerController', ['$scope',
-    function($scope) {
+appPlayer.controller('PlayerController', ['$scope', 'socket'
+    function($scope, socket) {
         // Sound manager is a audio player library with hundreds of methods available,
         // The setup we have should be enough for a MVP.
+        
+
         soundManager.setup({
             onready: function() {
                 var mySound,

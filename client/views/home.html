@@ -8,15 +8,8 @@
         <ul class="well" id="messages" class="message">
             <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
         </ul>
-<<<<<<< 2651e72682767fe1d247f25c6a7ff632d211605f
         <!-- submit Chats -->
         <input ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" />
-        <!-- <button class="chatUserSubmit" ng-hide="user" ng-click="setName()">Submit</button> -->
-=======
-
-        <!-- submit Chats -->
-        <input ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" />
->>>>>>> feat init included landinng page logic
         <button class="chatMsgSend" id="clicker" ng-click="chatSend()">Send</button>
     </div>
     <div class='player'>
@@ -36,7 +29,7 @@ showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x buttonCol
             <div class="well playListBorder">
                 <span class="innerPlayList">Playlist</span>
                 <hr class="separator">
-                <ul class="tracks" ng-animate="'highlight'" >
+                <ul class="tracks" ng-animate="'highlight'">
                     <li>{{ item }}</li>
                 </ul>
             </div>

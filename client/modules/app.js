@@ -9,16 +9,7 @@ appPlayer.config(function($routeProvider) {
             controller: 'LandingPage',
             templateUrl: '../views/landingPage.html'
         })
-<<<<<<< 4c8f5b4f33e29e0f65addfb4bdee8394e39d3988
         .otherwise({
             redirectTo: '/'
         });
-});
-=======
-
->>>>>>> style config
-    .otherwise({
-        redirectTo: '/'
-    });
 })
->>>>>>> feat init included landinng page logic

@@ -1,4 +1,4 @@
-var appPlayer = angular.module('MusicPlayer', ['ngRoute']);
+var appPlayer = angular.module('MusicPlayer', ['ngRoute', 'MusicPlayer.Home']);
 appPlayer.config(function($routeProvider) {
     $routeProvider
         .when('/', {

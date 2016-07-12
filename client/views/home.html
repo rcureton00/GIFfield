@@ -1,4 +1,4 @@
-<div ng-controller='HomeController'>
+<div>
   <div class="chats">
     <input ng-model="screenName" />
     <button ng-click="setName()">Submit</button>
@@ -18,8 +18,15 @@
 <div class='player well'>
        <img class='playerImg' src="http://icons.iconarchive.com/icons/danleech/simple/512/soundcloud-icon.png">
        <ul>
-         <li id="playBack"><a href="#">Play</a></li>
-         <li id="stop"><a href="#">Stop</a></li>
+        <li id="playBack" ng-click="play()">
+          <!-- <a href="#">Play</a> -->
+          Play
+        </li>
+        <li id="stop" ng-click="pause()">
+          <!-- <a href="#">Stop</a> -->
+          Stop
+        </li>
+         
        </ul>
           
        <div class="well check"><span class="PlayTitle">Playlist</span>

@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-audio": "^1.7.2"
+    "angular-audio": "^1.7.2",
+    "angular-cookies": "^1.5.7"
   }
 }

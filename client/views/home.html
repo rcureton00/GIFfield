@@ -1,34 +1,38 @@
-<div ng-controller='HomeController'>
-
+<div>
   <div class="chats">
+    <input ng-model="screenName" />
+    <button ng-click="setName()">Submit</button>
+    <!-- submit Chats -->
+    <input ng-model="chatMsg" autocomplete="off" />
+    <button id="clicker" ng-click="chatSend()">Send</button>
     <!-- Populate Messages -->
-    <ul class="well" id="messages">
-        <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
+    <ul id="messages">
+        <li ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
     </ul>
 
-    <input ng-hide="user" ng-model="screenName" />
-    <!-- submit Chats -->
-    <input ng-show="user" ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off"/>
-    <button class="chatUserSubmit" ng-hide="user" ng-click="setName()">Submit</button>
-    <button class="chatMsgSend" ng-show="user" id="clicker" ng-click="chatSend()">Send</button>
   </div>
 </div>
 
+<!-- soundcloud attempt -->
+
 <div class='player well'>
-  <h1>U Hurd</h1>
-  <div class="windowImg">
-    <img class='songCover' src="http://icons.iconarchive.com/icons/danleech/simple/512/soundcloud-icon.png">
-    <div class="btnWrapper">
-      <div class="playPauseButton" ng-click="updatePlayPause()">
-        <i class="fa fa-pause fa-3x showPause buttonColor" aria-hidden="true"></i>
-        <i class="fa fa-play fa-3x showPlay buttonColor" aria-hidden="true"></i>
-      </div>
-      <!--  <button class='stop'><i class="fa fa-stop fa-1x buttonColor" aria-hidden="true"></i></button> -->
-      <button class='volume'><i class="fa fa-volume-up buttonColor showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down buttonColor
-showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off buttonColor showMuteVolume" aria-hidden="true"></i></button>
-    </div>
-    <div class="well playListBorder"><span class="innerPlayList">Playlist</span>
-      <hr>
-    </div>
-  </div>
+       <img class='playerImg' src="http://icons.iconarchive.com/icons/danleech/simple/512/soundcloud-icon.png">
+       <ul>
+        <li id="playBack" ng-click="play()">
+          <!-- <a href="#">Play</a> -->
+          Play
+        </li>
+        <li id="stop" ng-click="pause()">
+          <!-- <a href="#">Stop</a> -->
+          Stop
+        </li>
+         
+       </ul>
+          
+       <div class="well check"><span class="PlayTitle">Playlist</span>
+           <hr>
+       </div>
 </div>
+
+
+    

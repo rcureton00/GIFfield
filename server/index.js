@@ -23,6 +23,11 @@ io.on('connection', function(socket){
     socket.broadcast.emit('playNpause', cb);
   });
 
+  socket.on('playNpause', function(cb){
+    console.log('SERVER CAUGHT', cb);
+    io.emit('playNpause', cb);
+  });
+
   socket.on('username', function(name){
     socket['name'] = name;
     

@@ -7,13 +7,10 @@
     margin-left: 35px;
 }
 
-.chats {
+.chats{
     position: absolute;
     margin-left: 70%;
-
 }
-
-
 /*Outer window layout*/
 
 .player {
@@ -23,6 +20,7 @@
     height: 700px;
     background: #F0F4C3;
     margin-left: 2%;
+
 }
 
 
@@ -34,44 +32,6 @@
     width: 600px;
     border: 1px solid orange;
     border-radius: 3px;
-}
-
-.controls {
-    width: 600px;
-}
-
-
-/*chat pretties here*/
-
-.chatUserSubmit {
-    background: #80ccff;
-    border-radius: 5px;
-}
-
-.chatMsgSend {
-    background: #80ccff;
-    border-radius: 5px;
-    float: bottom;
-}
-
-#messages {
-    vertical-align: left;
-    height: 300px;
-    overflow: auto;
-    background: rgba(0, 0, 0, 0.63);
-}
-
-
-.message {
-    border: 1px;
-    border-radius: 10px;
-    margin-top: 5%;
-    padding: 5px;
-    font-size: 1em;
-    font-color: #80ccff;
-    color: white;
-    list-style-type: none;
-    background: rgba(0, 0, 0, 0.63);
 }
 
 
@@ -126,9 +86,8 @@
 
 .showPlay,
 .showPause {
-    /*    position: fixed;
-*/
-    margin-top: 18px;
+/*    position: fixed;
+*/    margin-top: 18px;
     border-radius: 100%;
     border-bottom: 1px solid #ff5419;
     margin-left: 20px;
@@ -155,7 +114,6 @@
 
 
 /*Volume*/
-
 .showFullVolume,
 .showMidVolume,
 .showMuteVolume {

@@ -1,0 +1,159 @@
+/* ### Player Template ### */
+
+
+/*Inner window layout*/
+
+.windowImg {
+    margin-left: 35px;
+}
+
+.chats {
+    position: absolute;
+    margin-left: 70%;
+
+}
+
+
+/*Outer window layout*/
+.fullPage {
+    background-color: #424242;
+    height: 100%;
+}
+.player {
+    margin-top: 5%;
+    border: 1px solid #E6EE9C;
+    /*width: 96%;*/
+    height: 700px;
+    background: #F0F4C3;
+    margin-left: 2%;
+}
+
+
+/*Song Cover*/
+
+.songCover {
+    display: block;
+    height: 350px;
+    width: 600px;
+    border: 1px solid orange;
+    border-radius: 3px;
+}
+
+.controls {
+    width: 600px;
+}
+
+
+/*chat pretties here*/
+
+.chatUserSubmit {
+    background: #80ccff;
+    border-radius: 5px;
+}
+
+.chatMsgSend {
+    background: #80ccff;
+    border-radius: 5px;
+    float: bottom;
+}
+
+#messages {
+    vertical-align: left;
+    height: 300px;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.63);
+}
+
+
+.message {
+    border: 1px;
+    border-radius: 10px;
+    margin-top: 5%;
+    padding: 5px;
+    font-size: 1em;
+    font-color: #80ccff;
+    color: white;
+    list-style-type: none;
+    background: rgba(0, 0, 0, 0.63);
+}
+
+
+/*Button Wrapper*/
+
+.btnWrapper {
+    background: rgba(0, 0, 0, 0.63);
+    border-radius: 3px;
+    border-bottom: 1px solid #ff5419;
+    width: 600px;
+    height: 100px;
+}
+
+
+/*Button Color*/
+
+.buttonColor {
+    margin-left: 4%;
+    color: white;
+}
+
+
+/*Volume settings*/
+
+.volume {
+    margin-left: 80%;
+    margin-top: 30px;
+    border-radius: 100%;
+    background: #312b2b;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    padding: 4px 8px 4px 8px;
+    border-bottom: 1px solid #ff5419;
+}
+
+
+/*Show Play or Pause icon manipulation*/
+
+.fa-play:before {
+    margin-left: 10px;
+    content: "\f04b";
+}
+
+.fa-pause:before {
+    margin-left: 6px;
+    content: "\f04c";
+}
+
+
+/*Player Settings*/
+
+.showPlay,
+.showPause {
+    /*    position: fixed;
+*/
+    margin-top: 18px;
+    border-radius: 100%;
+    border-bottom: 1px solid #ff5419;
+    margin-left: 20px;
+    padding: 10px;
+    width: 70px;
+    background: #312b2b;
+}
+
+
+/*Playlist*/
+
+.innerPlayList {
+    color: white;
+    font-family: arial-black;
+}
+
+
+
+/*Volume*/
+
+.showFullVolume,
+.showMidVolume,
+.showMuteVolume {
+    position: fixed;
+}

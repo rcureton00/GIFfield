@@ -1,3 +1,5 @@
+//server side spec file
+
 var expect = require('chai').expect;
 
 var express = require('express');

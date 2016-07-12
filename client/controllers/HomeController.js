@@ -167,6 +167,3 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
   return userSet;
 });
-
-
-

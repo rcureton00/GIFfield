@@ -8,9 +8,15 @@
         <ul class="well" id="messages" class="message">
             <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
         </ul>
+<<<<<<< 2651e72682767fe1d247f25c6a7ff632d211605f
         <!-- submit Chats -->
         <input ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" />
         <!-- <button class="chatUserSubmit" ng-hide="user" ng-click="setName()">Submit</button> -->
+=======
+
+        <!-- submit Chats -->
+        <input ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" />
+>>>>>>> feat init included landinng page logic
         <button class="chatMsgSend" id="clicker" ng-click="chatSend()">Send</button>
     </div>
     <div class='player'>
@@ -24,17 +30,14 @@
                     <i class="fa fa-pause fa-3x showPause buttonColor" ng-click="pause()" aria-hidden="true"></i>
                 </div>
                 <!--  <button class='stop'><i class="fa fa-stop fa-1x buttonColor" aria-hidden="true"></i></button> -->
-                <button class='volume'><i class="fa fa-volume-up buttonColor showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down buttonColor
-showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off buttonColor showMuteVolume" aria-hidden="true"></i></button>
+                <div class='volume'><i class="fa fa-volume-up fa-2x buttonColor showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down fa-2x buttonColor
+showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x buttonColor showMuteVolume" aria-hidden="true"></i></div>
             </div>
             <div class="well playListBorder">
                 <span class="innerPlayList">Playlist</span>
                 <hr class="separator">
-                <ul class="tracks">
-                    <li>Track One</li>
-                    <li>Track Two</li>
-                    <li>Track Three</li>
-                    <li>Track Four</li>
+                <ul class="tracks" ng-animate="'highlight'" >
+                    <li>{{ item }}</li>
                 </ul>
             </div>
         </div>

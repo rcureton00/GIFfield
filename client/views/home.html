@@ -8,8 +8,6 @@
         <ul class="well" id="messages" class="message">
             <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
         </ul>
-        <!--         <input ng-hide="user" ng-model="screenName" placeholder="Username" />
--->
         <!-- submit Chats -->
         <input ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" />
         <!-- <button class="chatUserSubmit" ng-hide="user" ng-click="setName()">Submit</button> -->

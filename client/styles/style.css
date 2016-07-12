@@ -39,19 +39,8 @@ body {
 .volume {
     margin-left: 92%;
     padding: 10px;
-<<<<<<< 2651e72682767fe1d247f25c6a7ff632d211605f
-=======
 }
 
-.fa-volume-off:before {
->>>>>>> feat init included landinng page logic
-    position: absolute;
-    color: #ff5419;
-    margin-top: 1%;
-    content: "\f026";
-}
-
-<<<<<<< 2651e72682767fe1d247f25c6a7ff632d211605f
 .fa-volume-off:before {
     position: absolute;
     color: #ff5419;
@@ -59,12 +48,6 @@ body {
     content: "\f026";
 }
 
-.fa-volume-up:before {
-    position: absolute;
-    margin-top: 1%;
-    color: #ff5419;
-    content: "\f028";
-=======
 .fa-volume-up:before {
     position: absolute;
     margin-top: 1%;
@@ -77,7 +60,6 @@ body {
     margin-top: 1%;
     color: #ff5419;
     content: "\f027";
->>>>>>> feat init included landinng page logic
 }
 
 .fa-volume-down:before {

@@ -66,6 +66,103 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
         if (timeDiff >= $scope.TYPING_TIMER_LENGTH && $scope.typing) {
           socket.emit('stop typing');
           $scope.typing = false;
+<<<<<<< 518dda55a48d68a1076a600d681be44e29becec2
+=======
+=======
+appPlayer.controller('HomeController', ['$scope', 'socket',
+        function($scope, socket) {
+=======
+appPlayer.controller('HomeController', ['$scope', 'socket', 'userName',
+        function($scope, socket, userName) {
+>>>>>>> feat init included landinng page logic
+            // Sound manager is a audio player library with hundreds of methods available,
+            // The setup we have should be enough for a MVP.
+
+            /// chat controller stuff
+            $scope.user = false;
+            $scope.typing = false;
+            $scope.TYPING_TIMER_LENGTH = 2000; // this is how quick the "[other user] is typing" message will go away
+            $scope.chatSend = function() {
+                socket.emit('chat message', $scope.chatMsg);
+                $scope.chatMsg = "";
+                return false;
+            }
+
+            $scope.chatMessages = [];
+
+            socket.on('chat message', function(msg) {
+                console.log('on is listening');
+                $scope.chatMessages.push(msg);
+            });
+
+
+            socket.on("playNpause", function(obj) {
+                console.log('we heard you', obj);
+            });
+
+            $scope.updateTyping = function() {
+                $scope.typing = true;
+                socket.emit('typing', userName.name);
+                var lastTypingTime = (new Date()).getTime();
+
+                setTimeout(function() {
+                    var typingTimer = (new Date()).getTime();
+                    var timeDiff = typingTimer - lastTypingTime;
+                    if (timeDiff >= $scope.TYPING_TIMER_LENGTH && $scope.typing) {
+                        socket.emit('stop typing');
+                        $scope.typing = false;
+                    }
+                }, 4000);
+            };
+
+            // Whenever the server emits 'typing', show the typing message
+            socket.on('typing', function(data) {
+
+                data.typing = true;
+                $scope.typingMessage = data.name + " is typing";
+
+                if (!$scope.chatMessages.includes($scope.typingMessage)) {
+                    $scope.chatMessages.push($scope.typingMessage);
+                }
+
+
+            });
+
+            // Whenever the server emits 'stop typing', kill the typing message
+            socket.on('stop typing', function(data) {
+                data.typing = false;
+
+                var i = $scope.chatMessages.indexOf($scope.typingMessage);
+                $scope.chatMessages.splice(i, 1);
+            });
+
+
+            soundManager.setup({
+                onready: function() {
+                    var mySound,
+                        showHidePlay;
+
+                    mySound = soundManager.createSound({
+                        url: 'http://server6.mp3quran.net/arkani/001.mp3'
+                    });
+                    // Hide Pause
+                    $('.showPlay').show();
+                    $('.showPause').hide();
+                    // Play on click, hide play and show pause.
+                    $('.showPlay').on('click', function() {
+                        mySound.play();
+                        $('.showPlay').hide();
+                        $('.showPause').show();
+                        $('.showPause').click(function() {
+                            $('.showPlay').show();
+                            $('.showPause').hide();
+                            mySound.pause();
+                        });
+                    });
+                }
+            })
+>>>>>>> style config
+>>>>>>> chore config updating local repo
         }
       }, $scope.TYPING_TIMER_LENGTH);
     };
@@ -167,3 +264,68 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
   return userSet;
 });
+<<<<<<< 518dda55a48d68a1076a600d681be44e29becec2
+=======
+
+
+=======
+    ])
+    .controller('LandingPage', ['$scope', '$location', 'userName', 'socket', function($scope, $location, userName, socket) {
+        var name = '';
+        $scope.submit = function() {
+            if ($scope.text) {
+                name = userName.user(this.text);
+            }
+            socket.emit('username', userName.name);
+            $location.path('/home', false)
+
+        }
+    }])
+    .factory('playList', function() {
+        $scope.plusOne = function(index) {
+            var listSong = $scope.list;
+            soundManager.setup({
+                onready: function() {
+                    var mySound;
+                    mySound = soundManager.createSound({
+                        url: listSong[index].uri
+                    });
+                    mySound.play();
+                }
+            })
+        }
+    })
+    .factory('socket', function($rootScope) {
+        var socket = io.connect();
+        return {
+            on: function(eventName, callback) {
+                socket.on(eventName, function() {
+                    var args = arguments;
+                    $rootScope.$apply(function() {
+                        callback.apply(socket, args);
+                    });
+                });
+            },
+            emit: function(eventName, data, callback) {
+                socket.emit(eventName, data, function() {
+                    var args = arguments;
+                    $rootScope.$apply(function() {
+                        if (callback) {
+                            callback.apply(socket, args);
+                        }
+                    })
+                })
+            }
+        };
+    })
+    .factory('userName', function() {
+        var userSet = {};
+        userSet.name = '';
+        userSet.user = function(userVal) {
+            userSet.name = userVal;
+        };
+
+        return userSet;
+    })
+>>>>>>> feat init included landinng page logic
+>>>>>>> chore config updating local repo

@@ -1,7 +1,7 @@
 var appPlayer = angular.module('MusicPlayer', ['ngRoute']);
 appPlayer.config(function($routeProvider) {
   $routeProvider
-    .when('/', {
+    .when('/home', {
       controller: 'HomeController',
       templateUrl: '../views/home.html'
     })

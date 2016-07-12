@@ -1,11 +1,12 @@
-appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory'
-  function($scope, socket, playerFactory) {
+appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'userName',
+  function($scope, socket, playerFactory, userName) {
      // Sound manager is a audio player library with hundreds of methods available,
      // The setup we have should be enough for a MVP.
     SC.initialize({
       client_id: '8af4a50e36c50437ca44cd59756301ae'
     });
     let track = '/tracks/293';
+    $scope.isPlaying = false;
 
     SC.stream(track, function(player){
       console.log('player', player);
@@ -16,6 +17,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory'
       console.log("player from fac", playerFactory.player);
       if(playerFactory.player && !playerFactory.isPlaying) {
         playerFactory.isPlaying = true;
+        $scope.isPlaying = true;
         playerFactory.player.play();
         console.log('after play', playerFactory.player.id);
         socket.emit("playNpause", {
@@ -29,6 +31,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory'
       if(/*playerFactory.player &&*/ playerFactory.isPlaying) { 
       console.log('player from fac', playerFactory.player);
         playerFactory.isPlaying = false;
+        $scope.isPlaying = false;
         playerFactory.player.pause();
         socket.emit("playNpause", {
           id: playerFactory.player.id,

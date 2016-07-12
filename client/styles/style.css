@@ -62,10 +62,19 @@ body {
 
 /*Player Settings*/
 
-.showPlay,
+.showPlay {
+    position: absolute;
+    margin-left: 105px;
+    margin-top: 1%;
+    border-radius: 100%;
+    border-bottom: 1px solid #ff5419;
+    padding: 10px;
+    width: 70px;
+    background: none;
+}
 .showPause {
     position: absolute;
-    margin-left: 18px;
+    margin-left: 15px;
     margin-top: 1%;
     border-radius: 100%;
     border-bottom: 1px solid #ff5419;

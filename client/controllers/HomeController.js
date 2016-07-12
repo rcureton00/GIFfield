@@ -9,7 +9,7 @@ angular.module('MusicPlayer.Home', [])
       });
       
       
-      var track = '/tracks/293';
+      var track = '/tracks/123428319';
 
       SC.stream(track, function(player){
         console.log('player', player);
@@ -73,7 +73,7 @@ angular.module('MusicPlayer.Home', [])
 //      BY THIS ID, DON'T RECEIVE IT      
 //
         if(!playerFactory.isPlaying && obj.status === "play"){
-          SC.stream('/tracks/293', function(player){
+          SC.stream('/tracks/123428319', function(player){
             console.log('player', player);
             playerFactory.player = player;
             playerFactory.isPlaying = true;

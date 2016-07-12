@@ -5,6 +5,18 @@ body {
     background: #FFFDE7;
 }
 
+/*Logo*/
+
+.logoPos {
+    /*position: relative;*/
+    margin-bottom: 4%;
+}
+
+.logo {
+    height: 144px;
+    width: 200px;
+}
+
 
 /*MUSIC PLAYER*/
 
@@ -22,10 +34,32 @@ body {
 
 /*Volume*/
 .volume {
-    position: absolute;
-    margin-top: 3.8%;
-    object-position: right;
+    margin-left: 92%;
+    padding: 10px;
 }
+
+.fa-volume-off:before {
+    position: absolute;
+    color: #ff5419;
+    margin-top: 1%;
+    content: "\f026";
+}
+
+.fa-volume-up:before {
+    position: absolute;
+    margin-top: 1%;
+    color: #ff5419;
+    content: "\f028";
+}
+
+.fa-volume-down:before {
+    position: absolute;
+    margin-top: 1%;
+    color: #ff5419;
+    content: "\f027";
+}
+
+
 /*Player Settings*/
 
 .showPlay,
@@ -37,7 +71,7 @@ body {
     border-bottom: 1px solid #ff5419;
     padding: 10px;
     width: 70px;
-    background: white;
+    background: none;
 }
 
 
@@ -87,7 +121,7 @@ body {
 
 /*Image*/
 
-img {
+.songCover {
     vertical-align: middle;
     padding: 1%;
     width: 100%;
@@ -105,14 +139,14 @@ img {
 }
 
 .innerPlayList {
-    color: white;
+    color: black;
     font-size: 1.5em;
     font-family: helvetica;
 }
 
 .playListBorder {
     margin-top: 1%;
-    background: rgba(0, 0, 0, 0.63);
+    background: rgba(0, 0, 0, 0.1);
     border-bottom: 2px solid #ff5419;
     border-top-style: none;
     border-right-style: none;
@@ -124,7 +158,7 @@ img {
 }
 
 .tracks > li {
-    color: white;
+    color: #4e4e4e;
     font-family: sans-serif;
     font-size: 1.5em;
     margin-top: 1%;
@@ -155,7 +189,7 @@ img {
     vertical-align: left;
     overflow: auto;
     background: rgba(0, 0, 0, 0.63);
-    padding: 100%;
+    /*padding: 100%;*/
     margin-right: 1%;
     overflow-y: scroll;
     overflow-x: hidden;

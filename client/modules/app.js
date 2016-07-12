@@ -5,6 +5,10 @@ appPlayer.config(function($routeProvider) {
       controller: 'HomeController',
       templateUrl: '../views/home.html'
     })
+    .when('/', {
+      controller: 'LandingPage',
+      templateUrl: '../views/landingPage.html'
+    })
     
     .otherwise({
       redirectTo: '/'

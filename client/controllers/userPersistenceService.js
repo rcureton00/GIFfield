@@ -1,4 +1,4 @@
-appPlayer.factory('userPersistence', ['$cookes', function($cookies){
+appPlayer.factory('userPersistence', ['$cookies', function($cookies){
       var userName = "";
       return {
         setCookieData: function(username){

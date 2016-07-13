@@ -109,8 +109,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
       if(obj.status === "pause"){
         playerFactory.player.pause();
       }
-
-
     });
   }
 ])
@@ -118,7 +116,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
   var name = '';
   $scope.submit = function() {
     if ($scope.text) {
-        name = userName.user(this.text);
+      name = userName.user(this.text);
     }
     socket.emit('username', userName.name);
     $location.path('/home', false)

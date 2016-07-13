@@ -1,7 +1,8 @@
-<div class="logoPos">
-    <img class="logo text-center" src="../assets/uHerd.me-logo.png">
-</div> 
-<form ng-submit="submit()">
-  <input type="text" ng-model="text" name="text" />
-  <input type="submit" id="submit" value="Submit" />
+<div class="landingTitle ">
+    <h1 class="title">uHerd.me</h1>
+</div>
+<form ng-submit="submit()" class="userForm">
+    <input type="text" ng-model="text" name="text" class="userText" autocomplete="off" autofocus />
+    <input type="submit" id="submit" value="Submit" ng-hide="submit" />
 </form>
+<img class="landingLogo" src="../assets/cowhero2.jpg">

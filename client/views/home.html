@@ -5,12 +5,13 @@
     </div>
     <div class="chats">
         <!-- Populate Messages -->
-        <ul class="well" id="messages" class="message">
-            <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
+        <ul class="well" id="messages">
+            <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}<br></li>
         </ul>
         <!-- submit Chats -->
-        <input ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" />
-        <button class="chatMsgSend" id="clicker" ng-click="chatSend()">Send</button>
+        <form ng-submit="chatSend()" class="msgInput">
+            <input type="text" ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" autofocus/>
+        </form>
     </div>
     <div class='player'>
         <div class="windowImg">

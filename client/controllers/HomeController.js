@@ -60,7 +60,9 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
             $scope.typing = false;
             $scope.TYPING_TIMER_LENGTH = 4000; // this is how quick the "[other user] is typing" message will go away
             $scope.chatSend = function() {
-                socket.emit('chat message', $scope.chatMsg);
+                var msg = JSON.stringify($scope.chatMsg);
+                msg = $.parseJSON(msg);
+                socket.emit('chat message', msg);
                 $scope.chatMsg = "";
                 return false;
             }
@@ -190,4 +192,14 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
         };
 
         return userSet;
-    });
+    }) // autofocus directive, html5 autofocus with doesn't do well with Angular's templates.
+    .directive('autofocus', ['$timeout', function($timeout) {
+        return {
+            restrict: 'A',
+            link: function($scope, $element) {
+                $timeout(function() {
+                    $element[0].focus();
+                });
+            }
+        }
+    }]);

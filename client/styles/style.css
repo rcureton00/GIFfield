@@ -1,10 +1,10 @@
-
 body {
   font-family: helvetica, sans-serif;
   height: 100%;
   width: 100%;
   background: #FFFDE7;
 }
+
 
 /*Logo*/
 
@@ -33,7 +33,9 @@ body {
   color: #ff5419;
 }
 
+
 /*Volume*/
+
 .volume {
   margin-left: 92%;
   padding: 10px;
@@ -60,9 +62,17 @@ body {
   content: "\f027";
 }
 
+.fa-volume-down:before {
+    position: absolute;
+    margin-top: 1%;
+    color: #ff5419;
+    content: "\f027";
+}
+
 
 /*Player Settings*/
 
+<<<<<<< HEAD
 .showPlay {
   position: absolute;
   margin-left: 15px;
@@ -82,11 +92,30 @@ body {
   padding: 10px;
   width: 70px;
   background: none;
+=======
+.showPlay,
+.showPause {
+    position: absolute;
+    margin-top: 1%;
+    border-radius: 100%;
+    border-bottom: 1px solid #ff5419;
+    padding: 10px;
+    width: 70px;
+    background: none;
+}
+.showPlay {
+
+    margin-left: 15px;
+>>>>>>> f018f8174fea790b060743cdd185bea4a3b6adbc
 }
 
+.showPause {
+    margin-left: 105px;
+}
 
 /*App title*/
 
+<<<<<<< HEAD
 /*.appTitle {
   font-size: 10em;
   font-family: arial;
@@ -95,6 +124,17 @@ body {
   margin-top: 2%;
   padding-left: -40%;
   background: none;
+=======
+
+/*.appTitle {
+    font-size: 10em;
+    font-family: arial;
+    font-weight: bold;
+    color: black;
+    margin-top: 2%;
+    padding-left: -40%;
+    background: none;
+>>>>>>> f018f8174fea790b060743cdd185bea4a3b6adbc
 }*/
 
 
@@ -117,7 +157,6 @@ body {
 }
 
 
-
 /*Button Wrapper*/
 
 .btnWrapper {
@@ -128,7 +167,6 @@ body {
   width: 100%;
   height: 100px;
 }
-
 
 
 /*Image*/
@@ -148,7 +186,6 @@ body {
 
 .separator {
   border-color: #BDBDBD;
-
 }
 
 .innerPlayList {
@@ -220,7 +257,6 @@ body {
   background: rgba(0, 0, 0, 0.63);
 }
 
-
 /*Landing page*/
 
 .landingLogo {
@@ -263,5 +299,3 @@ body {
   outline: none;
   text-align: center;
 }
-
-

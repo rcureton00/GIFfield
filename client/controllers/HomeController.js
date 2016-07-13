@@ -1,21 +1,21 @@
 appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'userName',
   function($scope, socket, playerFactory, userName) {
-     // Sound manager is a audio player library with hundreds of methods available,
-     // The setup we have should be enough for a MVP.
+    // Sound manager is a audio player library with hundreds of methods available,
+    // The setup we have should be enough for a MVP.
     SC.initialize({
       client_id: '8af4a50e36c50437ca44cd59756301ae'
     });
     let track = '/tracks/293';
     $scope.isPlaying = false;
 
-    SC.stream(track, function(player){
+    SC.stream(track, function(player) {
       console.log('player', player);
       playerFactory.player = player;
     });
 
     $scope.play = function() {
       console.log("player from fac", playerFactory.player);
-      if(playerFactory.player && !playerFactory.isPlaying) {
+      if (playerFactory.player && !playerFactory.isPlaying) {
         playerFactory.isPlaying = true;
         $scope.isPlaying = true;
         playerFactory.player.play();
@@ -28,8 +28,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     }
 
     $scope.pause = function() {
-      if(/*playerFactory.player &&*/ playerFactory.isPlaying) { 
-      console.log('player from fac', playerFactory.player);
+      if ( /*playerFactory.player &&*/ playerFactory.isPlaying) {
+        console.log('player from fac', playerFactory.player);
         playerFactory.isPlaying = false;
         $scope.isPlaying = false;
         playerFactory.player.pause();
@@ -40,6 +40,9 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
       }
     }
 
+
+    /// chat controller stuff
+
     $scope.user = false;
     $scope.typing = false;
     $scope.TYPING_TIMER_LENGTH = 4000; // this is how quick the "[other user] is typing" message will go away
@@ -48,13 +51,13 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
       $scope.chatMsg = "";
       return false;
     }
- 
+
     $scope.chatMessages = [];
 
-    socket.on('chat message', function(msg){
+    socket.on('chat message', function(msg) {
       $scope.chatMessages.push(msg);
     });
-    
+
     $scope.updateTyping = function() {
       $scope.typing = true;
       socket.emit('typing', userName.name);
@@ -72,12 +75,11 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
     // Whenever the server emits 'typing', show the typing message
     socket.on('typing', function(data) {
-
       data.typing = true;
       $scope.typingMessage = data.name + " is typing";
 
       if (!$scope.chatMessages.includes($scope.typingMessage)) {
-          $scope.chatMessages.push($scope.typingMessage);
+        $scope.chatMessages.push($scope.typingMessage);
       }
     });
 
@@ -94,11 +96,11 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     //LISTENING --
 
     //PLAY WHEN HEARD from SOCKETS
-    socket.on("playNpause", function(obj){
+    socket.on("playNpause", function(obj) {
       console.log('we heard you', obj);
 
-      if(!playerFactory.isPlaying && obj.status === "play"){
-        SC.stream('/tracks/293', function(player){
+      if (!playerFactory.isPlaying && obj.status === "play") {
+        SC.stream('/tracks/293', function(player) {
           console.log('player', player);
           playerFactory.player = player;
           playerFactory.isPlaying = true;
@@ -106,8 +108,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
         });
       }
 
-      if(obj.status === "pause"){
-        playerFactory.player.pause();
+      if (obj.status === "pause") {
+          playerFactory.player.pause();
       }
     });
   }
@@ -122,33 +124,30 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     $location.path('/home', false)
   }
 }])
-
 .factory('playerFactory', function() {
   var singleton = {};
   singleton.player = null;
   singleton.isPlaying = false;
   return singleton;
 })
-.factory('socket', function($rootScope){
-
+.factory('socket', function($rootScope) {
   var socket = io.connect();
-   
 
-  return{
-    on: function(eventName, callback){
-      socket.on(eventName, function(){
+  return {
+    on: function(eventName, callback) {
+      socket.on(eventName, function() {
         var args = arguments;
-        $rootScope.$apply(function(){
+        $rootScope.$apply(function() {
           callback.apply(socket, args);
         });
       });
     },
 
-    emit: function(eventName, data, callback){
-      socket.emit(eventName, data, function(){
+    emit: function(eventName, data, callback) {
+      socket.emit(eventName, data, function() {
         var args = arguments;
-        $rootScope.$apply(function(){
-          if(callback){
+        $rootScope.$apply(function() {
+          if (callback) {
             callback.apply(socket, args);
           }
         })
@@ -160,7 +159,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
   var userSet = {};
   userSet.name = '';
   userSet.user = function(userVal) {
-      userSet.name = userVal;
+    userSet.name = userVal;
   };
 
   return userSet;

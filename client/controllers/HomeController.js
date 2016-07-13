@@ -1,7 +1,6 @@
 appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies',
     function($scope, socket, playerFactory, soundService, $cookies) {
 
-
         socket.on('connect', function() {
             console.log("i connected");
         });
@@ -49,12 +48,12 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
                 $scope.playListFinal.push({
                     id: '/tracks/' + response.data.id,
                     title: response.data.title,
-                    artwork: response.data.artwork_url
+                    artwork: response.data.artwork_url,
+                    releaseYear: response.data.release_year,
+                    name: response.data.user.username
                 });
             });
         });
-
-
         //set the flag to false initially
         playerFactory.isPlaying = false;
 
@@ -145,6 +144,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
         socket.on('chat message', function(msg) {
             $scope.chatMessages.push(msg);
         });
+
 
         $scope.updateTyping = function() {
             $scope.typing = true;
@@ -264,4 +264,17 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
                 });
             }
         }
-    }]);
+    }])
+    .factory('soundService', function($http) {
+
+
+        getArtist = function(tracknumber) {
+            $http({
+                method: 'GET',
+                url: 'https://api.soundcloud.com/tracks/' + tracknumber + '.json?consumer_key=8af4a50e36c50437ca44cd59756301ae'
+            });
+        };
+        return {
+            getArtist: getArtist
+        };
+    })

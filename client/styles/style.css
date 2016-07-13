@@ -247,6 +247,7 @@ body {
     left: 81%;
     width: 18%;
 }
+
 .chatMsgSend:hover {
     color: #ff5419;
     font-weight: 300;
@@ -255,6 +256,7 @@ body {
 /*Background Message input and send message*/
 .background {
     position: absolute;
+    overflow-y: scroll;
     background: rgba(0, 0, 0, 0.63);
     height: 17%;
     top: 96%;
@@ -273,6 +275,7 @@ body {
 .playList:hover {
     border-color: #ff5419;
 }
+
 /*Chat - Fixed height settings*/
 #messages {
     -moz-column-count: 3;
@@ -288,6 +291,7 @@ body {
     border-right: none;
     border-top: none;
     border-bottom: 1px solid white;
+
 }
 
 /*Chat - Baloon settings*/
@@ -450,4 +454,8 @@ input-group .form-control {
     color: white;
     /*opacity: 0.9;*/
     font-weight: 300;
+}
+
+.searchArtist {
+    background: none;
 }

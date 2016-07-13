@@ -87,12 +87,14 @@ body {
     -moz-transition: opacity 0.25s ease-in-out;
     -webkit-transition: opacity 0.25s ease-in-out;
 }
+
 .showPlay {
     margin-left: 15px;
 }
 .showPause {
     margin-left: 105px;
 }
+
 .showPlay:hover,
 .showPause:hover {
     opacity: 0.3;
@@ -287,6 +289,7 @@ body {
     border-top: none;
     border-bottom: 1px solid white;
 }
+
 /*Chat - Baloon settings*/
 .message {
     position: relative;
@@ -382,6 +385,7 @@ body {
     border-top: none;
     outline: none;
 }
+
 /*Search*/
 .inputSearch {
     position: absolute;

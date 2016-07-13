@@ -3,6 +3,39 @@
   <div class="logoPos">
     <img class="logo text-center" src="../assets/uHerd.me-logo.png">
   </div>    
+
+<!-- Search field -->
+   <div class="searchArtist">
+       <div class="container">
+           <div class="row">
+               <div class="col-md-6">
+                   <div id="custom-search-input">
+                       <div class="input-group col-md-12">
+                           <form ng-submit="findArtist()">
+                               <input type="text" ng-model="searchArtist" class="form-control input-lg" placeholder="Lyvo" />
+                           </form>
+                           <!-- <span class="input-group-btn">
+                       <button class="btn btn-info btn-lg" type="button">
+                           <i class="glyphicon glyphicon-search"></i>
+                       </button> 
+                   </span> -->
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+
+
+
+
+
+
+
+
+
+
+
   <div class="chats">
       <!-- Populate Messages -->
       <ul class="well" id="messages" class="message">
@@ -19,14 +52,14 @@
       <img class='songCover' src="http://cdn.modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg">
       <div class="btnWrapper">
         <div class="playButton">
-            <i class="fa fa-play fa-3x showPlay buttonColor" ng-click="play(playSong)" aria-hidden="true"></i>
+            <i class="fa fa-play fa-3x showPlay buttonColor" ng-click="play()" aria-hidden="true"></i>
         </div>
         <div class="pauseButton">
             <i class="fa fa-pause fa-3x showPause buttonColor" ng-click="pause()" aria-hidden="true"></i>
         </div>
         <!-- Next track -->
         <div class=next>
-          <i ng-click='next(play)' class='fa fa-fast-forward fa-3x showNext buttonColor' aria-hidden="true"></i>
+          <i ng-click='next()' class='fa fa-fast-forward fa-3x showNext buttonColor' aria-hidden="true"></i>
         </div>
           <!--  <button class='stop'><i class="fa fa-stop fa-1x buttonColor" aria-hidden="true"></i></button> -->
           <button class='volume'><i class="fa fa-volume-up buttonColor showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down buttonColor
@@ -35,9 +68,9 @@ showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off buttonColor sho
       <div class="well playListBorder">
           <span class="innerPlayList">Playlist</span>
           <hr class="separator">
-          <div ng-repeat='tracks in list'>
+          <div ng-repeat='tracks in pList track by $index'>
             <ul class="tracks">
-                <li ng-click='letsPlay()'>{{tracks.track}}</li>
+                <li ng-click='letsPlay()'><img src="{{tracks.artwork}}" />{{tracks.title}} </li>
             </ul>
           </div>
       </div>

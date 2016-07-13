@@ -18,35 +18,22 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
 
   socket.on('playNpause', function(cb){
-    console.log('SERVER CAUGHT', cb);
     io.emit('playNpause', cb);
   });
-  socket.on('playNpause', function(cb){
-    console.log('SERVER CAUGHT', cb);
-    io.emit('playNpause', cb);
-  });
+  
 
   socket.on('username', function(name){
-    // console.log(name);
-    // if(addedUser){return; };
     socket['name'] = name;
-    // addedUser = true;
-
-    // socket.broadcast.emit('user joined', {
-    //   username: socket.name
-    // })
   });
 
   socket.on('chat message', function(msg){
     var obj = {};
     obj['message'] = msg;
     io.emit('chat message', socket['name'] + ": " + msg);
-    // console.log('message: ' + msg);
   });
 
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function () {
-    // socket.broadcast.emit('typing', {
     socket.broadcast.emit('typing', {
       name: socket.name
     });

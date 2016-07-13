@@ -21,14 +21,13 @@ io.on('connection', function(socket){
     console.log('SERVER CAUGHT', cb);
     io.emit('playNpause', cb);
   });
-
   socket.on('playNpause', function(cb){
     console.log('SERVER CAUGHT', cb);
     io.emit('playNpause', cb);
   });
 
   socket.on('username', function(name){
-    console.log(name);
+    // console.log(name);
     // if(addedUser){return; };
     socket['name'] = name;
     // addedUser = true;
@@ -42,7 +41,7 @@ io.on('connection', function(socket){
     var obj = {};
     obj['message'] = msg;
     io.emit('chat message', socket['name'] + ": " + msg);
-    console.log('message: ' + msg);
+    // console.log('message: ' + msg);
   });
 
   // when the client emits 'typing', we broadcast it to others
@@ -60,7 +59,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    // console.log('user disconnected');
   });
 });
 

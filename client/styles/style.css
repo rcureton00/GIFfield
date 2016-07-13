@@ -33,6 +33,12 @@ body {
     color: #ff5419;
 }
 
+.fa-fast-forward{
+    margin-left: 6px;
+    content: "\f04c";
+    color: #ff5419;
+}
+
 /*Volume*/
 .volume {
     margin-left: 92%;
@@ -61,10 +67,19 @@ body {
 }
 
 /*Player Settings*/
-
+.showNext{
+    position: absolute;
+    margin-left: 195px;
+    margin-top: 1%;
+    border-radius: 100%;
+    border-bottom: 1px solid #ff5419;
+    padding: 10px;
+    width: 70px;
+    background: none;
+}
 .showPlay {
     position: absolute;
-    margin-left: 105px;
+    margin-left: 15px;
     margin-top: 1%;
     border-radius: 100%;
     border-bottom: 1px solid #ff5419;
@@ -74,7 +89,7 @@ body {
 }
 .showPause {
     position: absolute;
-    margin-left: 15px;
+    margin-left: 105px;
     margin-top: 1%;
     border-radius: 100%;
     border-bottom: 1px solid #ff5419;

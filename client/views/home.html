@@ -19,10 +19,14 @@
       <img class='songCover' src="http://cdn.modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg">
       <div class="btnWrapper">
         <div class="playButton">
-            <i class="fa fa-play fa-3x showPlay buttonColor" ng-click="play()" aria-hidden="true"></i>
+            <i class="fa fa-play fa-3x showPlay buttonColor" ng-click="play(playSong)" aria-hidden="true"></i>
         </div>
         <div class="pauseButton">
             <i class="fa fa-pause fa-3x showPause buttonColor" ng-click="pause()" aria-hidden="true"></i>
+        </div>
+        <!-- Next track -->
+        <div class=next>
+          <i ng-click='next(play)' class='fa fa-fast-forward fa-3x showNext buttonColor' aria-hidden="true"></i>
         </div>
           <!--  <button class='stop'><i class="fa fa-stop fa-1x buttonColor" aria-hidden="true"></i></button> -->
           <button class='volume'><i class="fa fa-volume-up buttonColor showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down buttonColor
@@ -31,12 +35,11 @@ showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off buttonColor sho
       <div class="well playListBorder">
           <span class="innerPlayList">Playlist</span>
           <hr class="separator">
-          <ul class="tracks">
-              <li>Track One</li>
-              <li>Track Two</li>
-              <li>Track Three</li>
-              <li>Track Four</li>
-          </ul>
+          <div ng-repeat='tracks in list'>
+            <ul class="tracks">
+                <li ng-click='letsPlay()'>{{tracks.track}}</li>
+            </ul>
+          </div>
       </div>
     </div>
   </div>

@@ -55,7 +55,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     $scope.pause = function() {
       if(playerFactory.isPlaying) { 
         socket.emit("playNpause", {
-          id:  $scope.playListFinal[0].id,
+          // id:  $scope.playListFinal[0].id,
           status: 'pause'
         });
       }
@@ -64,7 +64,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     //on clicking next, we emit id and status to change song on all devices
     $scope.next = function() {
       socket.emit("playNpause", {
-        id:  $scope.playListFinal[0].id,
+        // id:  $scope.playListFinal[0].id,
         status: 'next'
       });
     }

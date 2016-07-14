@@ -22,32 +22,32 @@ io.on('connection', function(socket){
   });
 
   socket.on('username', function(name) {
-    // if(addedUser){return; };
-    socket['name'] = name;
-    // addedUser = true;
-    // socket.broadcast.emit('user joined', {
-    //   username: socket.name
-    // })
+  //   // if(addedUser){return; };
+  //   socket['name'] = name;
+  //   // addedUser = true;
+  //   // socket.broadcast.emit('user joined', {
+  //   //   username: socket.name
+  socket.name = name.username;
+  //   // })
   });
 
   socket.on('chat message', function(msg){
-    // var obj = {};
-    // obj['message'] = msg;
-    // console.log(msg);
+    
+    
     io.emit('chat message', msg.username + ": " + msg.msg);
   });
 
   // when the client emits 'typing', we broadcast it to others
-  socket.on('typing', function () {
+  socket.on('typing', function (data) {
     socket.broadcast.emit('typing', {
-      name: socket.name
+      name: data
     });
   });
   
   // when the client emits 'stop typing', we broadcast it to others
   socket.on('stop typing', function () {
     socket.broadcast.emit('stop typing', {
-      username: socket.name
+      //username: socket.name
     });
   });
 

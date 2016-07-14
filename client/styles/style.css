@@ -312,18 +312,6 @@ body {
     border-radius: 3px;
     border-bottom: 1px solid rgba(187, 187, 187, 0.7);
 }
-/*Chat is typing*/
-.isTyping {
-    font-size: 2em;
-    position: absolute;
-    right: 21%;
-    z-index: 9999;
-    font-weight: 300;
-    top: 94%;
-    background: none;
-    color: rgb(255, 84, 25);
-}
-
 
 /*Chat is typing*/
 
@@ -348,6 +336,7 @@ body {
     overflow: hidden;
     /*// Hide overflow to contain the background*/
 }
+
 .userForm {
     position: absolute;
     left: 50%;
@@ -363,6 +352,28 @@ body {
     left: 50%;
     color: white;
     font-size: 10em;
+    font-weight: bold;
+    z-index: 9999;
+    opacity: 0.8;
+}
+ .subTitle {
+    position: absolute;
+    background: none;
+    top: 30%;
+    /*left: 26%;*/
+    color: white;
+    font-size: 4em;
+    font-weight: bold;
+    z-index: 9999;
+    opacity: 0.8;
+ }
+.footerMsg {
+    position: absolute;
+    background: none;
+    top: 80%;
+    left: 90%;
+    color: white;
+    font-size: 2em;
     font-weight: bold;
     z-index: 9999;
     opacity: 0.8;

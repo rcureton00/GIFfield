@@ -6,10 +6,11 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     
     //fetches the audio object from SoundCloud
     $scope.findArtist = function() {
-       if ($scope.searchArtist.indexOf(' ') !== -1) {
-           $scope.searchArtist = $scope.searchArtist.replace(' ', '-');
-       }
+       // if ($scope.searchArtist.indexOf(' ') !== -1) {
+       //     $scope.searchArtist = $scope.searchArtist.replace(' ', '-');
+       // }
       soundService.getArtist($scope.searchArtist).then(function success(response, err){
+        console.log("~~~~~~~~~~~~RESPONSE~~~~~~~~~~~~~", response);
         if(err) throw err;
         //Container to show audio information on the DOM
          $scope.playListFinal.push({
@@ -227,13 +228,21 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
 //factory to request audio Object from SoundCloud and push them to playList array
 .factory('soundService', function($http) {
-  var getArtist = function(tracknumber) {
+
+  var getArtist = function(userInput) {
     //sends a GET request to SoundCloud API with the inputed 'tracknumber'
+    var trackObj = {
+      'home' : 250715158,
+      'ghost': 220827192,
+      'swimming pools': 178466966,
+      'kuke kuke': 1038827, //no album art (test case)
+      'Zack Knight' : 249920130,
+    }
     return $http({
       method: 'GET',
-      url: 'https://api.soundcloud.com/tracks/' + tracknumber + '.json?consumer_key=8af4a50e36c50437ca44cd59756301ae'
+      url: 'https://api.soundcloud.com/tracks/' + trackObj[userInput] + '.json?consumer_key=8af4a50e36c50437ca44cd59756301ae'
     });
-   };
+  }
 
   //returns getArtist method and playList array -- to populate it when audio Objects (audioObj);
   return  {

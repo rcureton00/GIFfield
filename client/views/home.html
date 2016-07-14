@@ -1,51 +1,33 @@
 <!-- Full page wrapper-->
 <div class='fullPage'>
   <div class="logoPos">
-    <img class="logo text-center" src="../assets/uHerd.me-logo.png">
+  <img class="logo text-center" src="../assets/uHerd.me-logo.png">
   </div>    
 
 <!-- Search field -->
-   <div class="searchArtist">
-       <div class="container">
-           <div class="row">
-               <div class="col-md-6">
-                   <div id="custom-search-input">
-                       <div class="input-group col-md-12">
-                           <form ng-submit="findArtist()">
-                               <input type="text" ng-model="searchArtist" class="form-control input-lg" placeholder="Lyvo" />
-                           </form>
-                           <!-- <span class="input-group-btn">
-                       <button class="btn btn-info btn-lg" type="button">
-                           <i class="glyphicon glyphicon-search"></i>
-                       </button> 
-                   </span> -->
-                       </div>
-                   </div>
-               </div>
+  <div class="searchArtist">
+    <div class="container">
+     <div class="row">
+       <div class="col-md-6">
+         <div id="custom-search-input">
+           <div class="input-group col-md-12">
+             <form ng-submit="findArtist()">
+               <input type="text" ng-model="searchArtist" class="form-control input-lg" placeholder="Lyvo" />
+             </form>
            </div>
+         </div>
        </div>
-   </div>
-
-
-
-
-
-
-
-
-
-
+     </div>
+    </div>
+  </div>
 
   <div class="chats">
-      <!-- Populate Messages -->
-      <ul class="well" id="messages" class="message">
-          <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
-      </ul>
-<!--         <input ng-hide="user" ng-model="screenName" placeholder="Username" />
--->        <!-- submit Chats -->
-      <input ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" />
-      <!-- <button class="chatUserSubmit" ng-hide="user" ng-click="setName()">Submit</button> -->
-      <button class="chatMsgSend" id="clicker" ng-click="chatSend()">Send</button>
+    <!-- Populate Messages -->
+    <ul class="well" id="messages" class="message">
+      <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
+    </ul>
+    <input ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" />
+    <button class="chatMsgSend" id="clicker" ng-click="chatSend()">Send</button>
   </div>
   <div class='player'>
     <div class="windowImg">

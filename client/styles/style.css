@@ -145,7 +145,7 @@ body {
   vertical-align: middle;
   padding: 1%;
   width: 100%;
-  height: 700px;
+  height: 300px;
   background-color: #F5F5F5;
   /*border-bottom: 1px solid #BDBDBD;*/
   border-radius: 3px;
@@ -281,6 +281,7 @@ body {
 
 .title {
   position: absolute;
+  transform: translate(-50%, 0);
   background: none;
   top: 1%;
   left: 50%;

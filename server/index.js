@@ -31,9 +31,10 @@ io.on('connection', function(socket){
   });
 
   socket.on('chat message', function(msg){
-    var obj = {};
-    obj['message'] = msg;
-    io.emit('chat message', socket['name'] + ": " + msg);
+    // var obj = {};
+    // obj['message'] = msg;
+    // console.log(msg);
+    io.emit('chat message', msg.username + ": " + msg.msg);
   });
 
   // when the client emits 'typing', we broadcast it to others

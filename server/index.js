@@ -38,6 +38,7 @@ io.on('connection', function(socket){
       name: socket.name
     });
   });
+  
   // when the client emits 'stop typing', we broadcast it to others
   socket.on('stop typing', function () {
     socket.broadcast.emit('stop typing', {

@@ -1,60 +1,54 @@
 <!-- Full page wrapper-->
 <div class='fullPage'>
   <div class="logoPos">
-  <img class="logo text-center" src="../assets/uHerd.me-logo.png">
-  </div>    
-
-<!-- Search field -->
-  <div class="searchArtist">
-    <div class="container">
-     <div class="row">
-       <div class="col-md-6">
-         <div id="custom-search-input">
-           <div class="input-group col-md-12">
-             <form ng-submit="findArtist()">
-               <input type="text" ng-model="searchArtist" class="form-control input-lg" placeholder="Lyvo" />
-             </form>
-           </div>
-         </div>
-       </div>
-     </div>
-    </div>
+    <img class="logo text-center" src="../assets/uHerd.me-logo.png">
   </div>
 
-  <div class="chats">
+  <!-- Search field -->
+    <div class="searchArtists">
+        <form ng-submit="findArtist()">
+            <input type="text" ng-model="searchArtist" class="form-control input-lg inputSearch" placeholder="Search {{ options }}" />
+        </form>
+    </div>
+
     <!-- Populate Messages -->
-    <ul class="well" id="messages" class="message">
+  <div class="chats">
+    <p class="isTyping">{{typingMessage}}</p>
+    <ul class="well" id="messages">
       <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
     </ul>
-    <input ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" />
-    <button class="chatMsgSend" id="clicker" ng-click="chatSend()">Send</button>
+    <!-- Submit Message -->
+    <form ng-submit="chatSend()" class="msgInput">
+      <input class="chatInputField" type="text" ng-change="updateTyping()" ng-model="chatMsg" placeholder="Type Message Here and Press Enter" autocomplete="off" autofocus/>
+    </form>
   </div>
+
+  <!-- **************  PLAYER   ******************-->
   <div class='player'>
     <div class="windowImg">
-      <img class='songCover' src="http://cdn.modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg">
+      <img class='songCover' src="{{playListFinal[0].artwork}}" || src="http://cdn.modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg">
       <div class="btnWrapper">
         <div class="playButton">
-            <i class="fa fa-play fa-3x showPlay buttonColor" ng-click="play()" aria-hidden="true"></i>
+          <i class="fa fa-play fa-3x showPlay buttonColor" ng-click="play()" aria-hidden="true"></i>
         </div>
         <div class="pauseButton">
-            <i class="fa fa-pause fa-3x showPause buttonColor" ng-click="pause()" aria-hidden="true"></i>
+          <i class="fa fa-pause fa-3x showPause buttonColor" ng-click="pause()" aria-hidden="true"></i>
         </div>
-        <!-- Next track -->
-        <div class=next>
-          <i ng-click='next()' class='fa fa-fast-forward fa-3x showNext buttonColor' aria-hidden="true"></i>
+        <div class="nextButton">
+          <i ng-click="next()"" class="fa fa-next fa-3x showNext buttonColor" aria-hidden="true"></i>
         </div>
-          <!--  <button class='stop'><i class="fa fa-stop fa-1x buttonColor" aria-hidden="true"></i></button> -->
-          <button class='volume'><i class="fa fa-volume-up buttonColor showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down buttonColor
-showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off buttonColor showMuteVolume" aria-hidden="true"></i></button>
-      </div>
-      <div class="well playListBorder">
-          <span class="innerPlayList">Playlist</span>
-          <hr class="separator">
-          <div ng-repeat='tracks in playListFinal'>
+        <!--  <button class='stop'><i class="fa fa-stop fa-1x buttonColor" aria-hidden="true"></i></button> -->
+        <div class='volume'><i class="fa fa-volume-up fa-2x buttonColor showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down fa-2x buttonColor
+showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x buttonColor showMuteVolume" aria-hidden="true"></i></div>
+    </div>
+    <div class="well playListBorder">
+        <span class="innerPlayList">Playlist</span>
+        <hr class="separator">
+        <div ng-repeat='tracks in playListFinal'>
             <ul class="tracks">
                 <li ng-click='letsPlay()'><img src="{{tracks.artwork}}" />{{tracks.title}} </li>
             </ul>
-          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -8,6 +8,7 @@
         <img class="logo" src="{{defaultCover}}">
     </div>
     <!-- Search field -->
+
     <div class="searchArtists">
         <form ng-submit="findArtist()">
             <input type="text" ng-model="searchArtist" class="form-control input-lg inputSearch" placeholder="Search {{ options }}" />
@@ -19,7 +20,7 @@
         <!-- Populate Messages li-->
         <p class="isTyping">{{typingMessage}}</p>
         <ul class="well" id="messages">
-            <li class="message" ng-repeat="chatMessage in chatMessages track by $index">{{ chatMessage }}</li>
+            <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
         </ul>
         <!-- Submit Message -->
         <form ng-submit="chatSend()" class="msgInput">

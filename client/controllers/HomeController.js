@@ -68,6 +68,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
             }
         }
 
+
         //pause emits id and status to pause on all devices
         $scope.pause = function() {
             if (playerFactory.isPlaying) {
@@ -78,6 +79,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
             }
         }
 
+
         //on clicking next, we emit id and status to change song on all devices
         $scope.next = function() {
             socket.emit("playNpause", {
@@ -85,7 +87,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
                 status: 'next'
             });
         }
-
 
 
 
@@ -125,8 +126,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
         });
 
 
-        //chat controller socket module
-        //handles emit and listening events
 
         $scope.user = false;
         $scope.typing = false;
@@ -264,17 +263,4 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
                 });
             }
         }
-    }])
-    .factory('soundService', function($http) {
-
-
-        getArtist = function(tracknumber) {
-            $http({
-                method: 'GET',
-                url: 'https://api.soundcloud.com/tracks/' + tracknumber + '.json?consumer_key=8af4a50e36c50437ca44cd59756301ae'
-            });
-        };
-        return {
-            getArtist: getArtist
-        };
-    })
+    }]);

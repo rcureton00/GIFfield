@@ -232,10 +232,11 @@ body {
     margin-left: 52%;
     width: 47.5%;
 }
+
 /*Message Input*/
 .msgInput > .userMsg,
 .msgInput > .chatMsgSend {
-    margin-top: 1%;
+
 }
 .msgInput > .userMsg {
     width: 80%;
@@ -247,6 +248,7 @@ body {
     left: 81%;
     width: 18%;
 }
+
 
 .chatMsgSend:hover {
     color: #ff5419;
@@ -275,6 +277,7 @@ body {
 .playList:hover {
     border-color: #ff5419;
 }
+
 
 /*Chat - Fixed height settings*/
 #messages {
@@ -320,6 +323,21 @@ body {
     background: none;
     color: rgb(255, 84, 25);
 }
+
+
+/*Chat is typing*/
+
+.isTyping {
+    font-size: 1.2em;
+    position: absolute;
+    left: 82%;
+    font-weight: 300;
+    top: 84%;
+    background: none;
+    color: rgba(255, 255, 255, 0.82);
+}
+
+
 /*Landing page*/
 .landingLogo {
     position: absolute;
@@ -454,8 +472,4 @@ input-group .form-control {
     color: white;
     /*opacity: 0.9;*/
     font-weight: 300;
-}
-
-.searchArtist {
-    background: none;
 }

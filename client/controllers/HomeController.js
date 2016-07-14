@@ -17,10 +17,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
             title: response.data.title, 
             artwork: response.data.artwork_url
           });
-         //Container to save audio Object's ID's sent by SoundCloud
-          soundService.playList.push({
-            id: '/tracks/'+response.data.id, 
-          });
       });
       //clear the input field on DOM
       $scope.searchArtist = '';
@@ -34,9 +30,9 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
     //on clicking play we emit the ID and the status for clients to listen to and act upon
     $scope.play = function() {
-      if(soundService.playList[0] && !playerFactory.isPlaying) {
+      if( $scope.playListFinal[0] && !playerFactory.isPlaying) {
         socket.emit("playNpause", {
-          id: soundService.playList[0].id,
+          id:  $scope.playListFinal[0].id,
           status: 'play'
         });
       }
@@ -47,7 +43,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
   //on clicking next, we emit id and status to change song on all devices
     $scope.next = function() {
       socket.emit("playNpause", {
-        id: soundService.playList[0].id,
+        id:  $scope.playListFinal[0].id,
         status: 'next'
       });
     }
@@ -58,7 +54,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     $scope.pause = function() {
       if(playerFactory.isPlaying) { 
         socket.emit("playNpause", {
-          id: soundService.playList[0].id,
+          id:  $scope.playListFinal[0].id,
           status: 'pause'
         });
       }
@@ -79,7 +75,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
               playerFactory.curSong.play();
         })  
         playerFactory.curSong._onfinish = function() {
-          if (soundService.playlist.length === 1) {
+          if ( $scope.playListFinal.length === 1) {
             alert('Looks like there are nothing to play, add some more songs and try again!')
           } else {
             $scope.next();
@@ -95,7 +91,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
         playerFactory.curSong.stop();
 
         //removes the curent audio Object
-        soundService.playList.shift();
+         $scope.playListFinal.shift();
         //calls the play function on the new audio Object
         $scope.play();
       }
@@ -115,6 +111,18 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 *
 *
 */
+
+
+
+
+
+
+
+
+
+
+
+
 //chat controller socket module
   //handles emit and listening events
     $scope.user = false;
@@ -219,7 +227,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
 //factory to request audio Object from SoundCloud and push them to playList array
 .factory('soundService', function($http) {
-  var playList = [];
   var getArtist = function(tracknumber) {
     //sends a GET request to SoundCloud API with the inputed 'tracknumber'
     return $http({
@@ -230,8 +237,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
   //returns getArtist method and playList array -- to populate it when audio Objects (audioObj);
   return  {
-    getArtist: getArtist,
-    playList: playList
+    getArtist: getArtist
   };
 })
 

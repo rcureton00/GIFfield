@@ -1,5 +1,5 @@
-appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'userName',
-        function($scope, socket, playerFactory, userName) {
+appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'userName', 'soundService', '$sce',
+        function($scope, socket, playerFactory, userName, soundService, $sce) {
             // Sound manager is a audio player library with hundreds of methods available,
             // The setup we have should be enough for a MVP.
             SC.initialize({
@@ -9,8 +9,21 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
             $scope.isPlaying = false;
 
             SC.stream(track, function(player) {
-                console.log('player', player);
+                // console.log('player', player);
                 playerFactory.player = player;
+            });
+
+            // Dynamic placeholder generator
+            $scope.$on('$routeChangeSuccess', function() {
+                var option = ['Artists', 'Songs', 'Albums', 'Playlists'];
+                $scope.options = option[0];
+                return setInterval(function() {
+                    var popped = option.pop();
+                    $scope.options = popped;
+                    console.log($scope.options);
+                    $scope.$apply();
+                    option.unshift(popped);
+                }, 3000);
             });
 
             $scope.play = function() {
@@ -40,30 +53,27 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
                 }
             }
 
+            $scope.findArtist = function() {
+                console.log($scope.searchArtist);
+                if ($scope.searchArtist.indexOf(' ') !== -1) {
+                    $scope.searchArtist = $scope.searchArtist.replace(' ', '-');
+                }
 
-            // SC.stream(track, function(player){
-            //   $('#playBack').click(function(e) {
-            //     e.preventDefault();
-            //     player.start();
-            //     socket.emit("playNpause", track);
-            //   });
-            //   $('#stop').click(function(e) {
-            //     e.preventDefault();
-            //     player.pause();
-            //     socket.emit("playNpause", "pausing");
-            //   });
-            // });
+                soundService.getArtist($scope.searchArtist);
+                $scope.searchArtist = '';
+            }
 
-            /// chat controller stuff
 
             $scope.user = false;
             $scope.typing = false;
-            $scope.TYPING_TIMER_LENGTH = 4000; // this is how quick the "[other user] is typing" message will go away
+            $scope.TYPING_TIMER_LENGTH = 3000; // this is how quick the "[other user] is typing" message will go away
             $scope.chatSend = function() {
                 var msg = JSON.stringify($scope.chatMsg);
                 msg = $.parseJSON(msg);
                 socket.emit('chat message', msg);
+                socket.emit('stop typing');
                 $scope.chatMsg = "";
+                $scope.overflowCtrl();
                 return false;
             }
 
@@ -71,6 +81,10 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
             socket.on('chat message', function(msg) {
                 $scope.chatMessages.push(msg);
+
+                $scope.overflowCtrl();
+                console.log($scope.chatMessages);
+
             });
 
             $scope.updateTyping = function() {
@@ -83,28 +97,30 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
                     var timeDiff = typingTimer - lastTypingTime;
                     if (timeDiff >= $scope.TYPING_TIMER_LENGTH && $scope.typing) {
                         socket.emit('stop typing');
-                        $scope.typing = false;
+                        $scope.isTyping = false;
                     }
                 }, $scope.TYPING_TIMER_LENGTH);
             };
 
+            // Scroll bottom function
+            $scope.overflowCtrl = function() {
+                console.log("$scope.overflowCtrl");
+                window.setTimeout(function() {
+                    var elem = document.getElementById('messages');
+                    elem.scrollTop = elem.scrollHeight;
+                }, 0);
+            };
+
             // Whenever the server emits 'typing', show the typing message
             socket.on('typing', function(data) {
-
                 data.typing = true;
                 $scope.typingMessage = data.name + " is typing";
-
-                if (!$scope.chatMessages.includes($scope.typingMessage)) {
-                    $scope.chatMessages.push($scope.typingMessage);
-                }
             });
 
             // Whenever the server emits 'stop typing', kill the typing message
             socket.on('stop typing', function(data) {
                 data.typing = false;
-
-                var i = $scope.chatMessages.indexOf($scope.typingMessage);
-                $scope.chatMessages.splice(i, 1);
+                $scope.typingMessage = '';
             });
 
 
@@ -127,19 +143,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
                 if (obj.status === "pause") {
                     playerFactory.player.pause();
                 }
-
-                // SC.stream(obj, function(player){
-                //   player.start();
-                // });
-                // if(obj === 'playing'){
-                //  // musicInstance.playSound('http://users.skynet.be/fa046054/home/P22/track22.mp3', true);
-
-                // }
-                // if(obj === 'pausing'){
-
-                //   musicInstance.playSound.pause();
-                // }
-
             });
         }
     ])
@@ -202,4 +205,27 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
                 });
             }
         }
-    }]);
+    }])
+    .factory('soundService', function($http) {
+        getArtist = function(tracknumber) {
+            $http({
+                    method: 'GET',
+                    url: 'https://api.soundcloud.com/tracks/' + tracknumber + '.json?consumer_key=8af4a50e36c50437ca44cd59756301ae'
+                })
+                .then(function success(response) {
+                        console.log(response);
+                        console.log(response.data.title);
+                        console.log(response.data.artwork_url);
+                        console.log(response.data.id);
+                        return response;
+
+                    },
+                    function error(response) {
+                        console.log('failure', response);
+                    });
+
+        };
+        return {
+            getArtist: getArtist
+        };
+    });

@@ -3,12 +3,20 @@
     <div class="logoPos">
         <img class="logo text-center" src="../assets/uHerd.me-logo.png">
     </div>
+    <!-- Search field -->
+    <div class="searchArtists">
+        <form ng-submit="findArtist()">
+            <input type="text" ng-model="searchArtist" class="form-control input-lg inputSearch" placeholder="Search for one of our {{ options }}" />
+        </form>
+    </div>
+    <!-- Chats -->
     <div class="chats">
-        <!-- Populate Messages -->
+        <!-- Populate Messages li-->
+        <p class="isTyping">{{typingMessage}}</p>
         <ul class="well" id="messages">
-            <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}<br></li>
+            <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
         </ul>
-        <!-- submit Chats -->
+        <!-- Submit Message -->
         <form ng-submit="chatSend()" class="msgInput">
             <input type="text" ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" autofocus/>
         </form>

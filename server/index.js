@@ -31,22 +31,22 @@ io.on('connection', function(socket){
   });
 
   socket.on('chat message', function(msg){
-    var obj = {};
-    obj['message'] = msg;
-    io.emit('chat message', socket['name'] + ": " + msg);
+    // var obj = {};
+    // obj['message'] = msg;
+    io.emit('chat message', msg.username + ': ' + msg.msg);
   });
 
   // when the client emits 'typing', we broadcast it to others
-  socket.on('typing', function () {
+  socket.on('typing', function (data) {
     socket.broadcast.emit('typing', {
-      name: socket.name
+      name: data
     });
   });
   
   // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', function () {
+  socket.on('stop typing', function (data) {
     socket.broadcast.emit('stop typing', {
-      username: socket.name
+      name: data
     });
   });
 

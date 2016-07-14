@@ -1,5 +1,5 @@
-appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'userName', 'soundService',
-  function($scope, socket, playerFactory, userName, soundService) {
+appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies',
+  function($scope, socket, playerFactory, soundService, $cookies) {
 
     //A container to store audio's information for DOM manipulation 
     $scope.playListFinal = [];
@@ -112,7 +112,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     $scope.typing = false;
     $scope.TYPING_TIMER_LENGTH = 4000; // this is how quick the "[other user] is typing" message will go away
     $scope.chatSend = function() {
-      socket.emit('chat message', $scope.chatMsg);
+      socket.emit('chat message', {username: $cookies.get('username'), msg: $scope.chatMsg});
       $scope.chatMsg = '';
       return false;
     }
@@ -125,7 +125,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
     $scope.updateTyping = function() {
       $scope.typing = true;
-      socket.emit('typing', userName.name);
+      socket.emit('typing', $cookies.get('username'));
       var lastTypingTime = (new Date()).getTime();
 
       setTimeout(function() {
@@ -157,14 +157,14 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 ])
 
 // *************************** Landing page Controller ********************************
-.controller('LandingPage', ['$scope', '$location', 'userName', 'socket', 
-  function($scope, $location, userName, socket) {
-    var name = '';
+.controller('LandingPage', ['$scope', '$location', 'socket', '$cookies',
+  function($scope, $location, socket, $cookies) {
+    // var name = '';
     $scope.submit = function() {
       if ($scope.text) {
-        name = userName.user(this.text);
+        $cookies.put('username', $scope.text);
       }
-      socket.emit('username', userName.name);
+      socket.emit('username', $cookies.get('username'));
       $location.path('/home', false)
     }
   }
@@ -224,14 +224,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
   };
 })
 
-// ************************************ Username Factory ********************************
-.factory('userName', function() {
-  var userSet = {};
-  userSet.name = '';
-  userSet.user = function(userVal) {
-    userSet.name = userVal;
-  };
-  return userSet;
-});
+
 
 

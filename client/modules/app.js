@@ -12,4 +12,4 @@ appPlayer.config(function($routeProvider) {
         .otherwise({
             redirectTo: '/'
         });
-});
+})

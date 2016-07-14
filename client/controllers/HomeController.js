@@ -71,10 +71,10 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
     // ******** LISTENS to emitted events ********
     socket.on("playNpause", function(obj){
-      //REGEX to filter out only the '/tracks/track_number'
-      obj.id = obj.id.match(/\/tracks\/\d*/g);
 
       if(obj.status === "play"){
+        //REGEX to filter out only the '/tracks/track_number'
+        obj.id = obj.id.match(/\/tracks\/\d*/g);
         //fetches audio object for the provided track ID
         SC.stream(obj.id, function(audioObj) {
           playerFactory.curSong = audioObj;

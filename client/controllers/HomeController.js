@@ -2,22 +2,58 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
   function($scope, socket, playerFactory, userName, soundService) {
 
     //initializing with the first 
-    playerFactory.player = playerFactory.playlist[0];
+   // playerFactory.player = playerFactory.playlist[0];
     $scope.playSong = playerFactory;
-    $scope.pList = playerFactory.pList;
+    //$scope.pList = playerFactory.pList;
+    $scope.playListFinal = [];
 /*
 *
 *
 *
 *
 */
+    $scope.findArtist = function() {
+         console.log($scope.searchArtist);
+         if ($scope.searchArtist.indexOf(' ') !== -1) {
+             $scope.searchArtist = $scope.searchArtist.replace(' ', '-');
+         }
+        soundService.getArtist($scope.searchArtist).then(function success(response, err){
+              if(err) throw err;
+               console.log(response);
+               console.log(response.data.title);
+               console.log(response.data.artwork_url);
+               console.log(response.data.id);
+               $scope.playListFinal.push({
+                  id: '/tracks/'+response.data.id, 
+                  title: response.data.title, 
+                  artwork: response.data.artwork_url
+                  /*, isPlaying: false */
+                });
+                soundService.playList.push({
+                  id: '/tracks/'+response.data.id, 
+                });
+                console.log('BEFORE~~~~~~~~soundService.playList', soundService.playList);
+               // SC.stream($scope.playListFinal[0].id, function(curSong) {
+               //  // playerFactory.curSong = curSong;
+               //   console.log(curSong);
+               //  soundService.playList.push(curSong);
+               // })
+              
+               return response;
+        });
+        $scope.searchArtist = '';
+      };
+
+
+
+  playerFactory.isPlaying = false;
   //PLAY, NEXT AND PAUSE FUNCTIONS
     //takes an arugment which is equivalent to playerFactory
     //'playerFact' refers to "playerFactory"
     $scope.play = function() {
-      if(playerFactory.player && !playerFactory.isPlaying) {
+      if(soundService.playList[0] && !playerFactory.isPlaying) {
         socket.emit("playNpause", {
-          id: playerFactory.player.id,
+          id: soundService.playList[0].id,
           status: 'play'
         });
       }
@@ -30,21 +66,10 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 */
     $scope.next = function() {
       socket.emit("playNpause", {
-        id: playerFactory.player.id,
+        id: soundService.playList[0].id,
         status: 'next'
       });
     }
-
-
-
-    $scope.findArtist = function() {
-         console.log($scope.searchArtist);
-         if ($scope.searchArtist.indexOf(' ') !== -1) {
-             $scope.searchArtist = $scope.searchArtist.replace(' ', '-');
-         }
-        soundService.getArtist($scope.searchArtist);
-        $scope.searchArtist = '';
-     }
 /*
 *
 *
@@ -54,7 +79,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     $scope.pause = function() {
       if(playerFactory.isPlaying) { 
         socket.emit("playNpause", {
-          id: playerFactory.player.id,
+          id: soundService.playList[0].id,
           status: 'pause'
         });
       }
@@ -71,11 +96,16 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     socket.on("playNpause", function(obj){
       obj.id = obj.id.match(/\/tracks\/\d*/g);
       if(obj.status === "play"){
-       console.log(playerFactory.player.id, 'ON PLAY~~~~~~~~~~~~ON PLAY~~~~~~~~~~~~ON PLAY')
-        playerFactory.isPlaying = true;
-        playerFactory.player.play();
-        playerFactory.player._onfinish = function() {
-          if (playerFactory.playlist.length === 1) {
+       //console.log(playerFactory.curSong.data.id, 'ON PLAY~~~~~~~~~~~~ON PLAY~~~~~~~~~~~~ON PLAY')
+        SC.stream(obj.id, function(audioObj) {
+              playerFactory.curSong = audioObj;
+              playerFactory.curSong.play();
+              playerFactory.isPlaying = true;
+        })
+        
+        // playerFactory.curSong.play();
+        playerFactory.curSong._onfinish = function() {
+          if (soundService.playlist.length === 1) {
             console.log('PlayList');
           } else {
             $scope.next();
@@ -83,18 +113,20 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
         };
       } 
       if(obj.status === "pause"){
-        console.log(playerFactory.player.id, "ON PAUSE~~~~~~~~~~~~ON PAUSE~~~~~~~~~~~~ON PAUSE");
+        console.log(playerFactory.curSong.id, "ON PAUSE~~~~~~~~~~~~ON PAUSE~~~~~~~~~~~~ON PAUSE");
         playerFactory.isPlaying = false;
-        playerFactory.player.pause();
+        playerFactory.curSong.pause();
       }
       if (obj.status === 'next') {
-        console.log(playerFactory.player.id, "ON NEXT~~~~~~~~~~~~ON NEXT~~~~~~~~~~~~ON NEXT");
-        playerFactory.player.stop();
-        playerFactory.isPlaying = false;
-        playerFactory.playlist.shift();
-        playerFactory.player = playerFactory.playlist[0];
-        playerFactory.isPlaying = true;
-        playerFactory.player.play();
+          playerFactory.curSong.stop();
+          playerFactory.isPlaying = false;
+         console.log('AFTER~~~~~~~~soundService.playList', soundService.playList);
+          soundService.playList.shift();
+         $scope.play();
+        //.log(playerFactory.curSong.id, "ON NEXT~~~~~~~~~~~~ON NEXT~~~~~~~~~~~~ON NEXT");
+        // playerFactory.curSong = soundService.playlist[0];
+        // playerFactory.isPlaying = true;
+        // playerFactory.curSong.play();
       }
     });
 /*
@@ -143,6 +175,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 *
 *
 */
+
+ 
     // Whenever the server emits 'typing', show the typing message
     socket.on('typing', function(data) {
 
@@ -187,9 +221,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 //playlist factory
 .factory('playerFactory', function() {
   var singleton = {};
-  singleton.player = null;
-  singleton.playlist = [];  
-  singleton.pList = [];    
+  //changed from player
+  singleton.curSong = null;
   singleton.isPlaying = false;
 
   //testing code to populate the playlist
@@ -197,14 +230,14 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
       client_id: '8af4a50e36c50437ca44cd59756301ae'
     });
     //populates playlist array with 4 player/track objects
-    // singleton.pList = ["/tracks/293", "/tracks/291", "/tracks/299", "/tracks/290", "/tracks/297"]
-    singleton.pList = [{track: '/tracks/293', title: 'Crazy woman', artwork: 'https://i1.sndcdn.com/artworks-000067273316-smsiqx-large.jpg'} , {track: '/tracks/291', title: 'Crazy woman', artwork: 'https://i1.sndcdn.com/artworks-000067273316-smsiqx-large.jpg'}];
-    for (var i = 0; i < singleton.pList.length; i++) {
-      SC.stream(singleton.pList[i].track, function(audioObj) {
-        // audioObj.creatId = pList[i];
-        singleton.playlist.push(audioObj);
-      })
-    }
+    // singleton.info = ["/tracks/293", "/tracks/291", "/tracks/299", "/tracks/290", "/tracks/297"]
+    // singleton.info = [{track: '/tracks/293', title: 'Crazy woman', artwork: 'https://i1.sndcdn.com/artworks-000067273316-smsiqx-large.jpg'} , {track: '/tracks/291', title: 'Crazy woman', artwork: 'https://i1.sndcdn.com/artworks-000067273316-smsiqx-large.jpg'}];
+    // for (var i = 0; i < singleton.info.length; i++) {
+    //   SC.stream(singleton.info[i].track, function(audioObj) {
+    //     // audioObj.creatId = info[i];
+    //     this.playListFinal.push(audioObj);
+    //   })
+    // }
   return singleton;
 })
 /*
@@ -255,54 +288,17 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 })
 
 .factory('soundService', function($http) {
-       
+  var playList = [];
+  var getArtist = function(tracknumber) {
+     return $http({
+       method: 'GET',
+       url: 'https://api.soundcloud.com/tracks/' + tracknumber + '.json?consumer_key=8af4a50e36c50437ca44cd59756301ae'
+     });
+   };
+   return  {
+     getArtist: getArtist,
+     playList: playList
+   };
 
-       getArtist = function(tracknumber) {
-           $http({
-               method: 'GET',
-               url: 'https://api.soundcloud.com/tracks/' + tracknumber + '.json?consumer_key=8af4a50e36c50437ca44cd59756301ae'
-           })
-           .then(function success(response){
-               console.log(response);
-               console.log(response.data.title);
-               console.log(response.data.artwork_url);
-               console.log(response.data.id);
-               return response;
-
-           },
-               function error(response){
-                   console.log('failure', response);
-           });
-
-       };
-       return  {
-           getArtist: getArtist
-       };
-   })
-.factory('soundService', function($http) {
-       
-
-       getArtist = function(tracknumber) {
-           $http({
-               method: 'GET',
-               url: 'https://api.soundcloud.com/tracks/' + tracknumber + '.json?consumer_key=8af4a50e36c50437ca44cd59756301ae'
-           })
-           .then(function success(response){
-               console.log(response);
-               console.log(response.data.title);
-               console.log(response.data.artwork_url);
-               console.log(response.data.id);
-               playerFactory.plist.push({track: '/tracks/'+response.data.id, title: response.data.title, artwork: response.data.artwork_url});
-               return response;
-
-           },
-               function error(response){
-                   console.log('failure', response);
-           });
-
-       };
-       return  {
-           getArtist: getArtist
-       };
-   });
+});
 

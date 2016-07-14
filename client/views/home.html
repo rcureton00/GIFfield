@@ -68,7 +68,7 @@ showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off buttonColor sho
       <div class="well playListBorder">
           <span class="innerPlayList">Playlist</span>
           <hr class="separator">
-          <div ng-repeat='tracks in pList track by $index'>
+          <div ng-repeat='tracks in playListFinal'>
             <ul class="tracks">
                 <li ng-click='letsPlay()'><img src="{{tracks.artwork}}" />{{tracks.title}} </li>
             </ul>

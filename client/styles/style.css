@@ -281,6 +281,7 @@ body {
 
 .title {
   position: absolute;
+  transform: translate(-50%, 0);
   background: none;
   top: 1%;
   left: 50%;

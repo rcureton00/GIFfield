@@ -18,21 +18,13 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
 
   socket.on('playNpause', function(cb){
-    console.log('SERVER CAUGHT', cb);
     io.emit('playNpause', cb);
   });
 
-  socket.on('playNpause', function(cb){
-    console.log('SERVER CAUGHT', cb);
-    io.emit('playNpause', cb);
-  });
-
-  socket.on('username', function(name){
-    console.log(name);
+  socket.on('username', function(name) {
     // if(addedUser){return; };
     socket['name'] = name;
     // addedUser = true;
-
     // socket.broadcast.emit('user joined', {
     //   username: socket.name
     // })
@@ -42,16 +34,15 @@ io.on('connection', function(socket){
     var obj = {};
     obj['message'] = msg;
     io.emit('chat message', socket['name'] + ": " + msg);
-    console.log('message: ' + msg);
   });
 
   // when the client emits 'typing', we broadcast it to others
   socket.on('typing', function () {
-    // socket.broadcast.emit('typing', {
     socket.broadcast.emit('typing', {
       name: socket.name
     });
   });
+  
   // when the client emits 'stop typing', we broadcast it to others
   socket.on('stop typing', function () {
     socket.broadcast.emit('stop typing', {
@@ -60,7 +51,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    // console.log('user disconnected');
   });
 });
 

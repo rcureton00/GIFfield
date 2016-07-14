@@ -20,7 +20,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
                 return setInterval(function() {
                     var popped = option.pop();
                     $scope.options = popped;
-                    console.log($scope.options);
+                    // console.log($scope.options);
                     $scope.$apply();
                     option.unshift(popped);
                 }, 3000);
@@ -81,11 +81,26 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
             socket.on('chat message', function(msg) {
                 $scope.chatMessages.push(msg);
-
+                $scope.leftOrRight();
                 $scope.overflowCtrl();
-                console.log($scope.chatMessages);
-
             });
+
+            $scope.leftOrRight = function (){
+                $scope.chatMessages.forEach( function (msg){
+                    let whichUser = msg.split(':')[0];
+                    if(whichUser===userName.name){
+                        console.log("this message should float left");
+                        var myEl = angular.element(document.querySelector('.message'));
+                        myEl.removeClass('them');
+                        myEl.addClass('me');
+                    } else {
+                        console.log("this message should float right");
+                        var myEl = angular.element(document.querySelector('.message'));
+                        myEl.removeClass('me');
+                        myEl.addClass('them');
+                    }
+                });
+            }   
 
             $scope.updateTyping = function() {
                 $scope.typing = true;
@@ -104,7 +119,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
 
             // Scroll bottom function
             $scope.overflowCtrl = function() {
-                console.log("$scope.overflowCtrl");
                 window.setTimeout(function() {
                     var elem = document.getElementById('messages');
                     elem.scrollTop = elem.scrollHeight;

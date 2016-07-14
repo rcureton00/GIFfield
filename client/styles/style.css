@@ -5,6 +5,19 @@ body {
     background: rgba(0, 128, 0, 0.68);
 }
 
+.me {
+    display: inline-block;
+    float: left;
+    clear: left;
+    color: green;
+}
+
+.them {
+    display: inline-block;
+    float: right;
+    clear: right;
+    color: blue;
+}
 
 /*Logo*/
 

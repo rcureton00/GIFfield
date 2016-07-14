@@ -14,7 +14,8 @@
         <!-- Populate Messages li-->
         <p class="isTyping">{{typingMessage}}</p>
         <ul class="well" id="messages">
-            <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
+            <li class="message" ng-repeat="chatMessage in chatMessages track by $index">{{ chatMessage }}</li>
+            <!-- <li class="message" ng-repeat="chatMessage in chatMessages track by $index" ng-class="{true: 'me', false: 'them'}[$scope.username===chatMessage.split(':')[0]]">{{ chatMessage }}</li> -->
         </ul>
         <!-- Submit Message -->
         <form ng-submit="chatSend()" class="msgInput">

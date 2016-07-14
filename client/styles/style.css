@@ -34,14 +34,22 @@ body {
   margin-left: 10px;
   content: "\f04b";
   color: #ff5419;
+  cursor: pointer;
 }
 
 .fa-pause:before {
   margin-left: 6px;
   content: "\f04c";
   color: #ff5419;
+  cursor: pointer;
 }
 
+.fa-next:before {
+  margin-left: 6px;
+  content: "\f050";
+  color: #ff5419;
+  cursor: pointer;
+}
 
 /*Volume*/
 
@@ -73,13 +81,14 @@ body {
 
 
 /*Player Settings*/
-
+.showNext,
 .showPlay,
 .showPause {
   position: absolute;
   margin-top: 1%;
   border-radius: 100%;
-  border-bottom: 1px solid #ff5419;
+  border-right: 2px solid #ff5419;
+  border-bottom: 2px solid #ff5419;
   padding: 10px;
   width: 70px;
   background: none;
@@ -90,6 +99,9 @@ body {
 
 .showPause {
   margin-left: 105px;
+}
+.showNext {
+  margin-left: 195px;
 }
 
 /*App title*/
@@ -199,6 +211,10 @@ body {
   background: #80ccff;
   border-radius: 5px;
   float: bottom;
+}
+
+.chatInputField {
+  background: #80ccff;
 }
 
 

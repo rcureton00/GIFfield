@@ -4,6 +4,19 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'us
     //A container to store audio's information for DOM manipulation 
     $scope.playListFinal = [];
 
+    // Dynamic placeholder generator
+    $scope.$on('$routeChangeSuccess', function() {
+      var option = ['Artists', 'Songs', 'Albums', 'Playlists'];
+      $scope.options = option[0];
+      return setInterval(function() {
+        var popped = option.pop();
+        $scope.options = popped;
+        // console.log($scope.options);
+        $scope.$apply();
+        option.unshift(popped);
+      }, 3000);
+    });
+
     //fetches the audio object from SoundCloud
     $scope.findArtist = function() {
       if ($scope.searchArtist.indexOf(' ') !== -1) {

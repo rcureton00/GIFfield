@@ -17,9 +17,13 @@
   },
   "homepage": "https://github.com/clefnetwork/GIFfield#readme",
   "dependencies": {
-    "angular": "^1.5.7",
     "body-parser": "^1.15.2",
+    "chai": "^3.5.0",
     "express": "^4.14.0",
-    "request": "^2.72.0"
+    "http": "0.0.0",
+    "mocha": "^2.5.3",
+    "request": "^2.72.0",
+    "socket.io": "^1.4.8",
+    "soundcloud": "^3.1.2"
   }
 }

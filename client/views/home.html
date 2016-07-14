@@ -1,0 +1,55 @@
+<!-- Full page wrapper-->
+<div class='fullPage'>
+  <div class="logoPos">
+    <img class="logo text-center" src="../assets/uHerd.me-logo.png">
+  </div>
+
+  <!-- Search field -->
+    <div class="searchArtists">
+        <form ng-submit="findArtist()">
+            <input type="text" ng-model="searchArtist" class="form-control input-lg inputSearch" placeholder="Search {{ options }}" />
+        </form>
+    </div>
+
+    <!-- Populate Messages -->
+  <div class="chats">
+    <p class="isTyping">{{typingMessage}}</p>
+    <ul class="well" id="messages">
+      <li class="message" ng-repeat="chatMessage in chatMessages track by $index"> {{ chatMessage }}</li>
+    </ul>
+    <!-- Submit Message -->
+    <form ng-submit="chatSend()" class="msgInput">
+      <input class="chatInputField" type="text" ng-change="updateTyping()" ng-model="chatMsg" placeholder="Type Message Here and Press Enter" autocomplete="off" autofocus/>
+    </form>
+  </div>
+
+  <!-- **************  PLAYER   ******************-->
+  <div class='player'>
+    <div class="windowImg">
+      <img class='songCover' src="{{playListFinal[0].artwork}}">
+      <div class="btnWrapper">
+        <div class="playButton">
+          <i class="fa fa-play fa-3x showPlay buttonColor" ng-click="play()" aria-hidden="true"></i>
+        </div>
+        <div class="pauseButton">
+          <i class="fa fa-pause fa-3x showPause buttonColor" ng-click="pause()" aria-hidden="true"></i>
+        </div>
+        <div class="nextButton">
+          <i ng-click="next()"" class="fa fa-next fa-3x showNext buttonColor" aria-hidden="true"></i>
+        </div>
+        <!--  <button class='stop'><i class="fa fa-stop fa-1x buttonColor" aria-hidden="true"></i></button> -->
+        <div class='volume'><i class="fa fa-volume-up fa-2x buttonColor showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down fa-2x buttonColor
+showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x buttonColor showMuteVolume" aria-hidden="true"></i></div>
+    </div>
+    <div class="well playListBorder">
+        <span class="innerPlayList">Playlist</span>
+        <hr class="separator">
+        <div ng-repeat='tracks in playListFinal'>
+            <ul class="tracks">
+                <li ng-click='letsPlay()'><img src="{{tracks.artwork}}" />{{tracks.title}} </li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

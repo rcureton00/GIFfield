@@ -1,0 +1,21 @@
+{
+  "name": "giffield",
+  "description": "Gif Library",
+  "main": "index.js",
+  "authors": [
+    "elifaz <zafile3@hotmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Elifaz/GIFfield",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-audio": "^1.7.2",
+    "angular-cookies": "^1.5.7"
+  }
+}

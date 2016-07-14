@@ -1,13 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="giffieldapp">
+<html lang="en" ng-app="MusicPlayer">
+
 <head>
   <meta charset="UTF-8">
-  <title>GifField</title>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script> -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js'></script>
-  <script src="/config.js"></script>
+  <title>uHerd.me</title>
+
+  <!-- *************** PRETTIES ***************** -->
+  <!-- jQuery ***** (NEEDS TO BE BEFORE THE PAGE TRANSITIONS) ***** -->
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+  <!-- Font awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <!-- Bootstrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles/style.css">
+  <!-- Page transitions -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.js"></script>
+
+
+  <!-- *************** Angular *************** -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
+  <!-- Angular-route -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.js"></script>
+  <!-- Angular-Cookies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-cookies.min.js"></script>
+
+  <!-- *************** MISC. *************** -->
+  <!-- Socket IO -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+  <!-- SOUNDCLOUD SDK -->
+  <script src="https://connect.soundcloud.com/sdk.js"></script>
+  <!-- SoundManager2 -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/script/soundmanager2.js"></script>
+
+  <!-- *************** OUR SCRIPTS ***************** -->
+  <!-- Modules -->
+  <script src="modules/app.js"></script>
+  <!-- Controllers -->
+  <script src="controllers/HomeController.js"></script>
 </head>
-<body ng-controller="mainController">
-  <p>{{ name }}</p>
+
+<body>
+  <!-- Single View -->
+  <div ng-view></div>
 </body>
+
 </html>

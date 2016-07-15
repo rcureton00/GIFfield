@@ -2,6 +2,9 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
   function($scope, socket, playerFactory, soundService, $cookies) {
 
     
+    socket.on('connect', function(){
+      console.log("i connected");
+    });
     // Dynamic placeholder generator - Displays in search bar: search for songs, artists, albums
     //continues to run throughout
    $scope.$on('$routeChangeSuccess', function() {
@@ -59,7 +62,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     $scope.play = function() {
       if( $scope.playListFinal[0] && !playerFactory.isPlaying) {
         socket.emit("playNpause", {
-       //   id:  $scope.playListFinal[0].id,
+          //use id to pass to server for people who join song midtrack
+          id: $scope.playListFinal[0].id,
           status: 'play'
         });
       }
@@ -135,6 +139,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     }
 
     $scope.chatMessages = [];
+
+
 
     socket.on('chat message', function(msg) {
       $scope.chatMessages.push(msg);

@@ -14,13 +14,24 @@ app.get('/', function(req, res){
 
 });
 
+//persist current song
+var currentSong = "";
+
 
 io.on('connection', function(socket){
+
+  console.log("I just connected", currentSong + " is playing");
+
+
   socket.on('findArtist', function(cb){
     io.emit('findArtist', cb);
   });
 
   socket.on('playNpause', function(cb){
+    if(cb.status === 'play'){
+      console.log('status was play', cb.id);
+      currentSong = cb.id;
+    }
     io.emit('playNpause', cb);
   });
 

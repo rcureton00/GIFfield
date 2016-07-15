@@ -22,15 +22,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       if ($scope.searchArtist.indexOf(' ') !== -1) {
         $scope.searchArtist = $scope.searchArtist.replace(' ', '-');
       }
-      soundService.getArtist($scope.searchArtist).then(function success(response, err){
-        if(err) throw err;
-        //Container to show audio information on the DOM
-        $scope.playListFinal.push({
-          id: '/tracks/'+response.data.id, 
-          title: response.data.title, 
-          artwork: response.data.artwork_url
-        });
-      });
+      socket.emit('findArtist', {query: $scope.searchArtist});
+      
       //clear the input field on DOM
       $scope.searchArtist = '';
     };
@@ -45,7 +38,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     $scope.play = function() {
       if( $scope.playListFinal[0] && !playerFactory.isPlaying) {
         socket.emit("playNpause", {
-          id:  $scope.playListFinal[0].id,
+          // id:  $scope.playListFinal[0].id,
           status: 'play'
         });
       }
@@ -70,9 +63,23 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     }
 
     // ******** LISTENS to emitted events ********
+    socket.on('findArtist', function(obj) {
+      soundService.getArtist(obj.query).then(function success(response, err){
+        if(err) throw err;
+        //Container to show audio information on the DOM
+        $scope.playListFinal.push({
+          id: '/tracks/'+response.data.id, 
+          title: response.data.title, 
+          artwork: response.data.artwork_url
+        });
+      });
+    });
+
+
     socket.on("playNpause", function(obj){
 
       if(obj.status === "play"){
+        obj.id = $scope.playListFinal[0].id;
         //REGEX to filter out only the '/tracks/track_number'
         obj.id = obj.id.match(/\/tracks\/\d*/g);
         //fetches audio object for the provided track ID

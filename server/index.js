@@ -16,6 +16,10 @@ app.get('/', function(req, res){
 
 
 io.on('connection', function(socket){
+  socket.on('findArtist', function(cb) {
+    io.emit('findArtist', cb);
+  });
+  
 
   socket.on('playNpause', function(cb){
     io.emit('playNpause', cb);

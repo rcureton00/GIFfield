@@ -110,6 +110,7 @@ body {
 .btnWrapper:hover {
     border-top: 1px solid #ff5419;
 }
+
 /*Playlist*/
 .playList {
     overflow: scroll;
@@ -306,12 +307,23 @@ body {
 .isTyping {
     font-size: 2em;
     position: absolute;
-    right: 21%;
+    font-size: 1em;
     z-index: 9999;
     font-weight: 300;
     top: 94%;
     background: none;
     color: rgb(255, 84, 25);
+}
+
+
+.isTyping {
+    right: 21%;
+}
+
+.dotDot {
+    display: block;
+    text-align: left;
+    right: 17%;
 }
 /*Landing page*/
 .landingLogo {

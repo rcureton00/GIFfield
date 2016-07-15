@@ -46,7 +46,7 @@ showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x buttonCol
         <hr class="separator">
         <div ng-repeat='tracks in playListFinal'>
             <ul class="tracks">
-                <li ng-click='letsPlay()'><img src="{{tracks.artwork}}" />{{tracks.title}} </li>
+                <li ng-click='letsPlay()'><i ng-click='rmvPlayListItem(this.tracks)' class='fa fa-times' aria-hidden="true"'></i><img src="{{tracks.artwork}}" />{{tracks.title}} </li>
             </ul>
         </div>
       </div>

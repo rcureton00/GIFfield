@@ -4,48 +4,46 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     //A container to store audio's information for DOM manipulation 
     $scope.playListFinal = [];
 
-    // Dynamic placeholder generator
-    $scope.$on('$routeChangeSuccess', function() {
-      var option = ['Artists', 'Songs', 'Albums', 'Playlists'];
-      $scope.options = option[0];
-      return setInterval(function() {
-        var popped = option.pop();
-        $scope.options = popped;
-        // console.log($scope.options);
-        $scope.$apply();
-        option.unshift(popped);
-      }, 3000);
-    });
+    $scope.rmvPlayListItem = function(event) {
+      for(let i=0; i<$scope.playListFinal.length; i++){
+        if(event.id === $scope.playListFinal[i].id){
+          $scope.playListFinal.splice(i, 1);
+        }
+      }
+    };
 
     //fetches the audio object from SoundCloud
     $scope.findArtist = function() {
       if ($scope.searchArtist.indexOf(' ') !== -1) {
         $scope.searchArtist = $scope.searchArtist.replace(' ', '-');
       }
-      soundService.getArtist($scope.searchArtist).then(function success(response, err){
-        if(err) throw err;
-        //Container to show audio information on the DOM
-        $scope.playListFinal.push({
-          id: '/tracks/'+response.data.id, 
-          title: response.data.title, 
-          artwork: response.data.artwork_url
-        });
-      });
-      //clear the input field on DOM
+      socket.emit('findArtist', {query: $scope.searchArtist});
+
+    //clear the input field on DOM
       $scope.searchArtist = '';
     };
+      // ******** LISTENS to emitted events ********
+    socket.on('findArtist', function(obj) {
+      soundService.getArtist(obj.query).then(function success(response, err){
+       if(err) throw err;
+      //Container to show audio information on the DOM
+       $scope.playListFinal.push({
+        id: '/tracks/'+response.data.id, 
+        title: response.data.title, 
+        artwork: response.data.artwork_url
+        });
+      });
+    });
 
 
     //set the flag to false initially
     playerFactory.isPlaying = false;
 
-    
-
     //on clicking play we emit the ID and the status for clients to listen to and act upon
     $scope.play = function() {
       if( $scope.playListFinal[0] && !playerFactory.isPlaying) {
         socket.emit("playNpause", {
-          id:  $scope.playListFinal[0].id,
+       //   id:  $scope.playListFinal[0].id,
           status: 'play'
         });
       }
@@ -55,7 +53,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     $scope.pause = function() {
       if(playerFactory.isPlaying) { 
         socket.emit("playNpause", {
-          id:  $scope.playListFinal[0].id,
+          //id:  $scope.playListFinal[0].id,
           status: 'pause'
         });
       }
@@ -64,45 +62,48 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     //on clicking next, we emit id and status to change song on all devices
     $scope.next = function() {
       socket.emit("playNpause", {
-        id:  $scope.playListFinal[0].id,
+       // id:  $scope.playListFinal[0].id,
         status: 'next'
       });
     }
 
-    // ******** LISTENS to emitted events ********
-    socket.on("playNpause", function(obj){
-      //REGEX to filter out only the '/tracks/track_number'
+  
+
+
+   socket.on("playNpause", function(obj){
+    if(obj.status === "play"){
+      obj.id = $scope.playListFinal[0].id;
+    //REGEX to filter out only the '/tracks/track_number'
       obj.id = obj.id.match(/\/tracks\/\d*/g);
-
-      if(obj.status === "play"){
-        //fetches audio object for the provided track ID
-        SC.stream(obj.id, function(audioObj) {
-          playerFactory.curSong = audioObj;
-          playerFactory.isPlaying = true;
-          playerFactory.curSong.play();
-        })  
-        playerFactory.curSong._onfinish = function() {
-          if ($scope.playListFinal.length === 1) {
-            alert('Looks like there is nothing to play. Add some more songs and try again!')
-          } else {
-            $scope.next();
-          }
-        };
-      } 
-      if(obj.status === "pause"){
-        playerFactory.isPlaying = false;
-        playerFactory.curSong.pause();
+    //fetches audio object for the provided track ID
+      SC.stream(obj.id, function(audioObj) {
+        playerFactory.curSong = audioObj;
+        console.log('audioobj', audioObj);
+        playerFactory.isPlaying = true;
+        playerFactory.curSong.play();
+      });  
+    playerFactory.curSong._onfinish = function() {
+      if ($scope.playListFinal.length === 1) {
+        alert('Looks like there is nothing to play. Add some more songs and try again!')
+      } else {
+        $scope.next();
       }
-      if (obj.status === 'next') {
-        playerFactory.isPlaying = false;
-        playerFactory.curSong.stop();
+    };
+  } 
+  if(obj.status === "pause"){
+    playerFactory.isPlaying = false;
+    playerFactory.curSong.pause();
+  }
+  if (obj.status === 'next') {
+    playerFactory.isPlaying = false;
+    playerFactory.curSong.stop();
 
-        //removes the curent audio Object
-        $scope.playListFinal.shift();
-        //calls the play function on the new audio Object
-        $scope.play();
-      }
-    });
+    //removes the curent audio Object
+    $scope.playListFinal.shift();
+    //calls the play function on the new audio Object
+    $scope.play();
+  }
+});
 
 
     //chat controller socket module
@@ -167,14 +168,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
      socket.emit('username', $cookies.get('username'));
      $location.path('/home', false);
      }
-
-    // $scope.submit = function() {
-    //   if ($scope.text) {
-    //     name = userName.user(this.text);
-    //   }
-    //   socket.emit('username', userName.name);
-    //   $location.path('/home', false)
-    // }
   }
 ])
 
@@ -206,6 +199,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 })
 
 // ********************************** Player Factory ***********************************
+
+//Maybe PLAYERFACTORY should not be in a factory, it should just be an object
 .factory('playerFactory', function() {
   var singleton = {};
   singleton.curSong = null;

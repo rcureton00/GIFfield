@@ -16,24 +16,19 @@ app.get('/', function(req, res){
 
 
 io.on('connection', function(socket){
+  socket.on('findArtist', function(cb){
+    io.emit('findArtist', cb);
+  });
 
   socket.on('playNpause', function(cb){
     io.emit('playNpause', cb);
   });
 
   socket.on('username', function(name) {
-  //   // if(addedUser){return; };
-  //   socket['name'] = name;
-  //   // addedUser = true;
-  //   // socket.broadcast.emit('user joined', {
-  //   //   username: socket.name
-  socket.name = name.username;
-  //   // })
+    socket.name = name.username;
   });
 
   socket.on('chat message', function(msg){
-    
-    
     io.emit('chat message', msg.username + ": " + msg.msg);
   });
 
@@ -45,9 +40,9 @@ io.on('connection', function(socket){
   });
   
   // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', function () {
+  socket.on('stop typing', function (data) {
     socket.broadcast.emit('stop typing', {
-      //username: socket.name
+      name: data
     });
   });
 

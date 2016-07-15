@@ -1,6 +1,22 @@
 appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', 
   function($scope, socket, playerFactory, soundService, $cookies) {
 
+    
+    // Dynamic placeholder generator - Displays in search bar: search for songs, artists, albums
+    //continues to run throughout
+   $scope.$on('$routeChangeSuccess', function() {
+     var option = ['Artists', 'Songs', 'Albums', 'Playlists'];
+     $scope.options = option[0];
+     return setInterval(function() {
+       var popped = option.pop();
+       $scope.options = popped;
+       $scope.$apply();
+       option.unshift(popped);
+     }, 3000);
+   });
+
+
+
     //A container to store audio's information for DOM manipulation 
     $scope.playListFinal = [];
 

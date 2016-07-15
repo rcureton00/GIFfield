@@ -17,8 +17,7 @@
     <!-- Chats -->
     <div class="chats">
         <!-- Populate Messages li-->
-        <p class="isTyping">{{typingMessage}}</p>
-        <p class="dotDot">{{dot}}</p>
+        <p class="isTyping" ng-show="checkTyping">{{typingMessage}}</p>
         <ul class="well" id="messages">
             <li class="message" ng-repeat="chatMessage in chatMessages track by $index">{{ chatMessage }}</li>
         </ul>

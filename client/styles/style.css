@@ -159,6 +159,8 @@ body {
 
 /*Playlist*/
 
+.emptyList {}
+
 .playList {
     overflow: scroll;
     margin-top: 1%;
@@ -187,17 +189,18 @@ body {
 }
 
 .songCoverPL {
+    border-radius: 1px;
     width: 60px;
-    height: 40px;
+    height: 50px;
     left: 5px;
-    top: 5px;
+    top: 9px;
 }
 
 .tracks {
     position: relative;
     list-style-type: none;
     margin-top: 1%;
-    padding: 3% 0 3% 0;
+    padding: 4.5% 0 4% 0;
     margin-left: -6%;
     right: inherit;
     height: 3%;
@@ -230,8 +233,10 @@ body {
 }
 
 .releaseYear {
-    top: 0;
-    left: 0;
+    margin-top: 0;
+    left: 80%;
+    font-weight: bold;
+    color: #ffa500;
 }
 
 .res {

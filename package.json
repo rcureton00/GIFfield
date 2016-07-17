@@ -18,12 +18,19 @@
   "homepage": "https://github.com/clefnetwork/GIFfield#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
-    "chai": "^3.5.0",
     "express": "^4.14.0",
     "http": "0.0.0",
-    "mocha": "^2.5.3",
     "request": "^2.72.0",
     "socket.io": "^1.4.8",
     "soundcloud": "^3.1.2"
+  },
+   "devDependencies": {
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.1.1",
+    "mocha": "^2.5.3",
+    "chai": "^3.5.0",
+    "karma-phantomjs-launcher": "^1.0.1",
+    "phantomjs": "^2.1.7",
+    "karma-jasmine": "^1.0.2"
   }
 }

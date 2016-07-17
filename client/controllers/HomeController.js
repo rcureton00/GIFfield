@@ -49,7 +49,9 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
        $scope.playListFinal.push({
         id: '/tracks/'+response.data.id, 
         title: response.data.title, 
-        artwork: response.data.artwork_url
+        artwork: response.data.artwork_url,
+        releaseYear: response.data.release_year,
+        name: response.data.user.username
         });
       });
     });

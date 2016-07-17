@@ -3,9 +3,9 @@
     <div class="logoPos">
         <img class="logo text-center" src="../assets/uHerd.me-logo.png">
     </div>
-    <div class="currentSongCvr">
+    <div class="songCover">
         <!-- Point current playing song cover to this logo -->
-        <img class="logo" src="{{defaultCover}}">
+        <img class="logo" src="{{playListFinal[0].artwork}}">
     </div>
     <!-- Search field -->
     <div class="searchArtists">
@@ -19,7 +19,7 @@
         <!-- Populate Messages li-->
         <p class="isTyping" ng-show="checkTyping">{{typingMessage}}</p>
         <ul class="well" id="messages">
-            <li class="message" ng-repeat="chatMessage in chatMessages track by $index">{{ chatMessage }}</li>
+            <li class="message" ng-repeat="chatMessage in chatMessages track by $index" ng-class="chatMessage.split(':')[0] === user ? 'left' : 'right'">{{ chatMessage }}</li>
         </ul>
         <!-- Submit Message -->
         <form ng-submit="chatSend()" class="msgInput">
@@ -30,43 +30,36 @@
     <!-- **************  PLAYER   ******************-->
     <div class='player'>
         <div class="windowImg">
-            <img class='songCover' src="{{playListFinal[0].artwork}}" || src="http://cdn.modernfarmer.com/wp-content/uploads/2014/09/cowhero2.jpg">
             <div class="btnWrapper">
                 <div class="playButton">
-                    <i class="fa fa-play fa-3x showPlay buttonColor" ng-click="play()" aria-hidden="true"></i>
+                    <i class="fa fa-play fa-3x showPlay" ng-click="play()" aria-hidden="true"></i>
                 </div>
                 <div class="pauseButton">
-                    <i class="fa fa-pause fa-3x showPause buttonColor" ng-click="pause()" aria-hidden="true"></i>
+                    <i class="fa fa-pause fa-3x showPause" ng-click="pause()" aria-hidden="true"></i>
                 </div>
                 <div class="nextButton">
-                    <i ng-click="next()" " class="fa fa-next fa-3x showNext buttonColor " aria-hidden="true "></i>
-              </div>
-
-            <div class='volume'>
-              <i class="fa fa-volume-up fa-2x buttonColor showFullVolume " aria-hidden="true "></i><i class="fa fa-volume-down fa-2x buttonColor showMidVolume " aria-hidden="true "></i><i class="fa fa-volume-off fa-2x buttonColor showMuteVolume " aria-hidden="true "></i>
+                    <i ng-click="next()" class="fa fa-step-forward fa-3x showNext" aria-hidden="true"></i> </div>
+                <div class='volume'>
+                    <i class="fa fa-volume-up fa-2x showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down fa-2x showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x showMuteVolume" aria-hidden="true"></i>
+                </div>
             </div>
-          </div>
-      </div>
-    </div>
-
-      <div class="playList ">
-        <div class="plTitle ">
-          <p>Playlist</p>
         </div>
-          <hr class="separator ">
-          <div ng-repeat='tracks in playListFinal'>
-              <ul class="tracks ">
-                  <li ng-click='letsPlay()'><i ng-click='rmvPlayListItem(this.tracks)' class='fa fa-times' aria-hidden="true "'></i>
-                    <img src="{{tracks.artwork}} " />{{tracks.title}} 
-                    <p><span class="nas ">Artist: </span><span class="nas ">{{tracks.name}}</span></p>
-                    <div class="releaseYear ">
-                        <p>
-                          <span class="re "> Release Year: </span>
-                          <span class="res ">{{tracks.releaseYear}}</span>
-                        </p>
-                    </div>
-                  </li>
-              </ul>
-          </div>
+    </div>
+    <div class="playList">
+        <div class="plTitle">
+            <p>Playlist</p>
+        </div>
+        <hr class="separator">
+        <div>
+            <ul class="initTrack">
+                <li class="tracks" ng-click='letsPlay()' ng-repeat='track in playListFinal'>
+                    <i ng-click='rmvPlayListItem(this.track)' aria-hidden="true"></i>
+                    <img class="songCoverPL" src="{{track.artwork}}" />
+                    <span class="singerTitle">Title: {{track.title}}</span>
+                    <p><span class="singerName">Artist: {{track.name}}</span></p>
+                    <p><span class="releaseYear">{{track.releaseYear}}</span></p>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

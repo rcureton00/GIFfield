@@ -1,5 +1,5 @@
-appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', 
-  function($scope, socket, playerFactory, soundService, $cookies) {
+appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', 'userName',
+  function($scope, socket, playerFactory, soundService, $cookies, userName) {
 
     
     socket.on('connect', function(){
@@ -18,14 +18,14 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
      }, 3000);
    });
 
-
-
     //A container to store audio's information for DOM manipulation 
     $scope.playListFinal = [];
 
+
     $scope.rmvPlayListItem = function(event) {
-      for(let i=0; i<$scope.playListFinal.length; i++){
-        if(event.id === $scope.playListFinal[i].id){
+      console.log(event);
+      for(var i = 0; i < $scope.playListFinal.length; i++) {
+        if(event.id === $scope.playListFinal[i].id) {
           $scope.playListFinal.splice(i, 1);
         }
       }
@@ -47,9 +47,11 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
        if(err) throw err;
       //Container to show audio information on the DOM
        $scope.playListFinal.push({
-        id: '/tracks/'+response.data.id, 
+        id: '/tracks/' + response.data.id, 
         title: response.data.title, 
-        artwork: response.data.artwork_url,
+        artwork: response.data.artwork_url || 
+                 response.data.user.avatar_url || 
+                 'http://24.media.tumblr.com/3d736df5da284e889c9499756530efc8/tumblr_mno89p9spT1sped3xo1_400.gif',
         releaseYear: response.data.release_year,
         name: response.data.user.username
         });
@@ -131,7 +133,9 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     //chat controller socket module
     //handles emit and listening events
 
-    $scope.user = false;
+    $scope.chatMessages = [];
+    $scope.checkTyping = false;
+    $scope.user = userName.name;
     $scope.typing = false;
     $scope.TYPING_TIMER_LENGTH = 4000; // this is how quick the "[other user] is typing" message will go away
     $scope.chatSend = function() {
@@ -139,10 +143,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       $scope.chatMsg = '';
       return false;
     }
-
-    $scope.chatMessages = [];
-
-
 
     socket.on('chat message', function(msg) {
       $scope.chatMessages.push(msg);
@@ -166,104 +166,31 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     // Whenever the server emits 'typing', show the typing message
     socket.on('typing', function(data) {
       data.typing = true;
+      console.log($scope.user);
       $scope.typingMessage = data.name + " is typing";
-      if (!$scope.chatMessages.includes($scope.typingMessage)) {
-        $scope.chatMessages.push($scope.typingMessage);
-      }
+      $scope.checkTyping = true;
     });
 
     // Whenever the server emits 'stop typing', kill the typing message
     socket.on('stop typing', function(data) {
       data.typing = false;
-      var i = $scope.chatMessages.indexOf($scope.typingMessage);
-      $scope.chatMessages.splice(i, 1);
+      $scope.checkTyping = false;
+      $scope.typingMessage = '';
     });
   }
 ])
 
 // *************************** Landing page Controller ********************************
-.controller('LandingPage', ['$scope', '$location', 'socket', '$cookies',  
-  function($scope, $location, socket, $cookies) {
+.controller('LandingPage', ['$scope', '$location', 'socket', '$cookies', 'userName',
+  function($scope, $location, socket, $cookies, userName) {
     // var name = '';
     $scope.submit = function(){
     if($scope.text){
       $cookies.put('username', $scope.text);
+      userName.user($scope.text);
     }
      socket.emit('username', $cookies.get('username'));
      $location.path('/home', false);
      }
   }
 ])
-
-// ****************************** Socket Factory ***************************************
-.factory('socket', function($rootScope) {
-  var socket = io.connect();
-
-  return {
-    on: function(eventName, callback) {
-      socket.on(eventName, function() {
-        var args = arguments;
-        $rootScope.$apply(function() {
-          callback.apply(socket, args);
-        });
-      });
-    },
-
-    emit: function(eventName, data, callback) {
-      socket.emit(eventName, data, function() {
-        var args = arguments;
-        $rootScope.$apply(function() {
-          if (callback) {
-            callback.apply(socket, args);
-          }
-        })
-      })
-    }
-  };
-})
-// ********************************** Player Factory ***********************************
-//Maybe PLAYERFACTORY should not be in a factory, it should just be an object
-.factory('playerFactory', function() {
-    var singleton = {};
-    singleton.curSong = null;
-    singleton.isPlaying = false;
-    SC.initialize({
-        client_id: '8af4a50e36c50437ca44cd59756301ae'
-    });
-    return singleton;
-})
-// ***************************** Soundservice Factory *********************************
-.factory('soundService', function($http) {
-    var getArtist = function(tracknumber) {
-        //sends a GET request to SoundCloud API with the inputed 'tracknumber'
-        return $http({
-            method: 'GET',
-            url: 'https://api.soundcloud.com/tracks/' + tracknumber + '.json?consumer_key=8af4a50e36c50437ca44cd59756301ae'
-        });
-    };
-
-    //returns getArtist method and playList array -- to populate it when audio Objects (audioObj);
-    return {
-        getArtist: getArtist
-    };
-})
-.factory('userName', function() {
-    var userSet = {};
-    userSet.name = '';
-    userSet.user = function(userVal) {
-        userSet.name = userVal;
-    };
-
-    return userSet;
-}) // autofocus directive, html5 autofocus with doesn't do well with Angular's templates.
-.directive('autofocus', ['$timeout', function($timeout) {
-    return {
-        restrict: 'A',
-        link: function($scope, $element) {
-            $timeout(function() {
-                $element[0].focus();
-            });
-        }
-    }
-
-}]);

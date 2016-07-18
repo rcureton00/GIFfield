@@ -23,13 +23,7 @@ io.on('connection', function(socket){
     io.emit('findArtist', cb);
   });
   
-
   console.log("I just connected", currentSong + " is playing");
-
-
-  socket.on('findArtist', function(cb){
-    io.emit('findArtist', cb);
-  });
 
   socket.on('playNpause', function(cb){
     if(cb.status === 'play'){

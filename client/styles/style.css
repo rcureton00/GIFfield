@@ -96,13 +96,6 @@ body {
     content: "\f027";
 }
 
-.fa-volume-down:before {
-    position: absolute;
-    margin-top: 1%;
-    color: #ff5419;
-    content: "\f027";
-}
-
 
 /*Player Settings*/
 

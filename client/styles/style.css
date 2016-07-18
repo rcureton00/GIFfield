@@ -225,6 +225,7 @@ body {
 .releaseYear {
     top: 0;
     left: 80%;
+    color: orange;
 }
 
 .res {

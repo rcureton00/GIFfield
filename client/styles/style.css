@@ -62,7 +62,7 @@ body {
 }
 
 .fa-step-forward:before {
-    margin-left: 11px;
+    margin-left: 5px;
     content: "\f050";
     color: #ff5419;
 }

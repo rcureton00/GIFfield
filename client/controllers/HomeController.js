@@ -37,32 +37,16 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
         $scope.searchArtist = $scope.searchArtist.replace(' ', '-');
       }
       socket.emit('findArtist', {query: $scope.searchArtist});
-
-    //clear the input field on DOM
+      //clear the input field on DOM
       $scope.searchArtist = '';
     };
-      // ******** LISTENS to emitted events ********
-    socket.on('findArtist', function(obj) {
-      soundService.getArtist(obj.query).then(function success(response, err){
-       if(err) throw err;
-      //Container to show audio information on the DOM
-       $scope.playListFinal.push({
-        id: '/tracks/' + response.data.id, 
-        title: response.data.title, 
-        artwork: response.data.artwork_url || 
-                 response.data.user.avatar_url || 
-                 'http://24.media.tumblr.com/3d736df5da284e889c9499756530efc8/tumblr_mno89p9spT1sped3xo1_400.gif',
-        releaseYear: response.data.release_year,
-        name: response.data.user.username
-        });
-      });
-    });
 
 
     //set the flag to false initially
     playerFactory.isPlaying = false;
 
     //on clicking play we emit the ID and the status for clients to listen to and act upon
+    // old $scope.play
     $scope.play = function() {
       if( $scope.playListFinal[0] && !playerFactory.isPlaying) {
         socket.emit("playNpause", {
@@ -73,83 +57,51 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       }
     }
 
+    // $scope.play = function() {
+    //   console.log("$scope.play()");
+    //   if ($scope.playListFinal[0] && !playerFactory.isPlaying) {
+    //       playerFactory.isPlaying = true;
+    //       $scope.isPlaying = true;
+    //       playerFactory.curSong.play();
+    //       console.log('after play', playerFactory.player.id);
+    //       socket.emit("playNpause", {
+    //           id: playerFactory.player.id,
+    //           status: 'play'
+    //       });
+    //   }
+    // }
+
     //pause emits id and status to pause on all devices
+    // old $scope.pause
     $scope.pause = function() {
       if(playerFactory.isPlaying) { 
         socket.emit("playNpause", {
-          id:  $scope.playListFinal[0].id,
+          // id:  $scope.playListFinal[0].id,
           status: 'pause'
         });
       }
     }
 
+    // $scope.pause = function() {
+    //   if (playerFactory.isPlaying) {
+    //       console.log('player from fac', playerFactory.player);
+    //       playerFactory.isPlaying = false;
+    //       $scope.isPlaying = false;
+    //       playerFactory.curSong.pause();
+    //       socket.emit("playNpause", {
+    //           id: playerFactory.player.id,
+    //           status: 'pause'
+    //       });
+    //   }
+    // }
+
     //on clicking next, we emit id and status to change song on all devices
     $scope.next = function() {
       socket.emit("playNpause", {
-        id:  $scope.playListFinal[0].id,
+       // id:  $scope.playListFinal[0].id,
         status: 'next'
       });
     }
-
-   socket.on("playNpause", function(obj){
-    if(obj.status === "play"){
-      obj.id = $scope.playListFinal[0].id;
-      //REGEX to filter out only the '/tracks/track_number'
-      obj.id = obj.id.match(/\/tracks\/\d*/g);
-      //fetches audio object for the provided track ID
-      SC.stream(obj.id, function(audioObj) {
-        playerFactory.curSong = audioObj;
-        console.log('audioobj', audioObj);
-        playerFactory.isPlaying = true;
-        playerFactory.curSong.play();
-      });  
-      playerFactory.curSong._onfinish = function() {
-        if ($scope.playListFinal.length === 1) {
-          alert('Looks like there is nothing to play. Add some more songs and try again!')
-        } else {
-          $scope.next();
-        }
-      };
-    } 
-    if(obj.status === "pause"){
-      console.log("Obj.status === pause");
-
-      playerFactory.isPlaying = false;
-      playerFactory.curSong.pause();
-    }
-    if (obj.status === 'next') {
-      console.log("Obj.status === next");
-      playerFactory.isPlaying = false;
-      playerFactory.curSong.stop();
-
-      //removes the curent audio Object
-      $scope.playListFinal.shift();
-      //calls the play function on the new audio Object
-      $scope.play();
-    }
-  });
-
-
-    //chat controller socket module
-    //handles emit and listening events
-
-    $scope.chatMessages = [];
-    $scope.checkTyping = false;
-    $scope.user = userName.name;
-    $scope.typing = false;
-    $scope.TYPING_TIMER_LENGTH = 4000; // this is how quick the "[other user] is typing" message will go away
-    
-    $scope.chatSend = function() {
-      socket.emit('chat message', {username: $cookies.get('username'), msg: $scope.chatMsg});
-      $scope.chatMsg = '';
-      $scope.overflowCtrl();
-      return false;
-    }
-
-    socket.on('chat message', function(msg) {
-      $scope.chatMessages.push(msg);
-      $scope.overflowCtrl();
-    });
 
     $scope.updateTyping = function() {
       $scope.typing = true;
@@ -166,13 +118,110 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       }, $scope.TYPING_TIMER_LENGTH);
     };
 
-    // Scroll bottom function
-    $scope.overflowCtrl = function() {
-        window.setTimeout(function() {
-            var elem = document.getElementById('messages');
-            elem.scrollTop = elem.scrollHeight;
-        }, 0);
+    $scope.chatMessages = [];
+    $scope.checkTyping = false;
+    $scope.user = userName.name;
+    $scope.typing = false;
+    // this is how quick the "[other user] is typing" message will go away
+    $scope.TYPING_TIMER_LENGTH = 4000; 
+
+    $scope.chatSend = function() {
+      var msg = JSON.stringify($scope.chatMsg);
+      msg = $.parseJSON(msg);
+      socket.emit('chat message', {username: $cookies.get('username'), msg: msg});
+      $scope.chatMsg = "";
+      $scope.overflowCtrl();
+      return false;
     };
+
+    $scope.overflowCtrl = function(){
+      window.setTimeout(function() {
+        var elem = document.getElementById('messages');
+        elem.scrollTop = elem.scrollHeight;
+      }, 0);
+    };
+
+  
+    // ****************** LISTENS to emitted events *******************
+    socket.on('findArtist', function(obj) {
+      soundService.getArtist(obj.query).then(function success(response, err){
+       if(err) throw err;
+      //Container to show audio information on the DOM
+       $scope.playListFinal.push({
+        id: '/tracks/' + response.data.id, 
+        title: response.data.title, 
+        artwork: response.data.artwork_url || 
+                 response.data.user.avatar_url || 
+                 'http://24.media.tumblr.com/3d736df5da284e889c9499756530efc8/tumblr_mno89p9spT1sped3xo1_400.gif',
+        releaseYear: response.data.release_year,
+        name: response.data.user.username
+        });
+      });
+    });
+
+    socket.on("playNpause", function(obj){
+      if(obj.status === "play"){
+        if(!playerFactory.curSong){
+          obj.id = $scope.playListFinal[0].id;
+          //REGEX to filter out only the '/tracks/track_number'
+          obj.id = obj.id.match(/\/tracks\/\d*/g);
+          //fetches audio object for the provided track ID
+          SC.stream(obj.id, function(audioObj) {
+            playerFactory.curSong = audioObj;
+            console.log('audioobj inside play func', audioObj);
+
+            // ********* _onfinish needs to be defined AFTER curSong is defined but BEFORE play is called
+            playerFactory.curSong._onfinish = function() {
+              if ($scope.playListFinal.length === 1) {
+                alert('Looks like there is nothing to play. Add some more songs and try again!')
+              } else {
+                $scope.next();
+              }
+            };
+          });
+        };
+        console.log("playerFactory.curSong", playerFactory.curSong);
+        
+        playerFactory.isPlaying = true;
+        playerFactory.curSong.play();
+      }
+      if(obj.status === "pause"){
+        playerFactory.isPlaying = false;
+        playerFactory.curSong.pause();
+      }
+      if (obj.status === 'next') {
+        playerFactory.isPlaying = false;
+        playerFactory.curSong.stop();
+
+        //removes the curent audio Object
+        $scope.playListFinal.shift();
+        //calls the play function on the new audio Object
+        // $scope.play();
+
+        obj.id = $scope.playListFinal[0].id;
+      //REGEX to filter out only the '/tracks/track_number'
+        obj.id = obj.id.match(/\/tracks\/\d*/g);
+      //fetches audio object for the provided track ID
+        SC.stream(obj.id, function(audioObj) {
+          playerFactory.curSong = audioObj;
+          console.log('audioobj inside next func', audioObj);
+          playerFactory.isPlaying = true;
+          playerFactory.curSong._onfinish = function() {
+            if ($scope.playListFinal.length === 1) {
+              alert('Looks like there is nothing to play. Add some more songs and try again!')
+            } else {
+              $scope.next();
+            }
+          };
+          playerFactory.curSong.play();
+        });
+      }
+    });
+
+    socket.on('chat message', function(msg) {
+      console.log('socket on', msg);
+      $scope.chatMessages.push(msg);
+    });
 
     // Whenever the server emits 'typing', show the typing message
     socket.on('typing', function(data) {
@@ -205,3 +254,4 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
      }
   }
 ])
+

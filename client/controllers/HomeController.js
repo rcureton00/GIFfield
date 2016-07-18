@@ -23,12 +23,9 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
 
     $scope.rmvPlayListItem = function(event) {
-      console.log(event);
-      for(var i = 0; i < $scope.playListFinal.length; i++) {
-        if(event.id === $scope.playListFinal[i].id) {
-          $scope.playListFinal.splice(i, 1);
-        }
-      }
+      socket.emit('removeSong' , {id: event.id});
+      // console.log(event);
+      
     };
 
     //fetches the audio object from SoundCloud
@@ -114,6 +111,18 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
   
     // ****************** LISTENS to emitted events *******************
+    socket.on('removeSong' , function(event) {
+      console.log("did we hit back client side?", event.id);
+      console.log("scope playlist", $scope.playListFinal);
+
+      for(var i = 0; i < $scope.playListFinal.length; i++) {
+        if(event.id === $scope.playListFinal[i].id) {
+          $scope.playListFinal.splice(i, 1);
+        }
+      }
+    });
+
+
     socket.on('findArtist', function(obj) {
       soundService.getArtist(obj.query).then(function success(response, err){
        if(err) throw err;
@@ -191,6 +200,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     socket.on('chat message', function(msg) {
       console.log('socket on', msg);
       $scope.chatMessages.push(msg);
+      $scope.overflowCtrl();
     });
 
     // Whenever the server emits 'typing', show the typing message

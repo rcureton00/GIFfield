@@ -25,6 +25,13 @@ io.on('connection', function(socket){
   
   console.log("I just connected", currentSong + " is playing");
 
+  socket.on('removeSong', function (cb) {
+      console.log('remove Song received');
+      io.emit('removeSong', cb);
+    });
+
+
+
   socket.on('playNpause', function(cb){
     if(cb.status === 'play'){
       console.log('status was play', cb.id);

@@ -96,12 +96,22 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     $scope.typing = false;
     // this is how quick the "[other user] is typing" message will go away
     $scope.TYPING_TIMER_LENGTH = 4000; 
+
+    socket.emit('chat message', {username: $cookies.get('username'), msg: $scope.chatMsg});
     
     $scope.chatSend = function() {
-      socket.emit('chat message', {username: $cookies.get('username'), msg: $scope.chatMsg});
-      $scope.chatMsg = '';
+      var msg = JSON.stringify($scope.chatMsg);
+      msg = $.parseJSON(msg);
+      socket.emit('chat message', {username: $cookies.get('username'), msg: msg});
+      $scope.chatMsg = "";
+      $scope.overflowCtrl();
       return false;
-    }
+    };
+
+    $scope.overflowCtrl = function(){
+      var elem = document.getElementById('messages');
+      elem.scrollTop = elem.scrollHeight;
+    };
 
   
     // ****************** LISTENS to emitted events *******************

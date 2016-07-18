@@ -38,6 +38,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('chat message', function(msg){
+    console.log('logged in', msg);
     io.emit('chat message', msg.username + ": " + msg.msg);
   });
 

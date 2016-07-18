@@ -23,7 +23,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
 
     $scope.rmvPlayListItem = function(event) {
-      socket.emit('removeSong' , {event: event});
+      socket.emit('removeSong' , {id: event.id});
       // console.log(event);
       
     };
@@ -112,11 +112,11 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
   
     // ****************** LISTENS to emitted events *******************
     socket.on('removeSong' , function(event) {
-      console.log("did we hit back client side?", event.event.id);
+      console.log("did we hit back client side?", event.id);
       console.log("scope playlist", $scope.playListFinal);
 
       for(var i = 0; i < $scope.playListFinal.length; i++) {
-        if(event.event.id === $scope.playListFinal[i].id) {
+        if(event.id === $scope.playListFinal[i].id) {
           $scope.playListFinal.splice(i, 1);
         }
       }

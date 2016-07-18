@@ -14,10 +14,24 @@ app.get('/', function(req, res){
 
 });
 
+//persist current song
+var currentSong = "";
+
 
 io.on('connection', function(socket){
 
+  console.log("I just connected", currentSong + " is playing");
+
+
+  socket.on('findArtist', function(cb){
+    io.emit('findArtist', cb);
+  });
+
   socket.on('playNpause', function(cb){
+    if(cb.status === 'play'){
+      console.log('status was play', cb.id);
+      currentSong = cb.id;
+    }
     io.emit('playNpause', cb);
   });
   
@@ -27,22 +41,20 @@ io.on('connection', function(socket){
   });
 
   socket.on('chat message', function(msg){
-    var obj = {};
-    obj['message'] = msg;
-    io.emit('chat message', socket['name'] + ": " + msg);
+    io.emit('chat message', msg.username + ": " + msg.msg);
   });
 
   // when the client emits 'typing', we broadcast it to others
-  socket.on('typing', function () {
+  socket.on('typing', function (data) {
     socket.broadcast.emit('typing', {
-      name: socket.name
+      name: data
     });
   });
   
   // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', function () {
+  socket.on('stop typing', function (data) {
     socket.broadcast.emit('stop typing', {
-      username: socket.name
+      name: data
     });
   });
 

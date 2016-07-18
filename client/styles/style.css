@@ -1,3 +1,26 @@
+
+.mainPage.ng-enter  { z-index:9999; }
+.mainPage.ng-enter {
+  animation: my_fade_in 1.5s linear;
+  -webkit-animation: my_fade_in 1.5s linear;
+}
+
+
+
+@keyframes my_fade_in {
+  from { opacity:0;  }
+  to { opacity:1;  }
+}
+
+@-webkit-keyframes my_fade_in {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+
+
+
+
+
 html {
     overflow-y: hidden;
 }
@@ -398,6 +421,7 @@ body {
         width: 1.25em;
     }
 }
+
 
 
 /*Landing page*/

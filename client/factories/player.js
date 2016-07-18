@@ -1,5 +1,4 @@
 // ********************************** Player Factory ***********************************
-//Maybe PLAYERFACTORY should not be in a factory, it should just be an object
 appPlayer.factory('playerFactory', function() {
     var singleton = {};
     singleton.curSong = null;

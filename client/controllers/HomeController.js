@@ -74,12 +74,14 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       });
     }
 
-    playerFactory.curSong._onfinish = function() {
-      if ($scope.playListFinal.length === 1) {
-        alert('Looks like there is nothing to play. Add some more songs and try again!')
-      } else {
-        $scope.next();
-      }
+    if(playerFactory.curSong) {
+      playerFactory.curSong._onfinish = function() {
+        if ($scope.playListFinal.length === 1) {
+          alert('Looks like there is nothing to play. Add some more songs and try again!')
+        } else {
+          $scope.next();
+        }
+      };
     };
 
 

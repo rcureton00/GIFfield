@@ -77,7 +77,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     $scope.pause = function() {
       if(playerFactory.isPlaying) { 
         socket.emit("playNpause", {
-          //id:  $scope.playListFinal[0].id,
+          id:  $scope.playListFinal[0].id,
           status: 'pause'
         });
       }
@@ -86,53 +86,48 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     //on clicking next, we emit id and status to change song on all devices
     $scope.next = function() {
       socket.emit("playNpause", {
-       // id:  $scope.playListFinal[0].id,
+        id:  $scope.playListFinal[0].id,
         status: 'next'
       });
     }
 
-    $scope.overflowCtrl = function(){        
-      var elem = document.getElementById('messages');
-      elem.scrollTop = elem.scrollHeight;
-    };
-
-  
-
-
    socket.on("playNpause", function(obj){
     if(obj.status === "play"){
       obj.id = $scope.playListFinal[0].id;
-    //REGEX to filter out only the '/tracks/track_number'
+      //REGEX to filter out only the '/tracks/track_number'
       obj.id = obj.id.match(/\/tracks\/\d*/g);
-    //fetches audio object for the provided track ID
+      //fetches audio object for the provided track ID
       SC.stream(obj.id, function(audioObj) {
         playerFactory.curSong = audioObj;
         console.log('audioobj', audioObj);
         playerFactory.isPlaying = true;
         playerFactory.curSong.play();
       });  
-    playerFactory.curSong._onfinish = function() {
-      if ($scope.playListFinal.length === 1) {
-        alert('Looks like there is nothing to play. Add some more songs and try again!')
-      } else {
-        $scope.next();
-      }
-    };
-  } 
-  if(obj.status === "pause"){
-    playerFactory.isPlaying = false;
-    playerFactory.curSong.pause();
-  }
-  if (obj.status === 'next') {
-    playerFactory.isPlaying = false;
-    playerFactory.curSong.stop();
+      playerFactory.curSong._onfinish = function() {
+        if ($scope.playListFinal.length === 1) {
+          alert('Looks like there is nothing to play. Add some more songs and try again!')
+        } else {
+          $scope.next();
+        }
+      };
+    } 
+    if(obj.status === "pause"){
+      console.log("Obj.status === pause");
 
-    //removes the curent audio Object
-    $scope.playListFinal.shift();
-    //calls the play function on the new audio Object
-    $scope.play();
-  }
-});
+      playerFactory.isPlaying = false;
+      playerFactory.curSong.pause();
+    }
+    if (obj.status === 'next') {
+      console.log("Obj.status === next");
+      playerFactory.isPlaying = false;
+      playerFactory.curSong.stop();
+
+      //removes the curent audio Object
+      $scope.playListFinal.shift();
+      //calls the play function on the new audio Object
+      $scope.play();
+    }
+  });
 
 
     //chat controller socket module
@@ -169,6 +164,14 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
           $scope.typing = false;
         }
       }, $scope.TYPING_TIMER_LENGTH);
+    };
+
+    // Scroll bottom function
+    $scope.overflowCtrl = function() {
+        window.setTimeout(function() {
+            var elem = document.getElementById('messages');
+            elem.scrollTop = elem.scrollHeight;
+        }, 0);
     };
 
     // Whenever the server emits 'typing', show the typing message

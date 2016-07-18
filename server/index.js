@@ -33,6 +33,7 @@ io.on('connection', function(socket){
       currentSong = cb.id;
     }
     io.emit('playNpause', cb);
+    //socket.emit('playNpause', cb);
   });
 
   socket.on('username', function(name) {

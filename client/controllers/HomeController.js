@@ -1,7 +1,9 @@
-appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', 'userName',
-  function($scope, socket, playerFactory, soundService, $cookies, userName) {
+appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', 'userName', '$animate',
+  function($scope, socket, playerFactory, soundService, $cookies, userName, $animate) {
 
-    
+
+   $scope.pageClass = 'mainPage';
+  
     socket.on('connect', function(){
       console.log("i connected");
     });
@@ -37,7 +39,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       //clear the input field on DOM
       $scope.searchArtist = '';
     };
-
 
     //set the flag to false initially
     playerFactory.isPlaying = false;
@@ -221,9 +222,11 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 ])
 
 // *************************** Landing page Controller ********************************
+
 .controller('LandingPage', ['$scope', '$location', 'socket', '$cookies', 'userName',
   function($scope, $location, socket, $cookies, userName) {
     // var name = '';
+
     $scope.submit = function(){
     if($scope.text){
       $cookies.put('username', $scope.text);
@@ -233,6 +236,9 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
      $location.path('/home', false);
      }
   }
-])
+]);
+
+
+
 
 

@@ -39,9 +39,10 @@ io.on('connection', function(socket){
     }
     io.emit('playNpause', cb);
   });
+  
 
-  socket.on('username', function(name) {
-    socket.name = name.username;
+  socket.on('username', function(name){
+    socket['name'] = name;
   });
 
   socket.on('chat message', function(msg){

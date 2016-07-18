@@ -573,8 +573,8 @@ input-group .form-control {
 }
 
 :-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: white;
-    /*opacity: 0.9;*/
-    font-weight: 300;
+  /* Internet Explorer 10-11 */
+  color: white;
+  /*opacity: 0.9;*/
+  font-weight: 300;
 }

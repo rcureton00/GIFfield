@@ -39,8 +39,8 @@
                 </div>
                 <div class="nextButton">
                     <i ng-click="next()" class="fa fa-step-forward fa-3x showNext" aria-hidden="true"></i> </div>
-                <div class='volume'>
-                    <i class="fa fa-volume-up fa-2x showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down fa-2x showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x showMuteVolume" aria-hidden="true"></i>
+                <div ng-click= "volume()" class='volume'>
+                    <i ng-show= "fHigh" class="fa fa-volume-up fa-2x showFullVolume" aria-hidden="true"></i><i ng-show="fMid" class="fa fa-volume-down fa-2x showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x showMuteVolume" aria-hidden="true"></i>
                 </div>
             </div>
         </div>
@@ -63,4 +63,4 @@
             </ul>
         </div>
     </div>
-</div>
+ </div>

@@ -75,6 +75,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     }
 
     if(playerFactory.curSong) {
+      console.log('inside playerFactory.cursong', playerFactory.curSong)
       playerFactory.curSong._onfinish = function() {
         if ($scope.playListFinal.length === 1) {
           alert('Looks like there is nothing to play. Add some more songs and try again!')
@@ -149,7 +150,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       //fetches audio object for the provided track ID
         SC.stream(obj.id, function(audioObj) {
           playerFactory.curSong = audioObj;
-          // console.log('audioobj', audioObj);
+          console.log('audioobj inside play func', audioObj);
           playerFactory.isPlaying = true;
           playerFactory.curSong.play();
         });
@@ -173,7 +174,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       //fetches audio object for the provided track ID
         SC.stream(obj.id, function(audioObj) {
           playerFactory.curSong = audioObj;
-          // console.log('audioobj', audioObj);
+          console.log('audioobj inside next func', audioObj);
           playerFactory.isPlaying = true;
           playerFactory.curSong.play();
         });

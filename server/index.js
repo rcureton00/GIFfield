@@ -14,6 +14,9 @@ app.get('/', function(req, res){
 
 });
 
+//persist current song
+var currentSong = "";
+
 
 io.on('connection', function(socket){
   socket.on('findArtist', function(cb) {
@@ -21,23 +24,27 @@ io.on('connection', function(socket){
   });
   
 
+  console.log("I just connected", currentSong + " is playing");
+
+
+  socket.on('findArtist', function(cb){
+    io.emit('findArtist', cb);
+  });
+
   socket.on('playNpause', function(cb){
+    if(cb.status === 'play'){
+      console.log('status was play', cb.id);
+      currentSong = cb.id;
+    }
     io.emit('playNpause', cb);
   });
 
   socket.on('username', function(name) {
-    // if(addedUser){return; };
-    socket['name'] = name;
-    // addedUser = true;
-    // socket.broadcast.emit('user joined', {
-    //   username: socket.name
-    // })
+    socket.name = name.username;
   });
 
   socket.on('chat message', function(msg){
-    // var obj = {};
-    // obj['message'] = msg;
-    io.emit('chat message', msg.username + ': ' + msg.msg);
+    io.emit('chat message', msg.username + ": " + msg.msg);
   });
 
   // when the client emits 'typing', we broadcast it to others

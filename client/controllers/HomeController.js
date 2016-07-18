@@ -132,26 +132,28 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
     socket.on("playNpause", function(obj){
       if(obj.status === "play"){
-        obj.id = $scope.playListFinal[0].id;
-      //REGEX to filter out only the '/tracks/track_number'
-        obj.id = obj.id.match(/\/tracks\/\d*/g);
-      //fetches audio object for the provided track ID
-        SC.stream(obj.id, function(audioObj) {
-          playerFactory.curSong = audioObj;
-          console.log('audioobj inside play func', audioObj);
-          playerFactory.isPlaying = true;
-
-// ********* _onfinish needs to be defined AFTER curSong is defined but BEFORE play is called
-          playerFactory.curSong._onfinish = function() {
-            if ($scope.playListFinal.length === 1) {
-              alert('Looks like there is nothing to play. Add some more songs and try again!')
-            } else {
-              $scope.next();
-            }
-          };
-
-          playerFactory.curSong.play();
-        });
+        if(!playerFactory.curSong) {
+          obj.id = $scope.playListFinal[0].id;
+        
+        //REGEX to filter out only the '/tracks/track_number'
+          obj.id = obj.id.match(/\/tracks\/\d*/g);
+        //fetches audio object for the provided track ID
+          SC.stream(obj.id, function(audioObj) {
+            playerFactory.curSong = audioObj;
+            console.log('audioobj inside play func', audioObj);
+            
+    // ********* _onfinish needs to be defined AFTER curSong is defined but BEFORE play is called
+            playerFactory.curSong._onfinish = function() {
+              if ($scope.playListFinal.length === 1) {
+                alert('Looks like there is nothing to play. Add some more songs and try again!')
+              } else {
+                $scope.next();
+              }
+            };
+          });
+        };
+        playerFactory.isPlaying = true;
+        playerFactory.curSong.play();
       }
       if(obj.status === "pause"){
         playerFactory.isPlaying = false;

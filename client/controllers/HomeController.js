@@ -74,6 +74,14 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       });
     }
 
+    playerFactory.curSong._onfinish = function() {
+      if ($scope.playListFinal.length === 1) {
+        alert('Looks like there is nothing to play. Add some more songs and try again!')
+      } else {
+        $scope.next();
+      }
+    };
+
 
     $scope.updateTyping = function() {
       $scope.typing = true;
@@ -142,15 +150,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
           // console.log('audioobj', audioObj);
           playerFactory.isPlaying = true;
           playerFactory.curSong.play();
-        });  
-        playerFactory.curSong._onfinish = function() {
-          if ($scope.playListFinal.length === 1) {
-            alert('Looks like there is nothing to play. Add some more songs and try again!')
-          } else {
-            $scope.next();
-          }
-        };
-      } 
+        });
+      }
       if(obj.status === "pause"){
         playerFactory.isPlaying = false;
         playerFactory.curSong.pause();
@@ -162,7 +163,18 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
         //removes the curent audio Object
         $scope.playListFinal.shift();
         //calls the play function on the new audio Object
-        $scope.play();
+        // $scope.play();
+
+        obj.id = $scope.playListFinal[0].id;
+      //REGEX to filter out only the '/tracks/track_number'
+        obj.id = obj.id.match(/\/tracks\/\d*/g);
+      //fetches audio object for the provided track ID
+        SC.stream(obj.id, function(audioObj) {
+          playerFactory.curSong = audioObj;
+          // console.log('audioobj', audioObj);
+          playerFactory.isPlaying = true;
+          playerFactory.curSong.play();
+        });
       }
     });
 

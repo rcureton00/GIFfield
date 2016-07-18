@@ -63,7 +63,7 @@ body {
 
 .fa-step-forward:before {
     margin-left: 11px;
-    content: "\f051";
+    content: "\f050";
     color: #ff5419;
 }
 
@@ -87,13 +87,6 @@ body {
     margin-top: 1%;
     color: #ff5419;
     content: "\f028";
-}
-
-.fa-volume-down:before {
-    position: absolute;
-    margin-top: 1%;
-    color: #ff5419;
-    content: "\f027";
 }
 
 .fa-volume-down:before {

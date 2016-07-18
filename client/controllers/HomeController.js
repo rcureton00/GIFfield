@@ -21,6 +21,11 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     //A container to store audio's information for DOM manipulation 
     $scope.playListFinal = [];
 
+    $scope.volume = function () {
+      // [full , mid , mute] clicking toggles through shows one, hides other two
+      
+    };
+
 
     $scope.rmvPlayListItem = function(event) {
       socket.emit('removeSong' , {id: event.id});
@@ -112,9 +117,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
   
     // ****************** LISTENS to emitted events *******************
     socket.on('removeSong' , function(event) {
-      console.log("did we hit back client side?", event.id);
-      console.log("scope playlist", $scope.playListFinal);
-
       for(var i = 0; i < $scope.playListFinal.length; i++) {
         if(event.id === $scope.playListFinal[i].id) {
           $scope.playListFinal.splice(i, 1);

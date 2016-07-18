@@ -1,19 +1,23 @@
 'use strict';
 describe("test: ", function(){
+  // it('should be cool', function() {
+  //   expect(true).to.be.true;
+  // });
 
-beforeEach(angular.mock.module('appPlayer'));
+  console.log("IO", io);
+
+  beforeEach(angular.mock.module('MusicPlayer'));
   
-  beforeEach(inject(function($controller, $rootScope){
-    var scope = 5;    
-  }));
+  describe('home view controller', function(){
+    it('should should exist', inject(function($controller, $rootScope){
+      //spec body
+      var scope = $rootScope.$new();
+      var HomeController = $controller('HomeController', {$scope:scope});
+      expect(HomeController).toBeDefined();
+    }));
 
-
-
-   
-
-  it('should be registered', function(){
-    expect(scope).toBeDefined();
   });
+
 });
 
 
@@ -22,14 +26,5 @@ beforeEach(angular.mock.module('appPlayer'));
 // describe('home view', function(){
 //   beforeEach(module('appPlayer'));
 
-//   describe('home view controller', function(){
-//     it('should should exist', inject(function($controller, $rootScope){
-//       //spec body
-//       var scope = $rootScope.$new();
-//       var HomeController = $controller('HomeController', {$scope:scope});
-//       expect(HomeController).toBeDefined();
-//     }));
-
-//   });
-// });
+ 
 

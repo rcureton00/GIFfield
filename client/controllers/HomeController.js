@@ -1,7 +1,8 @@
-appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', 
-  function($scope, socket, playerFactory, soundService, $cookies) {
+appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', '$animate',
+  function($scope, socket, playerFactory, soundService, $cookies, $animate) {
 
-    
+   $scope.pageClass = 'mainPage';
+  
     socket.on('connect', function(){
       console.log("i connected");
     });
@@ -182,9 +183,10 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 ])
 
 // *************************** Landing page Controller ********************************
-.controller('LandingPage', ['$scope', '$location', 'socket', '$cookies',  
+.controller('LandingPage', ['$scope', '$location', 'socket', '$cookies', 
   function($scope, $location, socket, $cookies) {
     // var name = '';
+
     $scope.submit = function(){
     if($scope.text){
       $cookies.put('username', $scope.text);
@@ -197,6 +199,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
 // ****************************** Socket Factory ***************************************
 .factory('socket', function($rootScope) {
+  console.log("IO IN HomeController", io);
   var socket = io.connect();
 
   return {

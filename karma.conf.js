@@ -15,6 +15,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js',
+      'client/assets/soundcloud.js',
+      "https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/script/soundmanager2.js",
       'bower_components/jquery/dist/jquery.min.js',
       'bower_components/angular/angular.min.js', 
       'bower_components/angular-route/angular-route.min.js',
@@ -23,9 +26,8 @@ module.exports = function(config) {
       'bower_components/animsition/dist/js/animsition.min.js',
       'client/modules/app.js',
       //'client/views/*.js',
-      //'client/controllers/*.js', 
-      'spec/client/config_spec.js',
-      'http://localhost:8000/socket.io/socket.io.js'
+      'client/controllers/HomeController.js', 
+      'spec/client/config_spec.js'
     ],
 
 
@@ -66,7 +68,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // Continuous Integration mode

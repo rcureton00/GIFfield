@@ -46,7 +46,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     playerFactory.isPlaying = false;
 
     //on clicking play we emit the ID and the status for clients to listen to and act upon
-    // old $scope.play
     $scope.play = function() {
       if( $scope.playListFinal[0] && !playerFactory.isPlaying) {
         socket.emit("playNpause", {
@@ -57,22 +56,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       }
     }
 
-    // $scope.play = function() {
-    //   console.log("$scope.play()");
-    //   if ($scope.playListFinal[0] && !playerFactory.isPlaying) {
-    //       playerFactory.isPlaying = true;
-    //       $scope.isPlaying = true;
-    //       playerFactory.curSong.play();
-    //       console.log('after play', playerFactory.player.id);
-    //       socket.emit("playNpause", {
-    //           id: playerFactory.player.id,
-    //           status: 'play'
-    //       });
-    //   }
-    // }
-
     //pause emits id and status to pause on all devices
-    // old $scope.pause
     $scope.pause = function() {
       if(playerFactory.isPlaying) { 
         socket.emit("playNpause", {
@@ -81,19 +65,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
         });
       }
     }
-
-    // $scope.pause = function() {
-    //   if (playerFactory.isPlaying) {
-    //       console.log('player from fac', playerFactory.player);
-    //       playerFactory.isPlaying = false;
-    //       $scope.isPlaying = false;
-    //       playerFactory.curSong.pause();
-    //       socket.emit("playNpause", {
-    //           id: playerFactory.player.id,
-    //           status: 'pause'
-    //       });
-    //   }
-    // }
 
     //on clicking next, we emit id and status to change song on all devices
     $scope.next = function() {
@@ -161,16 +132,17 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
     socket.on("playNpause", function(obj){
       if(obj.status === "play"){
-        if(!playerFactory.curSong){
+        if(!playerFactory.curSong) {
           obj.id = $scope.playListFinal[0].id;
-          //REGEX to filter out only the '/tracks/track_number'
+        
+        //REGEX to filter out only the '/tracks/track_number'
           obj.id = obj.id.match(/\/tracks\/\d*/g);
-          //fetches audio object for the provided track ID
+        //fetches audio object for the provided track ID
           SC.stream(obj.id, function(audioObj) {
             playerFactory.curSong = audioObj;
             console.log('audioobj inside play func', audioObj);
-
-            // ********* _onfinish needs to be defined AFTER curSong is defined but BEFORE play is called
+            
+    // ********* _onfinish needs to be defined AFTER curSong is defined but BEFORE play is called
             playerFactory.curSong._onfinish = function() {
               if ($scope.playListFinal.length === 1) {
                 alert('Looks like there is nothing to play. Add some more songs and try again!')
@@ -180,8 +152,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
             };
           });
         };
-        console.log("playerFactory.curSong", playerFactory.curSong);
-        
         playerFactory.isPlaying = true;
         playerFactory.curSong.play();
       }

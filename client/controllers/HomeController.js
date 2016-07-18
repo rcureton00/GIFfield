@@ -131,13 +131,14 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
        if(err) throw err;
       //Container to show audio information on the DOM
        $scope.playListFinal.push({
+
         id: '/tracks/' + response.data.id, 
         title: response.data.title, 
         artwork: response.data.artwork_url || 
-                 response.data.user.avatar_url || 
                  'http://24.media.tumblr.com/3d736df5da284e889c9499756530efc8/tumblr_mno89p9spT1sped3xo1_400.gif',
         releaseYear: response.data.release_year,
-        name: response.data.user.username
+        name: response.data.user.username,
+        duration: response.data.duration
         });
       });
     });
@@ -163,6 +164,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
               }
             };
           });
+          console.log('LOOKING FOR SONG DURATION', playerFactory.curSong.id, playerFactory.curSong.volume);
+          console.log('LOOKING FOR SONG DURATION', playerFactory.curSong.durationEstimate, playerFactory.curSong.options);
         };
         playerFactory.isPlaying = true;
         playerFactory.curSong.play();

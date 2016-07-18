@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/styleMedia.css">
   <!-- Page transitions -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.js"></script>
 
@@ -40,11 +41,19 @@
   <script src="modules/app.js"></script>
   <!-- Controllers -->
   <script src="controllers/HomeController.js"></script>
+ <!-- Factories -->
+  <script src="factories/player.js"></script>
+  <script src="factories/soundService.js"></script>
+  <script src="factories/username.js"></script>
+  <script src="factories/socket.js"></script>
+  <!-- Directives -->
+  <script src="directives/autofocus.js"></script>
 </head>
 
 <body>
   <!-- Single View -->
   <div class="page {{ pageClass }}" ng-view></div>
+
 </body>
 
 </html>

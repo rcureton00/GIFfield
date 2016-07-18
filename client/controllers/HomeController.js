@@ -74,18 +74,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       });
     }
 
-    if(playerFactory.curSong) {
-      console.log('inside playerFactory.cursong', playerFactory.curSong)
-      playerFactory.curSong._onfinish = function() {
-        if ($scope.playListFinal.length === 1) {
-          alert('Looks like there is nothing to play. Add some more songs and try again!')
-        } else {
-          $scope.next();
-        }
-      };
-    };
-
-
     $scope.updateTyping = function() {
       $scope.typing = true;
       socket.emit('typing', $cookies.get('username'));
@@ -153,6 +141,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
           console.log('audioobj inside play func', audioObj);
           playerFactory.isPlaying = true;
 
+// ********* _onfinish needs to be defined AFTER curSong is defined but BEFORE play is called
           playerFactory.curSong._onfinish = function() {
             if ($scope.playListFinal.length === 1) {
               alert('Looks like there is nothing to play. Add some more songs and try again!')
@@ -160,7 +149,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
               $scope.next();
             }
           };
-      
+
           playerFactory.curSong.play();
         });
       }
@@ -185,6 +174,13 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
           playerFactory.curSong = audioObj;
           console.log('audioobj inside next func', audioObj);
           playerFactory.isPlaying = true;
+          playerFactory.curSong._onfinish = function() {
+            if ($scope.playListFinal.length === 1) {
+              alert('Looks like there is nothing to play. Add some more songs and try again!')
+            } else {
+              $scope.next();
+            }
+          };
           playerFactory.curSong.play();
         });
       }

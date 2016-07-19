@@ -1,3 +1,4 @@
+// ***************************** User Name Factory *********************************
 appPlayer.factory('userName', function() {
     var userSet = {};
     userSet.name = '';

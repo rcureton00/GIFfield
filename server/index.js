@@ -19,13 +19,18 @@ var currentSong = "";
 
 
 io.on('connection', function(socket){
-
-  console.log("I just connected", currentSong + " is playing");
-
-
-  socket.on('findArtist', function(cb){
+  socket.on('findArtist', function(cb) {
     io.emit('findArtist', cb);
   });
+  
+  console.log("I just connected", currentSong + " is playing");
+
+  socket.on('removeSong', function (cb) {
+      console.log('remove Song received');
+      io.emit('removeSong', cb);
+    });
+
+
 
   socket.on('playNpause', function(cb){
     if(cb.status === 'play'){
@@ -34,12 +39,14 @@ io.on('connection', function(socket){
     }
     io.emit('playNpause', cb);
   });
+  
 
-  socket.on('username', function(name) {
-    socket.name = name.username;
+  socket.on('username', function(name){
+    socket['name'] = name;
   });
 
   socket.on('chat message', function(msg){
+    console.log('logged in', msg);
     io.emit('chat message', msg.username + ": " + msg.msg);
   });
 

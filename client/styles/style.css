@@ -1,3 +1,26 @@
+
+.mainPage.ng-enter  { z-index:9999; }
+.mainPage.ng-enter {
+  animation: my_fade_in 1.5s linear;
+  -webkit-animation: my_fade_in 1.5s linear;
+}
+
+
+
+@keyframes my_fade_in {
+  from { opacity:0;  }
+  to { opacity:1;  }
+}
+
+@-webkit-keyframes my_fade_in {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+
+
+
+
+
 html {
     overflow-y: hidden;
 }
@@ -62,8 +85,8 @@ body {
 }
 
 .fa-step-forward:before {
-    margin-left: 11px;
-    content: "\f051";
+    margin-left: 5px;
+    content: "\f050";
     color: #ff5419;
 }
 
@@ -87,13 +110,6 @@ body {
     margin-top: 1%;
     color: #ff5419;
     content: "\f028";
-}
-
-.fa-volume-down:before {
-    position: absolute;
-    margin-top: 1%;
-    color: #ff5419;
-    content: "\f027";
 }
 
 .fa-volume-down:before {
@@ -223,7 +239,7 @@ body {
 }
 
 .tracks:hover {
-    background: rgba(255, 84, 25, 0.22);
+    background: rgba(102, 98, 92, 0.3);
 }
 
 .singerTitle {
@@ -246,7 +262,7 @@ body {
     margin-top: 0;
     left: 80%;
     font-weight: bold;
-    color: #ffa500;
+    color: orange;
 }
 
 .res {
@@ -367,13 +383,13 @@ body {
     max-width: 50%;
     padding: 6px;
     color: #fff;
-    border-radius: 3px;
+    border-radius: 5px;
     border-bottom: 1px solid rgba(187, 187, 187, 0.7);
 }
 
 .message.right {
     margin: 12px -5px 10px 50%;
-    background: rgba(255, 84, 25, 0.35);
+    background: rgba(255, 165, 0, 0.9);
 }
 
 .message.left {
@@ -390,8 +406,8 @@ body {
     font-size: 1em;
     z-index: 9999;
     font-weight: 300;
-    left: 82.5%;
-    top: 82%;
+    left: 85%;
+    top: 75%;
     background: none;
     color: rgb(255, 84, 25);
 }
@@ -418,6 +434,7 @@ body {
         width: 1.25em;
     }
 }
+
 
 
 /*Landing page*/
@@ -569,8 +586,8 @@ input-group .form-control {
 }
 
 :-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: white;
-    /*opacity: 0.9;*/
-    font-weight: 300;
+  /* Internet Explorer 10-11 */
+  color: white;
+  /*opacity: 0.9;*/
+  font-weight: 300;
 }

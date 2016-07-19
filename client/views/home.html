@@ -18,12 +18,12 @@
     <div class="chats">
         <!-- Populate Messages li-->
         <p class="isTyping" ng-show="checkTyping">{{typingMessage}}</p>
-        <ul class="well" id="messages">
+        <ul id="messages">
             <li class="message" ng-repeat="chatMessage in chatMessages track by $index" ng-class="chatMessage.split(':')[0] === user ? 'left' : 'right'">{{ chatMessage }}</li>
         </ul>
         <!-- Submit Message -->
         <form ng-submit="chatSend()" class="msgInput">
-            <input class="background userMsg" type="text" ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" autofocus placeholder="Hi John, how have you been?" />
+            <input class="background userMsg" type="text" ng-change="updateTyping()" ng-model="chatMsg" autocomplete="off" autofocus placeholder="Type Message and Press Enter" />
             <input class="chatMsgSend background" type="submit" ng-submit="chatSend()" value="Send">
         </form>
     </div>
@@ -39,10 +39,10 @@
                 </div>
                 <div class="nextButton">
                     <i ng-click="next()" class="fa fa-step-forward fa-3x showNext" aria-hidden="true"></i> </div>
-                <div class='volume'>
-                    <i class="fa fa-volume-up fa-2x showFullVolume" aria-hidden="true"></i><i class="fa fa-volume-down fa-2x showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x showMuteVolume" aria-hidden="true"></i>
+                <div ng-click="volume()" class='volume'>
+                    <i ng-show="fHigh" class="fa fa-volume-up fa-2x showFullVolume" aria-hidden="true"></i><i ng-show="fMid" class="fa fa-volume-down fa-2x showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x showMuteVolume" aria-hidden="true"></i>
                 </div>
-               <!--  <div class="progress"> progress bar
+                <!--  <div class="progress"> progress bar
                     <md-progress-linear md-mode="determinate" class="md-pink" value="{{determinateValue}}"></md-progress-linear>
                 </div> -->
             </div>

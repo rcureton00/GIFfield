@@ -1,4 +1,5 @@
-var appPlayer = angular.module('MusicPlayer', ['ngRoute', 'ngCookies', 'ngMaterial']); // ngMaterial is for the Progress Bar
+
+var appPlayer = angular.module('MusicPlayer', ['ngRoute', 'ngCookies', 'ngMaterial', 'ngAnimate']); // ngMaterial is for the Progress Bar
 appPlayer.config(function($routeProvider, $mdThemingProvider) { // $mdThemingProvider, for the Progress Bar
     $routeProvider
         .when('/home', {

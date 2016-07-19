@@ -15,7 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "angular-audio": "^1.7.2",
-    "angular-cookies": "^1.5.7"
+    "angular-cookies": "^1.5.7",
+    "animsition": "^4.0.2",
+    "angular-mocks": "^1.5.7"
+  },
+  "devDependencies": {
+    "angular-animate": "^1.5.7"
   }
 }

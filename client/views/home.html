@@ -40,13 +40,16 @@
                 </div>
                 <div class="nextButton">
                     <i ng-click="next()" class="fa fa-step-forward fa-3x showNext" aria-hidden="true"></i> </div>
-                <div ng-click= "volume()" class='volume'>
-                    <i ng-show= "fHigh" class="fa fa-volume-up fa-2x showFullVolume" aria-hidden="true"></i><i ng-show="fMid" class="fa fa-volume-down fa-2x showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x showMuteVolume" aria-hidden="true"></i>
+                <div ng-click="volume()" class='volume'>
+                    <i ng-show="fHigh" class="fa fa-volume-up fa-2x showFullVolume" aria-hidden="true"></i><i ng-show="fMid" class="fa fa-volume-down fa-2x showMidVolume" aria-hidden="true"></i><i class="fa fa-volume-off fa-2x showMuteVolume" aria-hidden="true"></i>
                 </div>
+                <!--  <div class="progress"> progress bar
+                    <md-progress-linear md-mode="determinate" class="md-pink" value="{{determinateValue}}"></md-progress-linear>
+                </div> -->
             </div>
         </div>
     </div>
-
+    <!-- <p class="emptyList" ng-show="cleanList"> Looks like there is nothing to play. Add some more songs and try again! </p> Working on this piece next -->
     <div class="playList">
         <div class="plTitle">
             <p>Playlist</p>
@@ -54,8 +57,8 @@
         <hr class="separator">
         <div>
             <ul class="initTrack">
-                <li class="tracks" ng-click='rmvPlayListItem(this.track)' ng-repeat='track in playListFinal'> 
-                    <i ng-click='rmvPlayListItem(this.track)' aria-hidden="true"></i>
+                <li class="tracks" ng-click='rmvPlayListItem(this.track)' ng-click='letsPlay()' ng-repeat='track in playListFinal'>
+                    <!-- <i  aria-hidden="true"></i> -->
                     <img class="songCoverPL" src="{{track.artwork}}" />
                     <span class="singerTitle">Title: {{track.title}}</span>
                     <p><span class="singerName">Artist: {{track.name}}</span></p>
@@ -65,4 +68,3 @@
         </div>
     </div>
 </div>
-

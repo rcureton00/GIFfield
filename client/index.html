@@ -2,56 +2,57 @@
 <html lang="en" ng-app="MusicPlayer">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>uHerd.me</title>
-
-  <!-- *************** PRETTIES ***************** -->
-  <!-- jQuery ***** (NEEDS TO BE BEFORE THE PAGE TRANSITIONS) ***** -->
-  <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-  <!-- Font awesome -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-  <!-- Bootstrap-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles/style.css">
-  <link rel="stylesheet" media="(max-width: 320px)" href="styles/styleMedia.css" />
-  <link rel="stylesheet" media="(max-width: 481px)" href="styles/styleMedia.css" />
-  <link rel="stylesheet" media="(max-width: 641px)" href="styles/styleMedia.css" />
-  <link rel="stylesheet" media="(max-width: 961px)" href="styles/styleMedia.css" />
-  <link rel="stylesheet" media="(max-width: 1025px)" href="styles/styleMedia.css" />
-  <link rel="stylesheet" media="(max-width: 1281px)" href="styles/styleMedia.css" />
-  <!-- Page transitions -->
-
-  <!-- *************** Angular *************** -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
-  <!-- Angular-route -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.js"></script>
-  <!-- Angular-Cookies -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-cookies.min.js"></script>
-  <!-- Animations -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js"></script> 
-
-  <!-- *************** MISC. *************** -->
-  <!-- Socket IO -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
-  <!-- SOUNDCLOUD SDK -->
-  <script src="https://connect.soundcloud.com/sdk.js"></script>
-  <!-- SoundManager2 -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/script/soundmanager2.js"></script>
-
-  <!-- *************** OUR SCRIPTS ***************** -->
-  <!-- Modules -->
-  <script src="modules/app.js"></script>
-  <!-- Factories -->
-  <script src="factories/player.js"></script>
-  <script src="factories/soundService.js"></script>
-  <script src="factories/username.js"></script>
-  <script src="factories/socket.js"></script>
-  <!-- Controllers -->
-  <script src="controllers/HomeController.js"></script>
-  <!-- Directives -->
-  <script src="directives/autofocus.js"></script>
+    <meta charset="UTF-8">
+    <title>uHerd.me</title>
+    <!-- *************** PRETTIES ***************** -->
+    <!-- jQuery ***** (NEEDS TO BE BEFORE THE PAGE TRANSITIONS) ***** -->
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <!-- Font awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/styleMedia.css">
+    <!-- Progress Bar -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.css">
+    <!-- *************** Angular *************** -->
+    <!-- Angular -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular.min.js"></script>
+    <!-- Angular-route -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-route.js"></script>
+    <!-- Angular-Cookies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-cookies.min.js"></script>
+    <!-- Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js"></script> 
+    <!-- *************** MISC. *************** -->
+    <!-- Socket IO -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+    <!-- SOUNDCLOUD SDK -->
+    <script src="https://connect.soundcloud.com/sdk.js"></script>
+    <!-- Page transitions -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animsition/4.0.2/js/animsition.js"></script>
+    <!-- SoundManager2 -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/soundmanager2/2.97a.20150601/script/soundmanager2.js"></script>
+    <!-- Animate -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <!-- Aria dependent on angular-material progress bar-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <!-- Angular material for the progress bar -->
+    <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.js"></script>
+    <!-- *************** OUR SCRIPTS ***************** -->
+    <!-- Modules -->
+    <script src="modules/app.js"></script>
+    <!-- Controllers -->
+    <script src="controllers/HomeController.js"></script>
+    <!-- Factories -->
+    <script src="factories/player.js"></script>
+    <script src="factories/soundService.js"></script>
+    <script src="factories/username.js"></script>
+    <script src="factories/socket.js"></script>
+    <!-- Directives -->
+    <script src="directives/autofocus.js"></script>
 </head>
 
 <body>

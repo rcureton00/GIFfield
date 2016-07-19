@@ -3,7 +3,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
 
    $scope.pageClass = 'mainPage';
-  
     socket.on('connect', function(){
       console.log("i connected");
     });
@@ -22,12 +21,19 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
     //A container to store audio's information for DOM manipulation 
     $scope.playListFinal = [];
+    // $scope.determinateValue = duration.val;
+    // var j = 0, 
+    //   counter = 0;
 
-    $scope.volume = function () {
-      // [full , mid , mute] clicking toggles through shows one, hides other two
-      
-    };
+    // $scope.determinateValue = 0;     
+    //  console.log((Math.round(213890 / 100)))
 
+    // $interval(function() {
+    //   $scope.determinateValue += 1;
+    //   if ($scope.determinateValue > 100) $scope.determinateValue = 0;
+    //    if ( counter++ % 4 == 0 ) j++;
+    //    console.log(counter);
+    // }, $scope.playlistFinal.duration);
 
     $scope.rmvPlayListItem = function(event) {
       socket.emit('removeSong' , {id: event.id});
@@ -76,6 +82,8 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
         status: 'next'
       });
     }
+
+
     
     //************************ VOLUME CONTROL ***************************
     $scope.fHigh = true, $scope.fMid = false, $scope.fMute = false;
@@ -102,6 +110,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       }
     }
 
+
     $scope.updateTyping = function() {
       $scope.typing = true;
       socket.emit('typing', $cookies.get('username'));
@@ -127,7 +136,10 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     $scope.chatSend = function() {
       var msg = JSON.stringify($scope.chatMsg);
       msg = $.parseJSON(msg);
-      socket.emit('chat message', {username: $cookies.get('username'), msg: msg});
+      if (msg) {
+        socket.emit('chat message', {username: $cookies.get('username'), msg: msg});
+      }
+
       $scope.chatMsg = "";
       $scope.overflowCtrl();
       return false;
@@ -255,13 +267,13 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     // var name = '';
 
     $scope.submit = function(){
-    if($scope.text){
-      $cookies.put('username', $scope.text);
-      userName.user($scope.text);
+      if($scope.text){
+        $cookies.put('username', $scope.text);
+        userName.user($scope.text);
+        socket.emit('username', $cookies.get('username'));
+        $location.path('/home', false);
+      }
     }
-     socket.emit('username', $cookies.get('username'));
-     $location.path('/home', false);
-     }
   }
-])
+]);
 

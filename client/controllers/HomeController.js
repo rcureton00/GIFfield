@@ -1,7 +1,9 @@
-appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', 'userName',
-  function($scope, socket, playerFactory, soundService, $cookies, userName) {
+appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', 'userName', '$animate',
+  function($scope, socket, playerFactory, soundService, $cookies, userName, $animate) {
 
-    
+
+   $scope.pageClass = 'mainPage';
+  
     socket.on('connect', function(){
       console.log("i connected");
     });
@@ -23,12 +25,9 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
 
     $scope.rmvPlayListItem = function(event) {
-      console.log(event);
-      for(var i = 0; i < $scope.playListFinal.length; i++) {
-        if(event.id === $scope.playListFinal[i].id) {
-          $scope.playListFinal.splice(i, 1);
-        }
-      }
+      socket.emit('removeSong' , {id: event.id});
+      // console.log(event);
+      
     };
 
     //fetches the audio object from SoundCloud
@@ -40,7 +39,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       //clear the input field on DOM
       $scope.searchArtist = '';
     };
-
 
     //set the flag to false initially
     playerFactory.isPlaying = false;
@@ -63,6 +61,32 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
           // id:  $scope.playListFinal[0].id,
           status: 'pause'
         });
+      }
+    }
+
+    
+    //*********VOLUME CONTROL***********
+    $scope.fHigh = true, $scope.fMid = false, $scope.fMute = false;
+    $scope.volume = function() {
+      if ($scope.fHigh && !$scope.fMid && !$scope.fMute) {
+        $scope.fHigh = false;
+        $scope.fMid = true;
+        if(playerFactory.curSong) {
+          playerFactory.curSong.setVolume(30);  
+        }
+      } else if ($scope.fMid && !$scope.fMute && !$scope.fHigh) {
+        $scope.fMid = false;
+        $scope.fMute = true;
+        if(playerFactory.curSong) {
+          playerFactory.curSong.setVolume(0);  
+        }
+      } else {
+        $scope.fMute = false;
+        $scope.fMid = false;
+        $scope.fHigh = true;
+        if(playerFactory.curSong) {
+          playerFactory.curSong.setVolume(80);  
+        }
       }
     }
 
@@ -114,6 +138,18 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
   
     // ****************** LISTENS to emitted events *******************
+    socket.on('removeSong' , function(event) {
+      console.log("did we hit back client side?", event.id);
+      console.log("scope playlist", $scope.playListFinal);
+
+      for(var i = 0; i < $scope.playListFinal.length; i++) {
+        if(event.id === $scope.playListFinal[i].id) {
+          $scope.playListFinal.splice(i, 1);
+        }
+      }
+    });
+
+
     socket.on('findArtist', function(obj) {
       soundService.getArtist(obj.query).then(function success(response, err){
        if(err) throw err;
@@ -191,6 +227,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     socket.on('chat message', function(msg) {
       console.log('socket on', msg);
       $scope.chatMessages.push(msg);
+      $scope.overflowCtrl();
     });
 
     // Whenever the server emits 'typing', show the typing message
@@ -211,9 +248,11 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 ])
 
 // *************************** Landing page Controller ********************************
+
 .controller('LandingPage', ['$scope', '$location', 'socket', '$cookies', 'userName',
   function($scope, $location, socket, $cookies, userName) {
     // var name = '';
+
     $scope.submit = function(){
     if($scope.text){
       $cookies.put('username', $scope.text);

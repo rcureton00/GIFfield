@@ -25,6 +25,13 @@ io.on('connection', function(socket){
   
   console.log("I just connected", currentSong + " is playing");
 
+  socket.on('removeSong', function (cb) {
+      console.log('remove Song received');
+      io.emit('removeSong', cb);
+    });
+
+
+
   socket.on('playNpause', function(cb){
     if(cb.status === 'play'){
       console.log('status was play', cb.id);
@@ -33,9 +40,10 @@ io.on('connection', function(socket){
     io.emit('playNpause', cb);
     //socket.emit('playNpause', cb);
   });
+  
 
-  socket.on('username', function(name) {
-    socket.name = name.username;
+  socket.on('username', function(name){
+    socket['name'] = name;
   });
 
   socket.on('chat message', function(msg){

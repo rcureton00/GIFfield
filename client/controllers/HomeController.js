@@ -163,9 +163,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
               }
             };
           });
-          console.log('LOOKING FOR SONG DURATION', playerFactory.curSong.id, playerFactory.curSong.volume);
-          console.log('LOOKING FOR SONG DURATION', playerFactory.curSong.durationEstimate, playerFactory.curSong.options);
-        };
         playerFactory.isPlaying = true;
         playerFactory.curSong.play();
       }

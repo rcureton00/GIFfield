@@ -76,6 +76,31 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
         status: 'next'
       });
     }
+    
+    //************************ VOLUME CONTROL ***************************
+    $scope.fHigh = true, $scope.fMid = false, $scope.fMute = false;
+    $scope.volume = function() {
+      if ($scope.fHigh && !$scope.fMid && !$scope.fMute) {
+        $scope.fHigh = false;
+        $scope.fMid = true;
+        if(playerFactory.curSong) {
+          playerFactory.curSong.setVolume(30);  
+        }
+      } else if ($scope.fMid && !$scope.fMute && !$scope.fHigh) {
+        $scope.fMid = false;
+        $scope.fMute = true;
+        if(playerFactory.curSong) {
+          playerFactory.curSong.setVolume(0);  
+        }
+      } else {
+        $scope.fMute = false;
+        $scope.fMid = false;
+        $scope.fHigh = true;
+        if(playerFactory.curSong) {
+          playerFactory.curSong.setVolume(80);  
+        }
+      }
+    }
 
     $scope.updateTyping = function() {
       $scope.typing = true;
@@ -163,6 +188,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
               }
             };
           });
+        };
         playerFactory.isPlaying = true;
         playerFactory.curSong.play();
       }
@@ -237,9 +263,5 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
      $location.path('/home', false);
      }
   }
+
 ]);
-
-
-
-
-

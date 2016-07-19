@@ -21,12 +21,13 @@ module.exports = function(config) {
       'bower_components/jquery/dist/jquery.min.js',
       'bower_components/angular/angular.min.js', 
       'bower_components/angular-route/angular-route.min.js',
-      'bower_components/angular-cookies/angular-cookies.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/animsition/dist/js/animsition.min.js',
+      'bower_components/angular-cookies/angular-cookies.min.js',
+      "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.7/angular-animate.min.js",
       'client/modules/app.js',
+      'client/factories/**/*.js',
+      'client/controllers/**/*.js', 
       //'client/views/*.js',
-      'client/controllers/HomeController.js', 
       'spec/client/config_spec.js'
     ],
 

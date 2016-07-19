@@ -226,7 +226,7 @@ body {
 }
 
 .tracks:hover {
-    background: rgba(255, 84, 25, 0.22);
+    background: rgba(102, 98, 92, 0.3);
 }
 
 .singerTitle {
@@ -376,7 +376,7 @@ body {
 
 .message.left {
     margin: 12px -5px 10px 50%;
-    background: rgba(255, 84, 25, 0.35);
+    background: rgba(255, 165, 0, 0.9);
 }
 
 .message.right {
@@ -393,8 +393,8 @@ body {
     font-size: 1em;
     z-index: 9999;
     font-weight: 300;
-    left: 82.5%;
-    top: 82%;
+    left: 85%;
+    top: 75%;
     background: none;
     color: rgb(255, 84, 25);
 }
@@ -573,8 +573,8 @@ input-group .form-control {
 }
 
 :-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: white;
-    /*opacity: 0.9;*/
-    font-weight: 300;
+  /* Internet Explorer 10-11 */
+  color: white;
+  /*opacity: 0.9;*/
+  font-weight: 300;
 }

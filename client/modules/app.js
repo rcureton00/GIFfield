@@ -1,5 +1,5 @@
-var appPlayer = angular.module('MusicPlayer', ['ngRoute', 'ngCookies']);
-appPlayer.config(function($routeProvider) {
+var appPlayer = angular.module('MusicPlayer', ['ngRoute', 'ngCookies', 'ngMaterial']); // ngMaterial is for the Progress Bar
+appPlayer.config(function($routeProvider, $mdThemingProvider) { // $mdThemingProvider, for the Progress Bar
     $routeProvider
         .when('/home', {
             controller: 'HomeController',
@@ -12,4 +12,9 @@ appPlayer.config(function($routeProvider) {
         .otherwise({
             redirectTo: '/'
         });
+
+    // Progress Bar theme set.
+    $mdThemingProvider.theme('default')
+        .primaryPalette('deep-orange')
+        .accentPalette('orange')
 });

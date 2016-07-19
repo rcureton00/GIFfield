@@ -1,7 +1,6 @@
-appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', 'userName',
-  function($scope, socket, playerFactory, soundService, $cookies, userName) {
+appPlayer.controller('HomeController', ['$scope', '$interval', 'socket', 'playerFactory', 'soundService', '$cookies', 'userName',
+  function($scope, $interval, socket, playerFactory, soundService, $cookies, userName) {
 
-    
     socket.on('connect', function(){
       console.log("i connected");
     });
@@ -20,6 +19,21 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
 
     //A container to store audio's information for DOM manipulation 
     $scope.playListFinal = [];
+    // $scope.determinateValue = duration.val;
+    // var j = 0, 
+    //   counter = 0;
+
+    // $scope.determinateValue = 0;     
+    //  console.log((Math.round(213890 / 100)))
+
+    // $interval(function() {
+    //   $scope.determinateValue += 1;
+    //   if ($scope.determinateValue > 100) $scope.determinateValue = 0;
+    //    if ( counter++ % 4 == 0 ) j++;
+    //    console.log(counter);
+    // }, $scope.playlistFinal.duration);
+
+
 
 
     $scope.rmvPlayListItem = function(event) {
@@ -50,10 +64,10 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
         id: '/tracks/' + response.data.id, 
         title: response.data.title, 
         artwork: response.data.artwork_url || 
-                 response.data.user.avatar_url || 
                  'http://24.media.tumblr.com/3d736df5da284e889c9499756530efc8/tumblr_mno89p9spT1sped3xo1_400.gif',
         releaseYear: response.data.release_year,
-        name: response.data.user.username
+        name: response.data.user.username,
+        duration: response.data.duration
         });
       });
     });
@@ -102,6 +116,9 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     //fetches audio object for the provided track ID
       SC.stream(obj.id, function(audioObj) {
         playerFactory.curSong = audioObj;
+        // console.log(playerFactory.curSong);
+        // duration.retrieveDuration(200); // Abstract number
+        // duration.play();
         console.log('audioobj', audioObj);
         playerFactory.isPlaying = true;
         playerFactory.curSong.play();
@@ -116,6 +133,7 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
   } 
   if(obj.status === "pause"){
     playerFactory.isPlaying = false;
+    // duration.pause();
     playerFactory.curSong.pause();
   }
   if (obj.status === 'next') {
@@ -139,14 +157,27 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     $scope.typing = false;
     $scope.TYPING_TIMER_LENGTH = 4000; // this is how quick the "[other user] is typing" message will go away
     $scope.chatSend = function() {
-      socket.emit('chat message', {username: $cookies.get('username'), msg: $scope.chatMsg});
+      if ($scope.chatMsg) {
+       socket.emit('chat message', {username: $cookies.get('username'), msg: $scope.chatMsg});
+      }
       $scope.chatMsg = '';
+      $scope.overflowCtrl();
       return false;
     }
 
     socket.on('chat message', function(msg) {
-      $scope.chatMessages.push(msg);
+      console.log(msg)
+      if (msg !== '') {
+       $scope.chatMessages.push(msg);
+      }
     });
+
+    $scope.overflowCtrl = function() {
+       window.setTimeout(function() {
+         var elem = document.getElementById('messages');
+         elem.scrollTop = elem.scrollHeight;
+       }, 0);
+    };
 
     $scope.updateTyping = function() {
       $scope.typing = true;
@@ -193,4 +224,4 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
      $location.path('/home', false);
      }
   }
-])
+]);

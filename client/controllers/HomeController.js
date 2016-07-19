@@ -277,3 +277,4 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     }
   }
 ]);
+

@@ -38,6 +38,7 @@ io.on('connection', function(socket){
       currentSong = cb.id;
     }
     io.emit('playNpause', cb);
+    //socket.emit('playNpause', cb);
   });
   
 
@@ -73,5 +74,4 @@ io.on('connection', function(socket){
 http.listen(process.env.PORT || 8000, function(){
   console.log('App listening on port 8000');
 });
-
 

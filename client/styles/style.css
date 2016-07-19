@@ -311,6 +311,8 @@ body {
     width: 80%;
     text-shadow: none;
     padding-left: 10px;
+    position: absolute;
+    bottom: 0;
 }
 
 
@@ -362,6 +364,8 @@ body {
     /* Safari and Chrome */
     column-count: auto;
     height: 482px;
+
+
     background: rgba(0, 0, 0, 0.63);
     overflow: auto;
     margin-right: 1%;
@@ -369,6 +373,17 @@ body {
     border-right: none;
     border-top: none;
     border-bottom: 1px solid white;
+}
+
+.playList {
+    overflow: scroll;
+    margin-top: 1%;
+    margin-left: 1%;
+    border-bottom: 1px solid white;
+    width: 50%;
+    height: 71%;
+    border-radius: 3px;
+    background: rgb(32, 34, 32);
 }
 
 
@@ -591,3 +606,4 @@ input-group .form-control {
   /*opacity: 0.9;*/
   font-weight: 300;
 }
+

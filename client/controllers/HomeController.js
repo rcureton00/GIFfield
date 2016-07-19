@@ -131,7 +131,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
        if(err) throw err;
       //Container to show audio information on the DOM
        $scope.playListFinal.push({
-
         id: '/tracks/' + response.data.id, 
         title: response.data.title, 
         artwork: response.data.artwork_url || 

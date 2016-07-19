@@ -23,6 +23,11 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
     //A container to store audio's information for DOM manipulation 
     $scope.playListFinal = [];
 
+    $scope.volume = function () {
+      // [full , mid , mute] clicking toggles through shows one, hides other two
+      
+    };
+
 
     $scope.rmvPlayListItem = function(event) {
       socket.emit('removeSong' , {id: event.id});
@@ -64,8 +69,15 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
       }
     }
 
+    //on clicking next, we emit id and status to change song on all devices
+    $scope.next = function() {
+      socket.emit("playNpause", {
+       // id:  $scope.playListFinal[0].id,
+        status: 'next'
+      });
+    }
     
-    //*********VOLUME CONTROL***********
+    //************************ VOLUME CONTROL ***************************
     $scope.fHigh = true, $scope.fMid = false, $scope.fMute = false;
     $scope.volume = function() {
       if ($scope.fHigh && !$scope.fMid && !$scope.fMute) {
@@ -88,14 +100,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
           playerFactory.curSong.setVolume(80);  
         }
       }
-    }
-
-    //on clicking next, we emit id and status to change song on all devices
-    $scope.next = function() {
-      socket.emit("playNpause", {
-       // id:  $scope.playListFinal[0].id,
-        status: 'next'
-      });
     }
 
     $scope.updateTyping = function() {
@@ -139,9 +143,6 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
   
     // ****************** LISTENS to emitted events *******************
     socket.on('removeSong' , function(event) {
-      console.log("did we hit back client side?", event.id);
-      console.log("scope playlist", $scope.playListFinal);
-
       for(var i = 0; i < $scope.playListFinal.length; i++) {
         if(event.id === $scope.playListFinal[i].id) {
           $scope.playListFinal.splice(i, 1);
@@ -158,10 +159,10 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
         id: '/tracks/' + response.data.id, 
         title: response.data.title, 
         artwork: response.data.artwork_url || 
-                 response.data.user.avatar_url || 
                  'http://24.media.tumblr.com/3d736df5da284e889c9499756530efc8/tumblr_mno89p9spT1sped3xo1_400.gif',
         releaseYear: response.data.release_year,
-        name: response.data.user.username
+        name: response.data.user.username,
+        duration: response.data.duration
         });
       });
     });

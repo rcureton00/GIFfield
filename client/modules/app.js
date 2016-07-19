@@ -13,13 +13,9 @@ appPlayer.config(function($routeProvider, $mdThemingProvider) { // $mdThemingPro
         .otherwise({
             redirectTo: '/'
         });
-<<<<<<< HEAD
-
     // Progress Bar theme set.
     $mdThemingProvider.theme('default')
         .primaryPalette('deep-orange')
         .accentPalette('orange')
 });
-=======
-});
->>>>>>> ba15339a6161be0206afeb6eafa3ad9c148c0106
+

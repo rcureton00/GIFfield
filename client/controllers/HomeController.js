@@ -1,4 +1,3 @@
-
 appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'soundService', '$cookies', 'userName', '$animate',
   function($scope, socket, playerFactory, soundService, $cookies, userName, $animate) {
 

@@ -19,7 +19,7 @@
     <div class="chats">
         <!-- Populate Messages li-->
         <p class="isTyping" ng-show="checkTyping">{{typingMessage}}</p>
-        <ul id="messages">
+        <ul class="well" id="messages">
             <li class="message" ng-repeat="chatMessage in chatMessages track by $index" ng-class="chatMessage.split(':')[0] === user ? 'left' : 'right'">{{ chatMessage }}</li>
         </ul>
         <!-- Submit Message -->

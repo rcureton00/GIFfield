@@ -263,5 +263,5 @@ appPlayer.controller('HomeController', ['$scope', 'socket', 'playerFactory', 'so
      $location.path('/home', false);
      }
   }
+])
 
-]);
